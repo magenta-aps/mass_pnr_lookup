@@ -38,5 +38,31 @@ namespace mass_pnr_lookup.tests
             var lines = parser.ToArray();
             Assert.AreEqual(0, lines.Length);
         }
+
+        [TestMethod]
+        public void OneLine_One()
+        {
+            var parser = new CsvParser(Create("person,address in denmark"));
+            var lines = parser.ToArray();
+            Assert.AreEqual(1, lines.Length);
+        }
+
+        [TestMethod]
+        public void OneLine_CorrectData()
+        {
+            var parser = new CsvParser(Create("person;address in denmark"));
+            var line = parser.First();
+            Assert.AreEqual("person", line.Name);
+            Assert.AreEqual("address in denmark", line.Address);
+        }
+
+        [TestMethod]
+        public void AddressWithComma_CorrectData()
+        {
+            var parser = new CsvParser(Create("person;address,in , denmark"));
+            var line = parser.First();
+            Assert.AreEqual("person", line.Name);
+            Assert.AreEqual("address,in , denmark", line.Address);
+        }
     }
 }

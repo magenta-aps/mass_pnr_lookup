@@ -92,7 +92,7 @@ namespace mass_pnr_lookup.Parsers
                         _CurrentLine = _StreamReader.ReadLine();
                     }
                 }
-                return false;
+                return true;
             }
 
             public void Reset()
