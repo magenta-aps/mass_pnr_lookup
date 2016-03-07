@@ -26,7 +26,7 @@ namespace mass_pnr_lookup.Models
 
         public Parsers.IParser CreateParser()
         {
-            return new Parsers.CsvParser() { Batch = this };
+            return new Parsers.CsvParser(this.SourceContents);
         }
 
     }

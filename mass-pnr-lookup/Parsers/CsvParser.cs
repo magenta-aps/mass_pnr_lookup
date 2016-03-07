@@ -9,11 +9,16 @@ namespace mass_pnr_lookup.Parsers
 {
     public class CsvParser : IParser
     {
-        public Batch Batch { get; set; }
+        public byte[] Contents { get; private set; }
+
+        public CsvParser(byte[] contents)
+        {
+            this.Contents = contents;
+        }
 
         public IEnumerator<BatchLine> GetEnumerator()
         {
-            return new CsvEnumerator(Batch);
+            return new CsvEnumerator(Contents);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -23,16 +28,19 @@ namespace mass_pnr_lookup.Parsers
 
         class CsvEnumerator : IEnumerator<BatchLine>
         {
-            public Batch Batch { get; set; }
+            public byte[] Contents { get; private set; }
 
             StreamReader _StreamReader;
             MemoryStream _MemoryStream;
             string _CurrentLine;
 
-            public CsvEnumerator(Batch batch)
+            public CsvEnumerator(byte[] contents)
             {
-                this.Batch = batch;
-                this._MemoryStream = new MemoryStream(this.Batch.SourceContents);
+                if (contents == null)
+                    contents = new byte[0];
+
+                this.Contents = contents;
+                this._MemoryStream = new MemoryStream(this.Contents);
                 this._StreamReader = new StreamReader(this._MemoryStream);
             }
 
@@ -56,7 +64,7 @@ namespace mass_pnr_lookup.Parsers
             {
                 get
                 {
-                    return this.Current;
+                    return Current;
                 }
             }
 
@@ -81,7 +89,7 @@ namespace mass_pnr_lookup.Parsers
                     }
                     else
                     {
-                        this._CurrentLine = this._StreamReader.ReadLine();
+                        _CurrentLine = _StreamReader.ReadLine();
                     }
                 }
                 return false;
