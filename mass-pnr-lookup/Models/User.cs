@@ -14,6 +14,7 @@ namespace mass_pnr_lookup.Models
 
         [Index(IsUnique = true)]
         [MinLength(1)]
+        [MaxLength(255)]
         public string Name { get; set; }
 
         ICollection<Batch> Batches { get; set; }

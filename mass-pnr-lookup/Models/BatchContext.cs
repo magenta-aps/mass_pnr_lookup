@@ -10,6 +10,10 @@ namespace mass_pnr_lookup.Models
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Batch> Batches { get; set; }
-
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<BatchContext, Migrations.Configuration>());
+        }
     }
 }

@@ -17,13 +17,16 @@ namespace mass_pnr_lookup.Models
         public DateTime SubmittedTS { get; set; }
         public DateTime? CompletedTS { get; set; }
 
+        public int Size { get; set; }
+        public string FileName { get; set; }
+
         public byte[] SourceContents { get; set; }
         public byte[] GeneratedContents { get; set; }
 
         public User User { get; set; }
 
         public ICollection<BatchLine> Lines { get; set; }
-
+        
         public Parsers.IParser CreateParser()
         {
             return new Parsers.CsvParser(this.SourceContents);
