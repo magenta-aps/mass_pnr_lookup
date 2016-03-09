@@ -17,6 +17,6 @@ namespace mass_pnr_lookup.Models
         [MaxLength(255)]
         public string Name { get; set; }
 
-        ICollection<Batch> Batches { get; set; }
+        public virtual ICollection<Batch> Batches { get; set; }
     }
 }

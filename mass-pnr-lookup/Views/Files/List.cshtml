@@ -1,0 +1,49 @@
+﻿@model IEnumerable<mass_pnr_lookup.Models.Batch>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubmittedTS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompletedTS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Size)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmittedTS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompletedTS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BatchId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BatchId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BatchId })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -12,12 +12,38 @@ namespace mass_pnr_lookup.Controllers
         // GET: Files
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult List()
+        {
             IEnumerable<Batch> ret;
             using (var context = new Models.BatchContext())
             {
-                ret = context.Batches.ToArray();
+                var user = GetUser(context);
+                ret = user.Batches
+                    .OrderByDescending(b => b.SubmittedTS).ToArray();
             }
             return View(ret);
+        }
+
+        User GetUser(BatchContext context)
+        {
+            var user = context.Users.Where(u => u.Name.Equals(User.Identity.Name)).FirstOrDefault();
+            if (user == null)
+            {
+                lock ("User-adding")
+                {
+                    user = context.Users.Where(u => u.Name.Equals(User.Identity.Name)).FirstOrDefault();
+                    if (user == null)
+                    {
+                        user = new Models.User() { Name = User.Identity.Name };
+                        context.Users.Add(user);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            return user;
         }
 
         [HttpPost]
@@ -27,20 +53,7 @@ namespace mass_pnr_lookup.Controllers
             {
                 using (var context = new BatchContext())
                 {
-                    var user = context.Users.Where(u => u.Name.Equals(User.Identity.Name)).FirstOrDefault();
-                    if (user == null)
-                    {
-                        lock ("User-adding")
-                        {
-                            user = context.Users.Where(u => u.Name.Equals(User.Identity.Name)).FirstOrDefault();
-                            if (user == null)
-                            {
-                                user = new Models.User() { Name = User.Identity.Name };
-                                context.Users.Add(user);
-                                context.SaveChanges();
-                            }
-                        }
-                    }
+                    var user = GetUser(context);
 
                     // Now we have a user object
                     var batch = new Batch()

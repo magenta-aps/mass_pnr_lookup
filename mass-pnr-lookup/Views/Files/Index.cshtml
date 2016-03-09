@@ -1,6 +1,4 @@
-﻿@model IEnumerable<mass_pnr_lookup.Models.Batch>
-
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -19,62 +17,16 @@
 
 
 <p>
-    @Html.ActionLink("Create New", "Create")
-
     <h2>File Drag & Drop Upload</h2>
     <div id="dropZone">Drop your files here</div>
     <br>
     Uploaded Files:
     <ul id="uploadResult"></ul>
-
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubmittedTS)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompletedTS)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FileName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Size)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubmittedTS)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompletedTS)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FileName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Size)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BatchId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BatchId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BatchId })
-        </td>
-    </tr>
-}
-
-</table>
-
+<span id="fileList">
+    @Html.Action("List")
+</span>
 
 @section scripts{
     
@@ -99,6 +51,10 @@
             },
             uploadFinished: function (i, file, response, time) {
                 $('#uploadResult').append('<li>' + file.name + '</li>');
+                $.ajax('@Url.Action("List")')
+                    .success(function (data) {
+                        $('#fileList').html(data)
+                    })
             }
         });
     });
