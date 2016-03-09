@@ -16,6 +16,7 @@ namespace mass_pnr_lookup
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            QueueRegistration.Register();
         }
     }
 }
