@@ -79,6 +79,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="Resources\AddressSample.json" />
+    <None Include="Resources\Test_Opslag.csv" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

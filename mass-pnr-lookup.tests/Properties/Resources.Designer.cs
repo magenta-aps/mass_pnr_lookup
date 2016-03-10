@@ -83,5 +83,17 @@ namespace mass_pnr_lookup.tests.Properties {
                 return ResourceManager.GetString("AddressSample", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id;EJER_NAVN;EJER_ADR;EJER_POSTADR;EnhedNavn;EnhedAdresse;EnhedPostnr;Initialer;AfsenderNavn;Indeks;LinkBrev;LinkTillBrev
+        ///1749;Name 1;Studiestræde 14;1455 København K;Text;Vejnavn 1;1455 København K;init;Navn;3;LinkBrevValue;LinkTillBrevValue
+        ///;;;;;;;;;;;
+        ///.
+        /// </summary>
+        internal static string Test_Opslag {
+            get {
+                return ResourceManager.GetString("Test_Opslag", resourceCulture);
+            }
+        }
     }
 }

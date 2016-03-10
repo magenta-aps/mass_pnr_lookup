@@ -12,6 +12,7 @@ namespace mass_pnr_lookup.Models
         Extracted,
         Processing,
         Completed,
-        Notified
+        Notified,
+        Error
     }
 }

@@ -14,13 +14,13 @@ namespace mass_pnr_lookup.Queues
             var ret = new List<BatchQueueItem>();
             foreach (var item in items)
             {
-                try
+                using (var context = new BatchContext())
                 {
-                    using (var context = new BatchContext())
-                    {
-                        var batch = context.Batches.Find(item.BatchId);
-                        var parser = batch.CreateParser();
+                    var batch = context.Batches.Find(item.BatchId);
+                    var parser = batch.CreateParser();
 
+                    try
+                    {
                         var lines = parser.ToArray();
                         batch.Lines = lines;
                         context.SaveChanges();
@@ -30,14 +30,15 @@ namespace mass_pnr_lookup.Queues
                             searchQueue.Enqueue(line.ToQueueItem());
 
                         batch.Status = BatchStatus.Processing;
-                        context.SaveChanges();
-
-                        ret.Add(item);
                     }
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogException(ex);
+                    catch (Exception ex)
+                    {
+                        Logger.LogException(ex);
+
+                        batch.Status = BatchStatus.Error;
+                    }
+                    context.SaveChanges();
+                    ret.Add(item);
                 }
             }
             return ret.ToArray();

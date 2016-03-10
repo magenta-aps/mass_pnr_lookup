@@ -32,7 +32,11 @@ namespace mass_pnr_lookup.Parsers
 
             StreamReader _StreamReader;
             MemoryStream _MemoryStream;
+
             string _CurrentLine;
+            int nameColumnIndex = 1;
+            int addressColumnIndex = 2;
+            int postAddressColumnIndex = 3;
 
             public CsvEnumerator(byte[] contents)
             {
@@ -42,6 +46,24 @@ namespace mass_pnr_lookup.Parsers
                 this.Contents = contents;
                 this._MemoryStream = new MemoryStream(this.Contents);
                 this._StreamReader = new StreamReader(this._MemoryStream);
+
+                // Read the first line to get column indecies
+                string firstLine = null;
+                while (firstLine == null && !this._StreamReader.EndOfStream)
+                {
+                    firstLine = this._StreamReader.ReadLine();
+                }
+                if (!string.IsNullOrEmpty(firstLine))
+                {
+                    var firstLineValues = firstLine.Split(';');
+                    nameColumnIndex = Array.IndexOf<string>(firstLineValues, "EJER_NAVN");
+                    addressColumnIndex = Array.IndexOf<string>(firstLineValues, "EJER_ADR");
+                    postAddressColumnIndex = Array.IndexOf<string>(firstLineValues, "EJER_POSTADR");
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid contents");
+                }
             }
 
             public BatchLine Current
@@ -54,8 +76,11 @@ namespace mass_pnr_lookup.Parsers
                     var values = _CurrentLine.Split(';');
 
                     return new BatchLine(
-                        name: values.Skip(0).Take(1).FirstOrDefault(),
-                        address: values.Skip(1).Take(1).FirstOrDefault()
+                        name: values.Skip(nameColumnIndex).Take(1).FirstOrDefault(),
+                        address: string.Format("{0}, {1}",
+                            values.Skip(addressColumnIndex).Take(1).FirstOrDefault(),
+                            values.Skip(postAddressColumnIndex).Take(1).FirstOrDefault()
+                            )
                         );
                 }
             }
