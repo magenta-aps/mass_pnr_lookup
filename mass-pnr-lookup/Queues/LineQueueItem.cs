@@ -3,19 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CprBroker.Schemas.Part;
 
 namespace mass_pnr_lookup.Queues
 {
     public class LineQueueItem : QueueItemBase
     {
+        public int BatchLineId { get; set; }
+
         public override void DeserializeFromKey(string key)
         {
-            throw new NotImplementedException();
+            BatchLineId = int.Parse(key);
         }
 
         public override string SerializeToKey()
         {
-            throw new NotImplementedException();
+            return string.Format("{0}", BatchLineId);
         }
     }
 }

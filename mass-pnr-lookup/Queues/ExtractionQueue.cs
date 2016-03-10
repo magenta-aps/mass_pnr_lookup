@@ -21,8 +21,13 @@ namespace mass_pnr_lookup.Queues
                         var batch = context.Batches.Find(item.BatchId);
                         var parser = batch.CreateParser();
 
-                        batch.Lines = parser.ToArray();
+                        var lines = parser.ToArray();
+                        batch.Lines = lines;
                         context.SaveChanges();
+
+                        var searchQueue = Queue.GetQueues<SearchQueue>().FirstOrDefault();
+                        foreach (var line in lines)
+                            searchQueue.Enqueue(line.ToQueueItem());
 
                         ret.Add(item);
                     }
