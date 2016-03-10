@@ -29,6 +29,9 @@ namespace mass_pnr_lookup.Queues
                         foreach (var line in lines)
                             searchQueue.Enqueue(line.ToQueueItem());
 
+                        batch.Status = BatchStatus.Processing;
+                        context.SaveChanges();
+
                         ret.Add(item);
                     }
                 }
