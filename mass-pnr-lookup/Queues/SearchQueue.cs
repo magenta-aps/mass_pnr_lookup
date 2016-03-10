@@ -58,7 +58,6 @@ namespace mass_pnr_lookup.Queues
                 }
                 context.SaveChanges();
             }
-
             return ret.ToArray();
         }
     }
