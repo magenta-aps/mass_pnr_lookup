@@ -13,12 +13,11 @@ namespace mass_pnr_lookup.Parsers
                 addressString = System.Web.HttpUtility.UrlEncode(addressString, System.Text.Encoding.UTF8);
                 String urlString = "http://dawa.aws.dk/adresser?q=" + addressString;
 
-
-
                 var client = new System.Net.Http.HttpClient();
-                var response = client.GetStringAsync(urlString).ToString();
-
-                var adresses = Newtonsoft.Json.JsonConvert.DeserializeObject<JArray>(response);
+                var responseTask = client.GetStringAsync(urlString);
+                responseTask.Wait();
+                
+                var adresses = Newtonsoft.Json.JsonConvert.DeserializeObject<JArray>(responseTask.Result);
 
                 if (adresses.Count > 0)
                 {
