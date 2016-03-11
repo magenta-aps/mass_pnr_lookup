@@ -22,7 +22,7 @@ namespace mass_pnr_lookup.Queues
                 {
                     bool itemSucceeded = false;
 
-                    var batchLine = context.BatcheLines.Find(item.BatchLineId);
+                    var batchLine = context.BatchLines.Find(item.BatchLineId);
 
                     var partManager = new PartManager();
                     var soegObject = batchLine.ToSoegObject();
