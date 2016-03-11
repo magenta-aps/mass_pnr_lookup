@@ -70,6 +70,7 @@ namespace mass_pnr_lookup.Controllers
                         user = new Models.User() { Name = User.Identity.Name };
                         context.Users.Add(user);
                         context.SaveChanges();
+                        user = context.Users.Where(u => u.Name.Equals(User.Identity.Name)).FirstOrDefault();
                     }
                 }
             }

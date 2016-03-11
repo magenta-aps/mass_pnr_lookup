@@ -149,9 +149,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Logger.cs" />
-    <Compile Include="Migrations\201603081008123_InitialMigration.cs" />
-    <Compile Include="Migrations\201603081008123_InitialMigration.Designer.cs">
-      <DependentUpon>201603081008123_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201603111338567_initial.cs" />
+    <Compile Include="Migrations\201603111338567_initial.Designer.cs">
+      <DependentUpon>201603111338567_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Parsers\CsvParser.cs" />
@@ -225,8 +225,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603081008123_InitialMigration.resx">
-      <DependentUpon>201603081008123_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603111338567_initial.resx">
+      <DependentUpon>201603111338567_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
