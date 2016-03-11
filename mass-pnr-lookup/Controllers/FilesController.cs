@@ -20,7 +20,7 @@ namespace mass_pnr_lookup.Controllers
             IEnumerable<Batch> ret;
             using (var context = new Models.BatchContext())
             {
-                var user = GetUser(context);
+                var user = GetUser(context, User.Identity.Name);
                 ret = user.Batches
                     .OrderByDescending(b => b.SubmittedTS).ToArray();
             }
@@ -32,45 +32,50 @@ namespace mass_pnr_lookup.Controllers
         {
             foreach (var file in files)
             {
-                using (var context = new BatchContext())
-                {
-                    var user = GetUser(context);
-
-                    // Now we have a user object
-                    var batch = new Batch()
-                    {
-                        Size = file.ContentLength,
-                        SourceContents = new byte[file.ContentLength],
-                        Status = BatchStatus.Created,
-                        FileName = file.FileName,
-                        SubmittedTS = DateTime.Now,
-                        User = user
-                    };
-                    file.InputStream.Read(batch.SourceContents, 0, file.ContentLength);
-                    context.Batches.Add(batch);
-                    context.SaveChanges();
-
-                    var extractionQueue = CprBroker.Engine.Queues.Queue.GetQueues<Queues.ExtractionQueue>().Single();
-                    extractionQueue.Enqueue(new Queues.BatchQueueItem() { BatchId = batch.BatchId });
-                }
+                EnqueueFile(file.InputStream, file.FileName, file.ContentLength, User.Identity.Name);
             }
             return Json("All files have been successfully stored.");
         }
 
-        User GetUser(BatchContext context)
+        public void EnqueueFile(System.IO.Stream stream, string name, int length, string userName)
         {
-            var user = context.Users.Where(u => u.Name.Equals(User.Identity.Name)).FirstOrDefault();
+            using (var context = new BatchContext())
+            {
+                var user = GetUser(context, userName);
+
+                // Now we have a user object
+                var batch = new Batch()
+                {
+                    Size = length,
+                    SourceContents = new byte[length],
+                    Status = BatchStatus.Created,
+                    FileName = name,
+                    SubmittedTS = DateTime.Now,
+                    User = user
+                };
+                stream.Read(batch.SourceContents, 0, length);
+                context.Batches.Add(batch);
+                context.SaveChanges();
+
+                var extractionQueue = CprBroker.Engine.Queues.Queue.GetQueues<Queues.ExtractionQueue>().Single();
+                extractionQueue.Enqueue(new Queues.BatchQueueItem() { BatchId = batch.BatchId });
+            }
+        }
+
+        User GetUser(BatchContext context, string userName)
+        {
+            var user = context.Users.Where(u => u.Name.Equals(userName)).FirstOrDefault();
             if (user == null)
             {
                 lock ("User-adding")
                 {
-                    user = context.Users.Where(u => u.Name.Equals(User.Identity.Name)).FirstOrDefault();
+                    user = context.Users.Where(u => u.Name.Equals(userName)).FirstOrDefault();
                     if (user == null)
                     {
-                        user = new Models.User() { Name = User.Identity.Name };
+                        user = new Models.User() { Name = userName };
                         context.Users.Add(user);
                         context.SaveChanges();
-                        user = context.Users.Where(u => u.Name.Equals(User.Identity.Name)).FirstOrDefault();
+                        user = context.Users.Where(u => u.Name.Equals(userName)).FirstOrDefault();
                     }
                 }
             }
