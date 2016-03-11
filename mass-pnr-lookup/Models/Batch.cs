@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 using CprBroker.Engine.Queues;
+using mass_pnr_lookup.Parsers;
 
 namespace mass_pnr_lookup.Models
 {
@@ -44,6 +45,21 @@ namespace mass_pnr_lookup.Models
         public Semaphore NotificationSemaphore()
         {
             return Semaphore.GetById(NotificationSemaphoreId);
+        }
+
+        public void GenerateOutput()
+        {
+            var b = new System.Text.StringBuilder((int)(Size * 1.2));
+            var parser = new CsvParser.CsvEnumerator(SourceContents);
+            b.Append(parser.FirstLine);
+            b.AppendLine(";PNR;FEJL");
+
+            foreach (var line in Lines.OrderBy(l => l.Row).ThenBy(l => l.BatchElementId))
+            {
+                b.Append(line.SourceContents);
+                b.AppendFormat(";{0};{1}{2}", line.PNR, line.Error, Environment.NewLine);
+            }
+            GeneratedContents = System.Text.Encoding.UTF8.GetBytes(b.ToString());
         }
 
     }

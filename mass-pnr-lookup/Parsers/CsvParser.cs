@@ -26,7 +26,7 @@ namespace mass_pnr_lookup.Parsers
             return GetEnumerator();
         }
 
-        class CsvEnumerator : IEnumerator<BatchLine>
+        public class CsvEnumerator : IEnumerator<BatchLine>
         {
             public byte[] Contents { get; private set; }
 
@@ -34,9 +34,13 @@ namespace mass_pnr_lookup.Parsers
             MemoryStream _MemoryStream;
 
             string _CurrentLine;
+            int _CurrentLineIndex;
+
             int nameColumnIndex = 1;
             int addressColumnIndex = 2;
             int postAddressColumnIndex = 3;
+
+            public string FirstLine;
 
             public CsvEnumerator(byte[] contents)
             {
@@ -48,14 +52,14 @@ namespace mass_pnr_lookup.Parsers
                 this._StreamReader = new StreamReader(this._MemoryStream);
 
                 // Read the first line to get column indecies
-                string firstLine = null;
-                while (firstLine == null && !this._StreamReader.EndOfStream)
+                
+                while (FirstLine == null && !this._StreamReader.EndOfStream)
                 {
-                    firstLine = this._StreamReader.ReadLine();
+                    FirstLine = this._StreamReader.ReadLine();
                 }
-                if (!string.IsNullOrEmpty(firstLine))
+                if (!string.IsNullOrEmpty(FirstLine))
                 {
-                    var firstLineValues = firstLine.Split(';');
+                    var firstLineValues = FirstLine.Split(';');
                     nameColumnIndex = Array.IndexOf<string>(firstLineValues, "EJER_NAVN");
                     addressColumnIndex = Array.IndexOf<string>(firstLineValues, "EJER_ADR");
                     postAddressColumnIndex = Array.IndexOf<string>(firstLineValues, "EJER_POSTADR");
@@ -75,13 +79,16 @@ namespace mass_pnr_lookup.Parsers
 
                     var values = _CurrentLine.Split(';');
 
-                    return new BatchLine(
-                        name: values.Skip(nameColumnIndex).Take(1).FirstOrDefault(),
-                        address: string.Format("{0}, {1}",
+                    return new BatchLine()
+                    {
+                        Name = values.Skip(nameColumnIndex).Take(1).FirstOrDefault(),
+                        Address = string.Format("{0}, {1}",
                             values.Skip(addressColumnIndex).Take(1).FirstOrDefault(),
                             values.Skip(postAddressColumnIndex).Take(1).FirstOrDefault()
-                            )
-                        );
+                            ),
+                        Row = _CurrentLineIndex,
+                        SourceContents = _CurrentLine
+                    };
                 }
             }
 
@@ -115,6 +122,7 @@ namespace mass_pnr_lookup.Parsers
                     else
                     {
                         _CurrentLine = _StreamReader.ReadLine();
+                        _CurrentLineIndex++;
                     }
                 }
                 return true;

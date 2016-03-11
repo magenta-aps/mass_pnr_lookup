@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using CprBroker.Engine.Queues;
 using mass_pnr_lookup.Models;
+using mass_pnr_lookup.Parsers;
 
 namespace mass_pnr_lookup.Queues
 {
@@ -20,8 +21,7 @@ namespace mass_pnr_lookup.Queues
                     using (var context = new BatchContext())
                     {
                         var batch = context.Batches.Find(item.BatchId);
-                        // TODO: set GeneratedContents here
-                        // batch.GeneratedContents = ...
+                        batch.GenerateOutput();
 
                         context.SaveChanges();
 
@@ -37,5 +37,6 @@ namespace mass_pnr_lookup.Queues
             }
             return ret.ToArray();
         }
+        
     }
 }
