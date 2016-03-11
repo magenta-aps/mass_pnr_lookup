@@ -17,6 +17,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Size)
         </th>
+        <th>
+            Result
+        </th>
         <th></th>
     </tr>
 
@@ -39,11 +42,11 @@
                 @Html.DisplayFor(modelItem => item.Size)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.BatchId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.BatchId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.BatchId })
+                @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Completed)
+                {
+                    @Html.ActionLink("Download", "Result", new { id = item.BatchId })
+                }
             </td>
         </tr>
     }
-
 </table>

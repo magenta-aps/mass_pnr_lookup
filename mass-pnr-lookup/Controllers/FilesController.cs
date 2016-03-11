@@ -76,5 +76,15 @@ namespace mass_pnr_lookup.Controllers
             return user;
         }
 
+        public ActionResult Result(int id)
+        {
+            using (var context = new BatchContext())
+            {
+                var batch = context.Batches.Find(id);
+                if (batch.GeneratedContents != null)
+                    return new FileContentResult(batch.GeneratedContents, "application/csv");
+            }
+            return new HttpNotFoundResult();
+        }
     }
 }
