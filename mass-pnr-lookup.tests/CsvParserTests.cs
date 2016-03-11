@@ -16,6 +16,7 @@ namespace mass_pnr_lookup.tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void Null_Zero()
         {
             var parser = new CsvParser(null);
@@ -24,6 +25,7 @@ namespace mass_pnr_lookup.tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void NoLines_Zero()
         {
             var parser = new CsvParser(new byte[0]);
@@ -32,6 +34,7 @@ namespace mass_pnr_lookup.tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void EmptyLines_Zero()
         {
             var parser = new CsvParser(Create(Environment.NewLine + Environment.NewLine + Environment.NewLine));
