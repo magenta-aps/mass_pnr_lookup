@@ -9,7 +9,8 @@ namespace mass_pnr_lookup.Queues
     {
         public override BatchQueueItem[] Process(BatchQueueItem[] items)
         {
-            throw new NotImplementedException();
+            // TODO: Notify user here
+            return new BatchQueueItem[] { };
         }
     }
 }

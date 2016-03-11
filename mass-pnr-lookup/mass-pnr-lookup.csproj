@@ -168,6 +168,7 @@
     <Compile Include="Queues\BatchQueueItem.cs" />
     <Compile Include="Queues\ExtractionQueue.cs" />
     <Compile Include="Queues\LineQueueItem.cs" />
+    <Compile Include="Queues\OutputGenerationQueue.cs" />
     <Compile Include="Queues\SearchQueue.cs" />
     <Compile Include="Queues\UserNotificationQueue.cs" />
   </ItemGroup>

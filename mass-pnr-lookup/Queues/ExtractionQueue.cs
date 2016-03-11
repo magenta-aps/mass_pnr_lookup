@@ -23,9 +23,29 @@ namespace mass_pnr_lookup.Queues
                     {
                         var lines = parser.ToArray();
                         batch.Lines = lines;
+
+                        // Output generation queue
+                        var genSemaphore = Semaphore.Create(lines.Length);
+                        batch.GenerationSemaphoreId = genSemaphore.Impl.SemaphoreId;
+
+                        GetQueues<OutputGenerationQueue>().Single().Enqueue(
+                            new BatchQueueItem() { BatchId = batch.BatchId },
+                            genSemaphore
+                        );
+
+                        // user notification queue
+                        var notifSemaphore = Semaphore.Create();
+                        batch.NotificationSemaphoreId = notifSemaphore.Impl.SemaphoreId;
+
+                        GetQueues<UserNotificationQueue>().Single().Enqueue(
+                            new BatchQueueItem() { BatchId = batch.BatchId },
+                            notifSemaphore
+                        );
+
                         context.SaveChanges();
 
-                        var searchQueue = Queue.GetQueues<SearchQueue>().FirstOrDefault();
+                        // Search queue
+                        var searchQueue = GetQueues<SearchQueue>().FirstOrDefault();
                         foreach (var line in lines)
                             searchQueue.Enqueue(line.ToQueueItem());
 

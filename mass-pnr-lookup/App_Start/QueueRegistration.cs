@@ -24,6 +24,12 @@ namespace mass_pnr_lookup
                 searchQueue = Queue.AddQueue<SearchQueue>(3000, new Dictionary<string, string>(), 25, 3);
             }
 
+            var outputGenerationQueue = Queue.GetQueues<OutputGenerationQueue>().SingleOrDefault();
+            if (outputGenerationQueue == null)
+            {
+                outputGenerationQueue = Queue.AddQueue<OutputGenerationQueue>(3000, new Dictionary<string, string>(), 1, 5);
+            }
+
             var userNotificationQueue = Queue.GetQueues<UserNotificationQueue>().SingleOrDefault();
             if (userNotificationQueue == null)
             {

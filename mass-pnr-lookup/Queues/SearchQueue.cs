@@ -20,7 +20,10 @@ namespace mass_pnr_lookup.Queues
             {
                 foreach (var item in items)
                 {
+                    bool itemSucceeded = false;
+
                     var batchLine = context.BatcheLines.Find(item.BatchLineId);
+
                     var partManager = new PartManager();
                     var soegObject = batchLine.ToSoegObject();
 
@@ -44,7 +47,7 @@ namespace mass_pnr_lookup.Queues
                                 .Item as RegistreringType1;
 
                             batchLine.PNR = bestMatch.AttributListe.GetPnr();
-                            ret.Add(item);
+                            itemSucceeded = true;
                         }
                         else
                         {
@@ -55,8 +58,22 @@ namespace mass_pnr_lookup.Queues
                     {
                         batchLine.Error = "Invalid address";
                     }
+                    // Save the result at this point
+                    context.SaveChanges();
+
+                    // Queue management
+                    if (itemSucceeded)
+                    {
+                        ret.Add(item);
+                        // Decrement the wait count on the semaphore
+                        batchLine.Batch.GenerationSemaphore().Signal();
+                    }
+                    else if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
+                    {
+                        // Max attempts reached - signal anyway
+                        batchLine.Batch.GenerationSemaphore().Signal();
+                    }
                 }
-                context.SaveChanges();
             }
             return ret.ToArray();
         }
