@@ -20,61 +20,54 @@ namespace mass_pnr_lookup.tests
         public void Run()
         {
             string fileName = Guid.NewGuid().ToString();
-
-            Func<Batch> batch = () =>
+            CprBroker.Engine.BrokerContext.Initialize(CprBroker.Utilities.Constants.BaseApplicationToken.ToString(), "");
+            using (var myContext = new BatchContext())
             {
-                using (var myContext = new BatchContext())
+                Func<Batch> batch = () =>
                 {
                     return myContext.Batches.Where(b => b.FileName == fileName).SingleOrDefault();
-                }
-            };
-            var controller = new FilesController();
-            var bytes = Encoding.UTF8.GetBytes(Properties.Resources.Test_Opslag);
+                };
 
-            controller.EnqueueFile(new MemoryStream(bytes), fileName, bytes.Length, "dummyUser");
+                var controller = new FilesController();
+                var bytes = Encoding.UTF8.GetBytes(Properties.Resources.Test_Opslag);
 
-            Assert.IsNotNull(batch());
+                controller.EnqueueFile(new MemoryStream(bytes), fileName, bytes.Length, "dummyUser");
 
-            // Extract
-            var extractQueue = Queue.GetQueues<ExtractionQueue>().Single();
-            var extractQueueItem = extractQueue.GetNext(1000).Where(qi0 => qi0.BatchId == batch().BatchId).SingleOrDefault();
-            Assert.IsNotNull(extractQueueItem);
+                Assert.IsNotNull(batch());
 
-            var extractResult = extractQueue.Process(new BatchQueueItem[] { extractQueueItem });
-            Assert.AreEqual(1, extractResult.Length);
-            extractQueue.Remove(extractResult);
+                // Extract
+                var extractQueue = Queue.GetQueues<ExtractionQueue>().Single();
+                var extractQueueItem = extractQueue.GetNext(1000).Where(qi0 => qi0.BatchId == batch().BatchId).SingleOrDefault();
+                Assert.IsNotNull(extractQueueItem);
 
-            // Search
-            var searchQueue = Queue.GetQueues<SearchQueue>().Single();
-            var searchQueueItems = searchQueue.GetNext(1000).Where(qi => batch().Lines.Select(l => l.BatchElementId).Contains(qi.BatchLineId)).ToArray();
-            Assert.AreEqual(batch().Lines.Count, searchQueueItems.Length);
+                var extractResult = extractQueue.Process(new BatchQueueItem[] { extractQueueItem });
+                Assert.AreEqual(1, extractResult.Length);
+                extractQueue.Remove(extractResult);
 
-            var searchResult = searchQueue.Process(searchQueueItems);
-            Assert.AreEqual(batch().Lines.Count, searchResult.Length);
-            searchQueue.Remove(searchResult);
+                // Search
+                var searchQueue = Queue.GetQueues<SearchQueue>().Single();
+                var searchQueueItems = searchQueue.GetNext(1000).Where(qi => batch().Lines.Select(l => l.BatchElementId).Contains(qi.BatchLineId)).ToArray();
+                Assert.AreEqual(batch().Lines.Count, searchQueueItems.Length);
 
-            // Output generation
-            var outputGenerationQueue = Queue.GetQueues<OutputGenerationQueue>().Single();
-            var outputGenerationQueueItem = outputGenerationQueue.GetNext(1000).Where(qi => qi.BatchId == batch().BatchId).SingleOrDefault();
-            Assert.IsNotNull(outputGenerationQueueItem);
-            var outputGenerationResult = outputGenerationQueue.Process(new BatchQueueItem[] { outputGenerationQueueItem });
-            Assert.Equals(1, outputGenerationResult.Length);
+                var searchResult = searchQueue.Process(searchQueueItems);
+                Assert.AreEqual(batch().Lines.Count, searchResult.Length);
+                searchQueue.Remove(searchResult);
 
-            // Notification
-            var notificationQueue = Queue.GetQueues<UserNotificationQueue>().Single();
-            var notificationQueueItem = notificationQueue.GetNext(1000).Where(qi => qi.BatchId == batch().BatchId).SingleOrDefault();
-            Assert.IsNotNull(notificationQueueItem);
-            var notificationResult = notificationQueue.Process(new BatchQueueItem[] { notificationQueueItem });
-            Assert.Equals(1, notificationResult.Length);
+                // Output generation
+                var outputGenerationQueue = Queue.GetQueues<OutputGenerationQueue>().Single();
+                var outputGenerationQueueItem = outputGenerationQueue.GetNext(1000).Where(qi => qi.BatchId == batch().BatchId).SingleOrDefault();
+                Assert.IsNotNull(outputGenerationQueueItem);
+                var outputGenerationResult = outputGenerationQueue.Process(new BatchQueueItem[] { outputGenerationQueueItem });
+                Assert.Equals(1, outputGenerationResult.Length);
 
+                // Notification
+                var notificationQueue = Queue.GetQueues<UserNotificationQueue>().Single();
+                var notificationQueueItem = notificationQueue.GetNext(1000).Where(qi => qi.BatchId == batch().BatchId).SingleOrDefault();
+                Assert.IsNotNull(notificationQueueItem);
+                var notificationResult = notificationQueue.Process(new BatchQueueItem[] { notificationQueueItem });
+                Assert.Equals(1, notificationResult.Length);
 
-
-
-
-
-
+            }
         }
-
-
     }
 }

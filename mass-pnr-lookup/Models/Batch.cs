@@ -30,7 +30,7 @@ namespace mass_pnr_lookup.Models
 
         public User User { get; set; }
 
-        public ICollection<BatchLine> Lines { get; set; }
+        public virtual ICollection<BatchLine> Lines { get; set; }
 
         public Parsers.IParser CreateParser()
         {
