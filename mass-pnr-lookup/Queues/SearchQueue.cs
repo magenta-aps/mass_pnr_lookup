@@ -39,19 +39,16 @@ namespace mass_pnr_lookup.Queues
 
                         if (StandardReturType.IsSucceeded(searchResult.StandardRetur))
                         {
-                            // If multiple matches are found, choose the one with the shortest full name
-                            CprBroker.Engine.Local.Admin.AddNewLog(System.Diagnostics.TraceEventType.Information, "SearchQueue.Search", "", "",
-                                CprBroker.Utilities.Strings.SerializeObject(searchResult));
-
-                            var bestMatch = searchResult.LaesResultat
-                                .OrderBy(le =>
-                                    string.Join(" ",
-                                    (le.Item as FiltreretOejebliksbilledeType).AttributListe.Egenskab.First().NavnStruktur.PersonNameStructure.ToArray())
-                                    .Length)
-                                .First()
-                                .Item as FiltreretOejebliksbilledeType;
-
-                            batchLine.PNR = bestMatch.AttributListe.GetPnr();
+                            // If multiple matches are found, choose the first one
+                            var bestMatch = searchResult.LaesResultat.FirstOrDefault();
+                            if (bestMatch != null)
+                            {
+                                batchLine.PNR = (bestMatch.Item as FiltreretOejebliksbilledeType).AttributListe.GetPnr();
+                            }
+                            else
+                            {
+                                batchLine.Error = "Person not found";
+                            }
                             itemSucceeded = true;
                         }
                         else
