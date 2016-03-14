@@ -12,6 +12,8 @@ namespace mass_pnr_lookup.Queues
 {
     public class SearchQueue : CprBroker.Engine.Queues.Queue<LineQueueItem>
     {
+        public CprBroker.Schemas.SourceUsageOrder SourceUsageOrder { get; set; } = CprBroker.Schemas.SourceUsageOrder.ExternalOnly;
+
         public override LineQueueItem[] Process(LineQueueItem[] items)
         {
             var ret = new List<LineQueueItem>();
@@ -33,7 +35,7 @@ namespace mass_pnr_lookup.Queues
                             BrokerContext.Current.UserToken,
                             BrokerContext.Current.ApplicationToken,
                             soegObject,
-                            CprBroker.Schemas.SourceUsageOrder.ExternalOnly);
+                            SourceUsageOrder);
 
                         if (StandardReturType.IsSucceeded(searchResult.StandardRetur))
                         {

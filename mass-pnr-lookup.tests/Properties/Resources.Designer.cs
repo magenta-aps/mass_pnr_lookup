@@ -86,13 +86,25 @@ namespace mass_pnr_lookup.tests.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Id;EJER_NAVN;EJER_ADR;EJER_POSTADR;EnhedNavn;EnhedAdresse;EnhedPostnr;Initialer;AfsenderNavn;Indeks;LinkBrev;LinkTillBrev
-        ///1749;Name 1;Studiestræde 14;1455 København K;Text;Vejnavn 1;1455 København K;init;Navn;3;LinkBrevValue;LinkTillBrevValue
+        ///1749;Fornavn Efternavn;Studiestræde 14;1455 København K;Text;Vejnavn 1;1455 København K;init;Navn;3;LinkBrevValue;LinkTillBrevValue
         ///;;;;;;;;;;;
         ///.
         /// </summary>
         internal static string Test_Opslag {
             get {
                 return ResourceManager.GetString("Test_Opslag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id;EJER_NAVN;EJER_ADR;EJER_POSTADR;EnhedNavn;EnhedAdresse;EnhedPostnr;Initialer;AfsenderNavn;Indeks;LinkBrev;LinkTillBrev;PNR;FEJL
+        ///1749;Fornavn Efternavn;Studiestræde 14;1455 København K;Text;Vejnavn 1;1455 København K;init;Navn;3;LinkBrevValue;LinkTillBrevValue;2107497164;
+        ///;;;;;;;;;;;;;Invalid address
+        ///.
+        /// </summary>
+        internal static string Test_Opslag_output {
+            get {
+                return ResourceManager.GetString("Test_Opslag_output", resourceCulture);
             }
         }
     }

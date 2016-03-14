@@ -43,6 +43,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\broker.github\PART\Source\Core\Output\CprBroker.Engine.dll</HintPath>
     </Reference>
+    <Reference Include="CprBroker.Installers">
+      <HintPath>..\..\..\..\broker.github\PART\Source\Core\Output\CprBroker.Installers.dll</HintPath>
+    </Reference>
+    <Reference Include="CprBroker.Installers.EventBrokerInstallers">
+      <HintPath>..\..\..\..\broker.github\PART\Source\EventBroker\Output\CprBroker.Installers.EventBrokerInstallers.dll</HintPath>
+    </Reference>
+    <Reference Include="CprBroker.PartInterface, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\broker.github\PART\Source\CprBroker\Output\CprBroker.PartInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="CprBroker.Providers.CPRDirect">
+      <HintPath>..\..\..\..\broker.github\PART\Source\CprBroker\Output\CprBroker.Providers.CPRDirect.dll</HintPath>
+    </Reference>
+    <Reference Include="CprBroker.Providers.DPR">
+      <HintPath>..\..\..\..\broker.github\PART\Source\CprBroker\Output\CprBroker.Providers.DPR.dll</HintPath>
+    </Reference>
     <Reference Include="CprBroker.Schemas, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\broker.github\PART\Source\Core\Output\CprBroker.Schemas.dll</HintPath>
@@ -50,6 +66,10 @@
     <Reference Include="CprBroker.Utilities, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\broker.github\PART\Source\Core\Output\CprBroker.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="CprBrokerWixInstallers, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\broker.github\PART\Source\CprBroker\Output\CprBrokerWixInstallers.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -66,6 +86,9 @@
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="PartInterface.Tests">
+      <HintPath>..\..\..\..\broker.github\PART\Source\CprBroker\Output\PartInterface.Tests.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -132,6 +155,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Resources\Test_Opslag_output.csv" />
     <None Include="Resources\AddressSample.json" />
     <None Include="Resources\Test_Opslag.csv" />
   </ItemGroup>

@@ -9,8 +9,13 @@ namespace mass_pnr_lookup.Queues
     {
         public override BatchQueueItem[] Process(BatchQueueItem[] items)
         {
-            // TODO: Notify user here
-            return new BatchQueueItem[] { };
+            var ret = new List<BatchQueueItem>();
+            foreach (var item in items)
+            {
+                // TODO: Notify user here
+                ret.Add(item);
+            }
+            return ret.ToArray();
         }
     }
 }
