@@ -21,6 +21,7 @@ namespace mass_pnr_lookup.Controllers
             using (var context = new Models.BatchContext())
             {
                 var user = GetUser(context, User.Identity.Name);
+                
                 ret = user.Batches
                     .OrderByDescending(b => b.SubmittedTS).ToArray();
             }
@@ -75,7 +76,9 @@ namespace mass_pnr_lookup.Controllers
                         user = new Models.User() { Name = userName };
                         context.Users.Add(user);
                         context.SaveChanges();
+
                         user = context.Users.Where(u => u.Name.Equals(userName)).FirstOrDefault();
+                        context.Entry<User>(user).Collection(u => u.Batches).Load();
                     }
                 }
             }

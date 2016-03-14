@@ -17,5 +17,9 @@ namespace mass_pnr_lookup.Models
             base.OnModelCreating(modelBuilder);
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<BatchContext, Migrations.Configuration>());
         }
+
+        public BatchContext()
+            :base(Properties.Settings.Default.MassPnrLookupConnectionString)
+        { }
     }
 }
