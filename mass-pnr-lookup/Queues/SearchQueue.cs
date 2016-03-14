@@ -40,6 +40,9 @@ namespace mass_pnr_lookup.Queues
                         if (StandardReturType.IsSucceeded(searchResult.StandardRetur))
                         {
                             // If multiple matches are found, choose the one with the shortest full name
+                            CprBroker.Engine.Local.Admin.AddNewLog(System.Diagnostics.TraceEventType.Information, "SearchQueue.Search", "", "",
+                                CprBroker.Utilities.Strings.SerializeObject(searchResult));
+
                             var bestMatch = searchResult.LaesResultat
                                 .OrderBy(le =>
                                     string.Join(" ",
