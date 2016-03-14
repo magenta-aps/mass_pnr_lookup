@@ -10,7 +10,7 @@ namespace mass_pnr_lookup.Parsers
         {
             try
             {
-                addressString = System.Web.HttpUtility.UrlEncode(addressString, Commons.CsvEncoding);
+                addressString = System.Web.HttpUtility.UrlEncode(addressString);
                 String urlString = "http://dawa.aws.dk/adresser?q=" + addressString;
 
                 var client = new System.Net.Http.HttpClient();

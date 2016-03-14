@@ -75,6 +75,11 @@ namespace mass_pnr_lookup.tests
         {
             var parser = new CsvParser(System.IO.File.ReadAllBytes(@"C:\MagentaWorkspace\Naturstyrelsen\Mass PNR lookup\Test_Opslag.csv"));
             var lines = parser.ToArray();
+
+            var line = lines.Where(l => l.Name == "Aksel Daugård").FirstOrDefault();
+            DawaAddressParser p = new DawaAddressParser();
+            var adr = p.ToAddressType(line.Address);
+
             Console.WriteLine();
         }
     }

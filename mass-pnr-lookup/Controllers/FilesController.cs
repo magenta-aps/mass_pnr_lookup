@@ -21,7 +21,7 @@ namespace mass_pnr_lookup.Controllers
             using (var context = new Models.BatchContext())
             {
                 var user = GetUser(context, User.Identity.Name);
-                
+
                 ret = user.Batches
                     .OrderByDescending(b => b.SubmittedTS).ToArray();
             }
@@ -91,7 +91,7 @@ namespace mass_pnr_lookup.Controllers
             {
                 var batch = context.Batches.Find(id);
                 if (batch.GeneratedContents != null)
-                    return new FileContentResult(batch.GeneratedContents, "application/csv");
+                    return new FileContentResult(batch.GeneratedContents, "application/csv") { FileDownloadName = string.Format("{0}-result.csv", batch.FileName) };
             }
             return new HttpNotFoundResult();
         }
