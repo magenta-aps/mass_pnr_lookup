@@ -48,7 +48,7 @@ namespace mass_pnr_lookup.tests
                 {
                     new LaesResultatType()
                     {
-                        Item = new RegistreringType1()
+                        Item = new FiltreretOejebliksbilledeType()
                         {
                             AttributListe=new AttributListeType()
                             {
