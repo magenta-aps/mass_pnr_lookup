@@ -69,5 +69,13 @@ namespace mass_pnr_lookup.tests
             Assert.AreEqual("person", line.Name);
             Assert.AreEqual("address,in , denmark, ", line.Address);
         }
+
+        [TestMethod]
+        public void TestEncoding()
+        {
+            var parser = new CsvParser(System.IO.File.ReadAllBytes(@"C:\MagentaWorkspace\Naturstyrelsen\Mass PNR lookup\Test_Opslag.csv"));
+            var lines = parser.ToArray();
+            Console.WriteLine();
+        }
     }
 }

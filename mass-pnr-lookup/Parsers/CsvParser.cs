@@ -49,10 +49,10 @@ namespace mass_pnr_lookup.Parsers
 
                 this.Contents = contents;
                 this._MemoryStream = new MemoryStream(this.Contents);
-                this._StreamReader = new StreamReader(this._MemoryStream);
+                this._StreamReader = new StreamReader(this._MemoryStream, Commons.CsvEncoding);
 
                 // Read the first line to get column indecies
-                
+
                 while (FirstLine == null && !this._StreamReader.EndOfStream)
                 {
                     FirstLine = this._StreamReader.ReadLine();

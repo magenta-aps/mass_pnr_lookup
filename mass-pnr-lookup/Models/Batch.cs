@@ -59,7 +59,7 @@ namespace mass_pnr_lookup.Models
                 b.Append(line.SourceContents);
                 b.AppendFormat(";{0};{1}{2}", line.PNR, line.Error, Environment.NewLine);
             }
-            GeneratedContents = System.Text.Encoding.UTF8.GetBytes(b.ToString());
+            GeneratedContents = Commons.CsvEncoding.GetBytes(b.ToString());
         }
 
     }
