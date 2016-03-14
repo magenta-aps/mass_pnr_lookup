@@ -43,7 +43,7 @@ namespace mass_pnr_lookup.Queues
                             var bestMatch = searchResult.LaesResultat
                                 .OrderBy(le =>
                                     string.Join(" ",
-                                    (le.Item as RegistreringType1).AttributListe.Egenskab.First().NavnStruktur.PersonNameStructure.ToArray())
+                                    (le.Item as FiltreretOejebliksbilledeType).AttributListe.Egenskab.First().NavnStruktur.PersonNameStructure.ToArray())
                                     .Length)
                                 .First()
                                 .Item as RegistreringType1;
