@@ -46,7 +46,7 @@ namespace mass_pnr_lookup.Queues
                                     (le.Item as FiltreretOejebliksbilledeType).AttributListe.Egenskab.First().NavnStruktur.PersonNameStructure.ToArray())
                                     .Length)
                                 .First()
-                                .Item as RegistreringType1;
+                                .Item as FiltreretOejebliksbilledeType;
 
                             batchLine.PNR = bestMatch.AttributListe.GetPnr();
                             itemSucceeded = true;
