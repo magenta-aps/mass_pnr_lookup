@@ -23,6 +23,7 @@ namespace mass_pnr_lookup.Queues
                         var batch = context.Batches.Find(item.BatchId);
                         batch.GenerateOutput();
                         batch.Status = BatchStatus.Completed;
+                        batch.CompletedTS = DateTime.Now;
                         context.SaveChanges();
 
                         // Signal the notification
