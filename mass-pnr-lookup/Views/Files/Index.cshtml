@@ -31,6 +31,16 @@
     
 <script type="text/javascript">
     $(function () {
+        var refreshFiles = function () {
+            $.ajax('@Url.Action("List")')
+                    .success(function (data) {
+                        $('#fileList').html(data)
+                    })
+            setTimeout(refreshFiles, 5000);
+        };
+
+        setTimeout(refreshFiles, 5000);
+
         $('#dropZone').filedrop({
             url: '@Url.Action("UploadFiles")',
             paramname: 'files',
@@ -50,10 +60,7 @@
             },
             uploadFinished: function (i, file, response, time) {
                 $('#uploadResult').append('<li>' + file.name + '</li>');
-                $.ajax('@Url.Action("List")')
-                    .success(function (data) {
-                        $('#fileList').html(data)
-                    })
+                refreshFiles();
             }
         });
     });
