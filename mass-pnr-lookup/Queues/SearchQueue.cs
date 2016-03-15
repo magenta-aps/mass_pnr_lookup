@@ -63,6 +63,11 @@ namespace mass_pnr_lookup.Queues
                     // Save the result at this point
                     context.SaveChanges();
 
+                    if (itemSucceeded)
+                        batchLine.Batch.SucceededLines++;
+                    else
+                        batchLine.Batch.FailedLines++;
+
                     // Queue management
                     if (itemSucceeded)
                     {

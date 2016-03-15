@@ -15,7 +15,16 @@
             @Html.DisplayNameFor(model => model.FileName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Size)
+            Bytes
+        </th>
+        <th>
+            Lines
+        </th>
+        <th>
+            Succeeded
+        </th>
+        <th>
+            Failed
         </th>
         <th>
             Result
@@ -40,6 +49,15 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumLines)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SucceededLines)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FailedLines)
             </td>
             <td>
                 @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Completed)

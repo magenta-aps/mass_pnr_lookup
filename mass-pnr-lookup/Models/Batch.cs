@@ -22,6 +22,10 @@ namespace mass_pnr_lookup.Models
         public int Size { get; set; }
         public string FileName { get; set; }
 
+        public int NumLines { get; set; }
+        public int SucceededLines { get; set; } = 0;
+        public int FailedLines { get; set; } = 0;
+
         public byte[] SourceContents { get; set; }
         public byte[] GeneratedContents { get; set; }
 

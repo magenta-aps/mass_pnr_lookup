@@ -23,6 +23,7 @@ namespace mass_pnr_lookup.Queues
                     {
                         var lines = parser.ToArray();
                         batch.Lines = lines;
+                        batch.NumLines = lines.Length;
 
                         // Output generation queue
                         var genSemaphore = Semaphore.Create(lines.Length);
