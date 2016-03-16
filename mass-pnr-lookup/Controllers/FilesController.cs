@@ -9,21 +9,30 @@ namespace mass_pnr_lookup.Controllers
 {
     public class FilesController : Controller
     {
+
         // GET: Files
-        public ActionResult Index()
+        public ActionResult Index(bool allUsers = false)
         {
-            return View();
+            return View(allUsers);
         }
 
-        public ActionResult List()
+        public ActionResult List(bool allUsers = false)
         {
             IEnumerable<Batch> ret;
             using (var context = new Models.BatchContext())
             {
-                var user = GetUser(context, User.Identity.Name);
+                if (allUsers)
+                {
+                    ret = context.Batches
+                        .OrderByDescending(b => b.SubmittedTS).ToArray();
+                }
+                else
+                {
+                    var user = GetUser(context, User.Identity.Name);
 
-                ret = user.Batches
-                    .OrderByDescending(b => b.SubmittedTS).ToArray();
+                    ret = user.Batches
+                        .OrderByDescending(b => b.SubmittedTS).ToArray();
+                }
             }
             return View(ret);
         }

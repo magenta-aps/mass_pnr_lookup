@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace mass_pnr_lookup.tests
 {
     [TestClass]
-    class QueueTests
+    public class QueueTests
     {
         [TestMethod]
         public void RunQueues()
