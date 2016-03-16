@@ -68,7 +68,7 @@ namespace mass_pnr_lookup.Models
         }
 
 
-        public void EnqueueExtraction()
+        public void EnqueueOutputGeneration()
         {
             // Output generation queue
             var genSemaphore = Semaphore.Create(this.Lines.Count);
@@ -114,7 +114,7 @@ namespace mass_pnr_lookup.Models
             this.ResetCounters();
             context.SaveChanges();
 
-            this.EnqueueExtraction();
+            this.EnqueueOutputGeneration();
             this.EnqueueNotification();
             context.SaveChanges();
 
