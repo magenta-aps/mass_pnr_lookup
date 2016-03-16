@@ -140,6 +140,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="QueueTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\mass-pnr-lookup\mass-pnr-lookup.csproj">
