@@ -25,40 +25,20 @@ namespace mass_pnr_lookup.Queues
                         batch.Lines = lines;
                         batch.NumLines = lines.Length;
 
-                        // Output generation queue
-                        var genSemaphore = Semaphore.Create(lines.Length);
-                        batch.GenerationSemaphoreId = genSemaphore.Impl.SemaphoreId;
-
-                        GetQueues<OutputGenerationQueue>().Single().Enqueue(
-                            new BatchQueueItem() { BatchId = batch.BatchId },
-                            genSemaphore
-                        );
-
-                        // user notification queue
-                        var notifSemaphore = Semaphore.Create();
-                        batch.NotificationSemaphoreId = notifSemaphore.Impl.SemaphoreId;
-
-                        GetQueues<UserNotificationQueue>().Single().Enqueue(
-                            new BatchQueueItem() { BatchId = batch.BatchId },
-                            notifSemaphore
-                        );
-
+                        batch.ResetCounters();
                         context.SaveChanges();
 
-                        // Search queue
-                        var searchQueue = GetQueues<SearchQueue>().FirstOrDefault();
-                        foreach (var line in lines)
-                            searchQueue.Enqueue(line.ToQueueItem());
-
-                        batch.Status = BatchStatus.Processing;
+                        batch.EnqueueExtraction();
+                        batch.EnqueueNotification();
+                        batch.EnqueueSearch();
                     }
                     catch (Exception ex)
                     {
                         Logger.LogException(ex);
 
                         batch.Status = BatchStatus.Error;
+                        context.SaveChanges();
                     }
-                    context.SaveChanges();
                     ret.Add(item);
                 }
             }

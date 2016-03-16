@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 using CprBroker.Engine.Queues;
 using mass_pnr_lookup.Parsers;
+using mass_pnr_lookup.Queues;
 
 namespace mass_pnr_lookup.Models
 {
@@ -64,6 +65,47 @@ namespace mass_pnr_lookup.Models
                 b.AppendFormat(";{0};{1}{2}", line.PNR, line.Error, Environment.NewLine);
             }
             GeneratedContents = Commons.CsvEncoding.GetBytes(b.ToString());
+        }
+
+
+        public void EnqueueExtraction()
+        {
+            // Output generation queue
+            var genSemaphore = Semaphore.Create(this.Lines.Count);
+            this.GenerationSemaphoreId = genSemaphore.Impl.SemaphoreId;
+
+            Queue.GetQueues<OutputGenerationQueue>().Single().Enqueue(
+                new BatchQueueItem() { BatchId = this.BatchId },
+                genSemaphore
+            );
+        }
+
+        public void EnqueueNotification()
+        {
+            // user notification queue
+            var notifSemaphore = Semaphore.Create();
+            this.NotificationSemaphoreId = notifSemaphore.Impl.SemaphoreId;
+
+            Queue.GetQueues<UserNotificationQueue>().Single().Enqueue(
+                new BatchQueueItem() { BatchId = this.BatchId },
+                notifSemaphore
+            );
+        }
+
+        public void EnqueueSearch()
+        {
+            // Search queue
+            var searchQueue = Queue.GetQueues<SearchQueue>().FirstOrDefault();
+            foreach (var line in this.Lines)
+                searchQueue.Enqueue(line.ToQueueItem());
+        }
+
+        public void ResetCounters()
+        {
+            this.FailedLines = 0;
+            this.SucceededLines = 0;
+            this.CompletedTS = null;
+            this.Status = BatchStatus.Processing;
         }
 
     }
