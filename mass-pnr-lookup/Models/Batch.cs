@@ -102,6 +102,7 @@ namespace mass_pnr_lookup.Models
 
         public void ResetCounters()
         {
+            this.NumLines = this.Lines.Count;
             this.FailedLines = 0;
             this.SucceededLines = 0;
             this.CompletedTS = null;

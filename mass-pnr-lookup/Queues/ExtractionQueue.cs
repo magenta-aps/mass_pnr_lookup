@@ -23,7 +23,6 @@ namespace mass_pnr_lookup.Queues
                     {
                         var lines = parser.ToArray();
                         batch.Lines = lines;
-                        batch.NumLines = batch.Lines.Count;
 
                         batch.EnqueueAllAfterExtraction(context);
                     }
