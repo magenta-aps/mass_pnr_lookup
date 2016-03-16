@@ -108,5 +108,17 @@ namespace mass_pnr_lookup.Models
             this.Status = BatchStatus.Processing;
         }
 
+        public void EnqueueAllAfterExtraction(BatchContext context)
+        {
+            this.ResetCounters();
+            context.SaveChanges();
+
+            this.EnqueueExtraction();
+            this.EnqueueNotification();
+            context.SaveChanges();
+
+            this.EnqueueSearch();
+        }
+
     }
 }

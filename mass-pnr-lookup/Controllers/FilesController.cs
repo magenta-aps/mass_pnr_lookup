@@ -37,6 +37,20 @@ namespace mass_pnr_lookup.Controllers
             return View(ret);
         }
 
+        public ActionResult Retry(int id)
+        {
+            using (var context = new BatchContext())
+            {
+                var batch = context.Batches.Find(id);
+                if (batch != null && (batch.Status == BatchStatus.Completed || batch.Status == BatchStatus.Notified))
+                {
+                    batch.EnqueueAllAfterExtraction(context);
+                    return Json("Success.", JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("Unable to retry", JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult UploadFiles(IEnumerable<HttpPostedFileBase> files)
         {

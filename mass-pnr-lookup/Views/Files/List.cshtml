@@ -64,7 +64,32 @@
                 {
                     @Html.ActionLink("Download", "Result", new { id = item.BatchId })
                 }
+                @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Completed || item.Status == mass_pnr_lookup.Models.BatchStatus.Notified)
+                {
+                    <a href="#" name="retryBatchLink" href2="@Url.Action("Retry",new { id = item.BatchId })">(Retry)</a>
+                }
             </td>
         </tr>
     }
 </table>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+
+            $('a[name="retryBatchLink"]').unbind('click');
+
+            $('a[name="retryBatchLink"]').click(function () {
+                var url = $(this).attr('href2');
+                alert(url);
+                $.ajax(url)
+                    .success(function (data) {
+                        //alert(data);
+                    })
+                .fail(function (data) {
+                    alert(data)
+                });
+            });
+        });
+    </script>
+}
