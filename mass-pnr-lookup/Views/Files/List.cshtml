@@ -60,12 +60,10 @@
                 @Html.DisplayFor(modelItem => item.FailedLines)
             </td>
             <td>
-                @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Completed)
-                {
-                    @Html.ActionLink("Download", "Result", new { id = item.BatchId })
-                }
                 @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Completed || item.Status == mass_pnr_lookup.Models.BatchStatus.Notified)
                 {
+                    @Html.ActionLink("Download", "Result", new { id = item.BatchId })
+                    <br />                
                     <a href="#" name="retryBatchLink" href2="@Url.Action("Retry",new { id = item.BatchId })">(Retry)</a>
                 }
             </td>
