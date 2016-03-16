@@ -62,7 +62,7 @@ namespace mass_pnr_lookup.Models
             foreach (var line in Lines.OrderBy(l => l.Row).ThenBy(l => l.BatchElementId))
             {
                 b.Append(line.SourceContents);
-                b.AppendFormat(";{0};{1}{2}", line.PNR, line.Error, Environment.NewLine);
+                b.AppendFormat(";\"{0}\";{1}{2}", line.PNR, line.Error, Environment.NewLine);
             }
             GeneratedContents = Commons.CsvEncoding.GetBytes(b.ToString());
         }
