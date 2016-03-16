@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using mass_pnr_lookup.Models;
 
 namespace mass_pnr_lookup.Queues
 {
@@ -12,7 +13,16 @@ namespace mass_pnr_lookup.Queues
             var ret = new List<BatchQueueItem>();
             foreach (var item in items)
             {
-                // TODO: Notify user here
+                using (var context = new BatchContext())
+                {
+                    var batch = context.Batches.Find(item.BatchId);
+
+                    // TODO: Notify user here
+                    //.....
+
+                    batch.Status = BatchStatus.Notified;
+                    context.SaveChanges();
+                }
                 ret.Add(item);
             }
             return ret.ToArray();
