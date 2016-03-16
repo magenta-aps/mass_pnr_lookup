@@ -43,7 +43,9 @@ namespace mass_pnr_lookup.Queues
                             var bestMatch = searchResult.LaesResultat.FirstOrDefault();
                             if (bestMatch != null)
                             {
-                                batchLine.PNR = (bestMatch.Item as FiltreretOejebliksbilledeType).AttributListe.GetPnr();
+                                var attr = (bestMatch.Item as FiltreretOejebliksbilledeType).AttributListe;
+                                batchLine.PNR = attr.GetPnr();
+                                batchLine.MatchedName = attr.Egenskab.FirstOrDefault()?.NavnStruktur?.PersonNameStructure?.ToString();
                             }
                             else
                             {

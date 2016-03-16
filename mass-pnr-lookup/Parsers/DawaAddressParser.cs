@@ -21,6 +21,8 @@ namespace mass_pnr_lookup.Parsers
 
                 if (adresses.Count > 0)
                 {
+                    adresses = new JArray(adresses.First);
+
                     String streetName = null, houseNumber = null, floor = null, door = null, districtSubdivision = null, postCode = null, postDistrict = null;
 
                     streetName = GetString(adresses, "adgangsadresse/vejstykke/navn");

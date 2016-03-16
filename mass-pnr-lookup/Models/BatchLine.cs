@@ -21,6 +21,7 @@ namespace mass_pnr_lookup.Models
         public string Name { get; set; }
         public string PNR { get; set; }
         public string Error { get; set; }
+        public string MatchedName { get; set; }
 
         public BatchLine()
         { }
