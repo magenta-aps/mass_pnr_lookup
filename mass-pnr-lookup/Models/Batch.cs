@@ -57,16 +57,15 @@ namespace mass_pnr_lookup.Models
             var b = new System.Text.StringBuilder((int)(Size * 1.2));
             var parser = new CsvParser.CsvEnumerator(SourceContents);
             b.Append(parser.FirstLine);
-            b.AppendLine(";PNR;FEJL");
+            b.AppendLine(";PNR;FEJL;EJER_NAVN_MATCH;EJER_ADR_MATCH");
 
             foreach (var line in Lines.OrderBy(l => l.Row).ThenBy(l => l.BatchElementId))
             {
                 b.Append(line.SourceContents);
-                b.AppendFormat(";\"{0}\";{1}{2}", line.PNR, line.Error, Environment.NewLine);
+                b.AppendFormat(";{0};{1};{2};{3}{4}", line.PNR, line.Error, line.MatchedName, line.MatchedAddress, Environment.NewLine);
             }
             GeneratedContents = Commons.CsvEncoding.GetBytes(b.ToString());
         }
-
 
         public void EnqueueOutputGeneration()
         {
