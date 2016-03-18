@@ -70,5 +70,23 @@ namespace mass_pnr_lookup.Models
                 return null;
             }
         }
+
+        public void FillFrom(AttributListeType attr)
+        {
+            PNR = attr.GetPnr();
+            MatchedName = attr.Egenskab.FirstOrDefault()?.NavnStruktur?.PersonNameStructure?.ToString();
+            MatchedAddress = ((attr.RegisterOplysning.FirstOrDefault()?.Item as CprBorgerType)?
+                .FolkeregisterAdresse?.Item as DanskAdresseType)?.AddressComplete?.AddressPostal?
+                .ToAddressString();
+            Error = null;
+        }
+
+        public void ClearResults()
+        {
+            PNR = null;
+            Error = null;
+            MatchedName = null;
+            MatchedAddress = null;
+        }
     }
 }

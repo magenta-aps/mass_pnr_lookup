@@ -44,11 +44,7 @@ namespace mass_pnr_lookup.Queues
                             if (bestMatch != null)
                             {
                                 var attr = (bestMatch.Item as FiltreretOejebliksbilledeType).AttributListe;
-                                batchLine.PNR = attr.GetPnr();
-                                batchLine.MatchedName = attr.Egenskab.FirstOrDefault()?.NavnStruktur?.PersonNameStructure?.ToString();
-                                batchLine.MatchedAddress = ((attr.RegisterOplysning.FirstOrDefault()?.Item as CprBorgerType)?
-                                    .FolkeregisterAdresse?.Item as DanskAdresseType)?.AddressComplete?.AddressPostal?
-                                    .ToAddressString();
+                                batchLine.FillFrom(attr);
                             }
                             else
                             {
