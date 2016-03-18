@@ -9,11 +9,20 @@ namespace mass_pnr_lookup.Controllers
 {
     public class FilesController : Controller
     {
-
-        // GET: Files
-        public ActionResult Index(bool allUsers = false)
+        public ActionResult IndexAll()
         {
-            return View(allUsers);
+            return Index(true);
+        }
+
+        public ActionResult Index()
+        {
+            return Index(false);
+        }
+
+        [NonAction]
+        public ActionResult Index(bool allUsers)
+        {
+            return View("Index", allUsers);
         }
 
         public ActionResult List(bool allUsers = false)
