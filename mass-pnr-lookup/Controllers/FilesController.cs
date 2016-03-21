@@ -11,42 +11,20 @@ namespace mass_pnr_lookup.Controllers
 {
     public class FilesController : Controller
     {
-        public ActionResult IndexAll()
-        {
-            return Index(true);
-        }
+        #region User actions
 
         public ActionResult Index()
         {
             return Index(false);
         }
 
-        [NonAction]
-        public ActionResult Index(bool allUsers)
-        {
-            return View("Index", allUsers);
-        }
-
         public ActionResult List(int pageNumber = 1, int pageSize = 5, bool allUsers = false)
         {
-            IQueryable<Batch> ret;
-
-            using (var context = new Models.BatchContext())
-            {
-                if (allUsers)
-                {
-                    ret = context.Batches
-                        .OrderByDescending(b => b.SubmittedTS);
-                }
-                else
-                {
-                    var user = GetUser(context, User.Identity.Name);
-
-                    ret = user.Batches
-                        .OrderByDescending(b => b.SubmittedTS).AsQueryable();
-                }
-                return View(new PagedList<Batch>(ret, pageNumber, pageSize));
-            }
+            return List(
+                context => GetUser(context, User.Identity.Name).Batches.AsQueryable(),
+                pageNumber,
+                pageSize
+                );
         }
 
         public ActionResult Retry(int id)
@@ -83,8 +61,39 @@ namespace mass_pnr_lookup.Controllers
             }
             return new HttpNotFoundResult();
         }
+        #endregion
+
+        #region Action helpers
+
+        [NonAction]
+        public ActionResult Index(bool allUsers)
+        {
+            return View("Index", allUsers);
+        }
+
+        [NonAction]
+        public ActionResult List(Func<BatchContext, IQueryable<Batch>> load, int pageNumber, int pageSize)
+        {
+            using (var context = new Models.BatchContext())
+            {
+                IQueryable<Batch> ret = load(context).OrderByDescending(b => b.SubmittedTS);
+                return View(new PagedList<Batch>(ret, pageNumber, pageSize));
+            }
+        }
+        #endregion
+
+        #region Admin actions
+        [Route("Admin")]
+        public ActionResult IndexAll()
+        {
+            return Index(true);
+        }
+
+        [Route("Admin/List")]
+        #endregion
 
         #region Utility methods
+        [NonAction]
         public void EnqueueFile(System.IO.Stream stream, string name, int length, string userName)
         {
             using (var context = new BatchContext())
@@ -110,6 +119,7 @@ namespace mass_pnr_lookup.Controllers
             }
         }
 
+        [NonAction]
         User GetUser(BatchContext context, string userName)
         {
             var user = context.Users.Where(u => u.Name.Equals(userName)).FirstOrDefault();
