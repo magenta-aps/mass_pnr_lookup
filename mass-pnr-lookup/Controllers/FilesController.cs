@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using mass_pnr_lookup.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace mass_pnr_lookup.Controllers
 {
@@ -25,25 +27,26 @@ namespace mass_pnr_lookup.Controllers
             return View("Index", allUsers);
         }
 
-        public ActionResult List(bool allUsers = false)
+        public ActionResult List(int pageNumber = 1, int pageSize = 5, bool allUsers = false)
         {
-            IEnumerable<Batch> ret;
+            IQueryable<Batch> ret;
+
             using (var context = new Models.BatchContext())
             {
                 if (allUsers)
                 {
                     ret = context.Batches
-                        .OrderByDescending(b => b.SubmittedTS).ToArray();
+                        .OrderByDescending(b => b.SubmittedTS);
                 }
                 else
                 {
                     var user = GetUser(context, User.Identity.Name);
 
                     ret = user.Batches
-                        .OrderByDescending(b => b.SubmittedTS).ToArray();
+                        .OrderByDescending(b => b.SubmittedTS).AsQueryable();
                 }
+                return View(new PagedList<Batch>(ret, pageNumber, pageSize));
             }
-            return View(ret);
         }
 
         public ActionResult Retry(int id)

@@ -1,18 +1,31 @@
-﻿@model IEnumerable<mass_pnr_lookup.Models.Batch>
+﻿@using PagedList
+
+@model PagedList<mass_pnr_lookup.Models.Batch>
+
+@PagedList.Mvc.HtmlHelper.PagedListPager(
+    Html,
+    Model,
+    pageNum => Url.Action("List", new { pageNumber = pageNum }),
+    PagedList.Mvc.PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+        new AjaxOptions()
+        {
+            UpdateTargetId = "fileList",
+            InsertionMode = InsertionMode.Replace
+        }))
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            Status
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SubmittedTS)
+            SubmittedTS
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CompletedTS)
+            CompletedTS
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FileName)
+            FileName
         </th>
         <th>
             Bytes
@@ -63,7 +76,7 @@
                 @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Completed || item.Status == mass_pnr_lookup.Models.BatchStatus.Notified)
                 {
                     @Html.ActionLink("Download", "Result", new { id = item.BatchId })
-                    <br />                
+                    <br />
                     <a href="#" name="retryBatchLink" href2="@Url.Action("Retry",new { id = item.BatchId })">(Retry)</a>
                 }
             </td>
@@ -78,7 +91,7 @@
             $('a[name="retryBatchLink"]').unbind('click');
 
             $('a[name="retryBatchLink"]').click(function () {
-                var url = $(this).attr('href2');                
+                var url = $(this).attr('href2');
                 $.ajax(url)
                     .success(function (data) {
                         //alert(data);
