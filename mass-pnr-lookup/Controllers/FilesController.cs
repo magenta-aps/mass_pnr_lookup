@@ -73,6 +73,18 @@ namespace mass_pnr_lookup.Controllers
             return Json("All files have been successfully stored.");
         }
 
+        public ActionResult Result(int id)
+        {
+            using (var context = new BatchContext())
+            {
+                var batch = context.Batches.Find(id);
+                if (batch.GeneratedContents != null)
+                    return new FileContentResult(batch.GeneratedContents, "application/txt") { FileDownloadName = string.Format("{0}-result.txt", batch.FileName) };
+            }
+            return new HttpNotFoundResult();
+        }
+
+        #region Utility methods
         public void EnqueueFile(System.IO.Stream stream, string name, int length, string userName)
         {
             using (var context = new BatchContext())
@@ -119,16 +131,6 @@ namespace mass_pnr_lookup.Controllers
             }
             return user;
         }
-
-        public ActionResult Result(int id)
-        {
-            using (var context = new BatchContext())
-            {
-                var batch = context.Batches.Find(id);
-                if (batch.GeneratedContents != null)
-                    return new FileContentResult(batch.GeneratedContents, "application/txt") { FileDownloadName = string.Format("{0}-result.txt", batch.FileName) };
-            }
-            return new HttpNotFoundResult();
-        }
+        #endregion
     }
 }
