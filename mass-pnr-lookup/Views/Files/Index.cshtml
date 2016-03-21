@@ -33,6 +33,11 @@
 
     <script type="text/javascript">
         $(function () {
+            var periodicRefreshFiles = function () {
+                refreshFiles();
+                setTimeout(periodicRefreshFiles, 5000);
+            };
+
             var refreshFiles = function () {
 
                 url = '@Url.Action("List", new { allUsers = Model, pageNumber="sdf" })';
@@ -43,10 +48,9 @@
                         .success(function (data) {
                             $('#fileList').html(data)
                         })
-                setTimeout(refreshFiles, 5000);
             };
 
-            setTimeout(refreshFiles, 5000);
+            setTimeout(periodicRefreshFiles, 5000);
 
             $('#dropZone').filedrop({
                 url: '@Url.Action("UploadFiles")',

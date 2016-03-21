@@ -94,7 +94,7 @@
                 var url = $(this).attr('href2');
                 $.ajax(url)
                     .success(function (data) {
-                        //alert(data);
+                        refreshFiles();
                     })
                 .fail(function (data) {
                     alert(data)
