@@ -12,7 +12,7 @@ namespace mass_pnr_lookup.Controllers
     {
         protected override IQueryable<Batch> LoadBatches(BatchContext context)
         {
-            return context.Batches;
+            return context.Batches.Include("User");
         }
     }
 }
