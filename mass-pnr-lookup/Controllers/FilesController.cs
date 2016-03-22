@@ -15,7 +15,7 @@ namespace mass_pnr_lookup.Controllers
 
         public ActionResult Index()
         {
-            return View("Index", false);
+            return View("Index");
         }
 
         public ActionResult List(int pageNumber = 1, int pageSize = 5)
