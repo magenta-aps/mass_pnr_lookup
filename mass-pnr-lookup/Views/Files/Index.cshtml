@@ -31,26 +31,11 @@
 @section scripts{
 
     <script type="text/javascript">
+        var listUrl = function () {
+            return '@Url.Action("List", new { pageNumber="sdf" })';
+        };
+
         $(function () {
-            var periodicRefreshFiles = function () {
-                refreshFiles();
-                setTimeout(periodicRefreshFiles, 5000);
-            };
-
-            var refreshFiles = function () {
-
-                url = '@Url.Action("List", new { pageNumber="sdf" })';
-                var activePageAnchor = $('#fileList [class="pagination"] [class="active"] a');
-                url = url.replace('&amp;', '&').replace('sdf', activePageAnchor[0].innerText);
-
-                $.ajax(url)
-                        .success(function (data) {
-                            $('#fileList').html(data)
-                        })
-            };
-
-            setTimeout(periodicRefreshFiles, 5000);
-
             $('#dropZone').filedrop({
                 url: '@Url.Action("UploadFiles")',
                 paramname: 'files',
