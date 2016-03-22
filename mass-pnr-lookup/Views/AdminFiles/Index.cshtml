@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Files</h2>
+<h2>All users' files</h2>
 
 <span id="fileList">
     @Html.Action("List")
@@ -12,48 +12,8 @@
 @section scripts{
 
     <script type="text/javascript">
-        $(function () {
-            var periodicRefreshFiles = function () {
-                refreshFiles();
-                setTimeout(periodicRefreshFiles, 5000);
-            };
-
-            var refreshFiles = function () {
-
-                url = '@Url.Action("List", new { pageNumber="sdf" })';
-                var activePageAnchor = $('#fileList [class="pagination"] [class="active"] a');
-                url = url.replace('&amp;', '&').replace('sdf', activePageAnchor[0].innerText);
-
-                $.ajax(url)
-                        .success(function (data) {
-                            $('#fileList').html(data)
-                        })
-            };
-
-            setTimeout(periodicRefreshFiles, 5000);
-
-            $('#dropZone').filedrop({
-                url: '@Url.Action("UploadFiles")',
-                paramname: 'files',
-                maxFiles: 5,
-                maxfilesize: 10, // 10 MB
-                dragOver: function () {
-                    $('#dropZone').css('background', 'blue');
-                },
-                dragLeave: function () {
-                    $('#dropZone').css('background', 'gray');
-                },
-                drop: function () {
-                    $('#dropZone').css('background', 'gray');
-                },
-                afterAll: function () {
-                    $('#dropZone').html('The file(s) have been uploaded successfully!');
-                },
-                uploadFinished: function (i, file, response, time) {
-                    $('#uploadResult').append('<li>' + file.name + '</li>');
-                    refreshFiles();
-                }
-            });
-        });
+        var listUrl = function () {
+            return '@Url.Action("List", new { pageNumber="sdf" })';
+        };
     </script>
 }

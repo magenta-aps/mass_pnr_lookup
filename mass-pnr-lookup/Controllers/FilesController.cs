@@ -23,7 +23,7 @@ namespace mass_pnr_lookup.Controllers
             using (var context = new Models.BatchContext())
             {
                 IQueryable<Batch> ret = LoadBatches(context).OrderByDescending(b => b.SubmittedTS);
-                return PartialView("List", new PagedList<Batch>(ret, pageNumber, pageSize));
+                return PartialView("../Files/List", new PagedList<Batch>(ret, pageNumber, pageSize));
             }
         }
 
