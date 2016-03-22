@@ -27,6 +27,20 @@ namespace mass_pnr_lookup.Controllers
             }
         }
 
+        public ActionResult ListLines(int id, int pageNumber = 1, int pageSize = 10)
+        {
+            using (var context = new Models.BatchContext())
+            {
+                var batch = LoadBatches(context).Where(b => b.BatchId == id).SingleOrDefault();
+                if (batch != null)
+                {
+                    var lines = batch.Lines.OrderBy(l => l.Row);
+                    return PartialView("../Files/ListLines", new PagedList<BatchLine>(lines, pageNumber, pageSize));
+                }
+                return new HttpNotFoundResult();
+            }
+        }
+
         public ActionResult Retry(int id)
         {
             using (var context = new BatchContext())

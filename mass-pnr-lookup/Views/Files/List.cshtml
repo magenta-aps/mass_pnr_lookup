@@ -86,7 +86,16 @@
                     <a href="#" name="retryBatchLink" href2="@Url.Action("Retry",new { id = item.BatchId })">(Retry)</a>
                 }
             </td>
+            <td>
+                <button type="button" class="btn" data-toggle="collapse" data-target="#lines_@(item.BatchId)">
+                    <span class="glyphicon glyphicon-collapse-down"></span> Expand
+                </button>
+                <div id="lines_@(item.BatchId)" class="collapse">
+                    @Html.Action("ListLines", new { id = item.BatchId })
+                </div>
+            </td>
         </tr>
+
     }
 </table>
 
