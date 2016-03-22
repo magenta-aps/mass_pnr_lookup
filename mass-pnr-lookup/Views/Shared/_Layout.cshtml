@@ -17,9 +17,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Search", "Index", "Files", new { }, new { @class = "navbar-brand" })
-                @if (Commons.CanAccessUrl(Url.Action("IndexAll", "Files")))
+                @if (Commons.CanAccessPath(Url.Action("Index", "AdminFiles")))
                 {
-                    @Html.ActionLink("Admin", "IndexAll", "Files", new { }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Admin", "Index", "AdminFiles", new { }, new { @class = "navbar-brand" })
                 }
                 @Html.ActionLink("About", "About", "Home", new { }, new { @class = "navbar-brand" })
             </div>

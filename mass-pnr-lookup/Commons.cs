@@ -10,16 +10,9 @@ namespace mass_pnr_lookup
     {
         public static readonly Encoding CsvEncoding = Encoding.GetEncoding(1252);
 
-        public static bool CanAccessUrl(string url)
+        public static bool CanAccessPath(string path)
         {
-            return false;
-
-            SiteMapProvider provider = SiteMap.Provider;
-            HttpContext current = HttpContext.Current;
-            string rawUrl = VirtualPathUtility.ToAbsolute(url);
-            SiteMapNode node = provider.FindSiteMapNode(rawUrl);
-            return (node != null &&
-             provider.IsAccessibleToUser(HttpContext.Current, node));
+            return System.Web.Security.UrlAuthorizationModule.CheckUrlAccessForPrincipal(path, HttpContext.Current.User, "GET");
         }
     }
 }
