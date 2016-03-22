@@ -157,6 +157,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Resources\InvalidAddress.csv" />
     <None Include="Resources\Test_Opslag_output.csv" />
     <None Include="Resources\AddressSample.json" />
     <None Include="Resources\Test_Opslag.csv" />
