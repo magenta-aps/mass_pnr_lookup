@@ -15,23 +15,24 @@ namespace mass_pnr_lookup.Controllers
 
         public ActionResult Index()
         {
-            return Index(false);
+            return View("Index", false);
         }
 
-        public ActionResult List(int pageNumber = 1, int pageSize = 5, bool allUsers = false)
+        public ActionResult List(int pageNumber = 1, int pageSize = 5)
         {
-            return List(
-                context => GetUser(context, User.Identity.Name).Batches.AsQueryable(),
-                pageNumber,
-                pageSize
-                );
+            using (var context = new Models.BatchContext())
+            {
+                IQueryable<Batch> ret = LoadBatches(context).OrderByDescending(b => b.SubmittedTS);
+                return View("List", new PagedList<Batch>(ret, pageNumber, pageSize));
+            }
         }
 
         public ActionResult Retry(int id)
         {
             using (var context = new BatchContext())
             {
-                var batch = context.Batches.Find(id);
+                var batch = LoadBatches(context).Where(b => b.BatchId == id).SingleOrDefault();
+
                 if (batch != null && (batch.Status == BatchStatus.Completed || batch.Status == BatchStatus.Notified))
                 {
                     batch.EnqueueAllAfterExtraction(context);
@@ -55,41 +56,13 @@ namespace mass_pnr_lookup.Controllers
         {
             using (var context = new BatchContext())
             {
-                var batch = context.Batches.Find(id);
-                if (batch.GeneratedContents != null)
+                var batch = LoadBatches(context).Where(b => b.BatchId == id).SingleOrDefault();
+
+                if (batch != null && batch.GeneratedContents != null)
                     return new FileContentResult(batch.GeneratedContents, "application/txt") { FileDownloadName = string.Format("{0}-result.txt", batch.FileName) };
             }
             return new HttpNotFoundResult();
         }
-        #endregion
-
-        #region Action helpers
-
-        [NonAction]
-        public ActionResult Index(bool allUsers)
-        {
-            return View("Index", allUsers);
-        }
-
-        [NonAction]
-        public ActionResult List(Func<BatchContext, IQueryable<Batch>> load, int pageNumber, int pageSize)
-        {
-            using (var context = new Models.BatchContext())
-            {
-                IQueryable<Batch> ret = load(context).OrderByDescending(b => b.SubmittedTS);
-                return View(new PagedList<Batch>(ret, pageNumber, pageSize));
-            }
-        }
-        #endregion
-
-        #region Admin actions
-        [Route("Admin")]
-        public ActionResult IndexAll()
-        {
-            return Index(true);
-        }
-
-        [Route("Admin/List")]
         #endregion
 
         #region Utility methods
@@ -140,6 +113,13 @@ namespace mass_pnr_lookup.Controllers
                 }
             }
             return user;
+        }
+        #endregion
+
+        #region overridable methods
+        protected virtual IQueryable<Batch> LoadBatches(BatchContext context)
+        {
+            return GetUser(context, User.Identity.Name).Batches.AsQueryable();
         }
         #endregion
     }
