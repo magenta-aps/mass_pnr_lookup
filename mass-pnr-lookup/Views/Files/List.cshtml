@@ -13,91 +13,84 @@
             InsertionMode = InsertionMode.Replace
         }))
 
-<table class="table">
-    <tr>
-        <th>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
             User
-        </th>
-        <th>
+        </div>
+        <div class="col-md-1">
             Status
-        </th>
-        <th>
+        </div>
+        <div class="col-md-1">
             SubmittedTS
-        </th>
-        <th>
+        </div>
+        <div class="col-md-1">
             CompletedTS
-        </th>
-        <th>
+        </div>
+        <div class="col-md-2">
             FileName
-        </th>
-        <th>
+        </div>
+        <div class="col-md-1">
             Bytes
-        </th>
-        <th>
-            Lines
-        </th>
-        <th>
+        </div>
+        <div class="col-md-1">
             Succeeded
-        </th>
-        <th>
+        </div>
+        <div class="col-md-1">
             Failed
-        </th>
-        <th>
+        </div>
+        <div class="col-md-2">
             Result
-        </th>
-        <th></th>
-    </tr>
+        </div>
+    </div>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
+        <div class="row">
+            <div class="col-md-2">
                 @Html.DisplayFor(modelItem => item.User.Name)
-            </td>
-            <td>
+            </div>
+            <div class="col-md-1">
                 @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
+            </div>
+            <div class="col-md-1">
                 @Html.DisplayFor(modelItem => item.SubmittedTS)
-            </td>
-            <td>
+            </div>
+            <div class="col-md-1">
                 @Html.DisplayFor(modelItem => item.CompletedTS)
-            </td>
-            <td>
+            </div>
+            <div class="col-md-2">
                 @Html.DisplayFor(modelItem => item.FileName)
-            </td>
-            <td>
+            </div>
+            <div class="col-md-1">
                 @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumLines)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SucceededLines)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FailedLines)
-            </td>
-            <td>
+            </div>
+            <div class="col-md-1">
+                @Html.DisplayFor(modelItem => item.SucceededLines)/@Html.DisplayFor(modelItem => item.NumLines)
+            </div>
+            <div class="col-md-1">
+                @Html.DisplayFor(modelItem => item.FailedLines)/@Html.DisplayFor(modelItem => item.NumLines)
+            </div>
+            <div class="col-md-1">
                 @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Completed || item.Status == mass_pnr_lookup.Models.BatchStatus.Notified)
                 {
                     @Html.ActionLink("Download", "Result", new { id = item.BatchId })
                     <br />
                     <a href="#" name="retryBatchLink" href2="@Url.Action("Retry",new { id = item.BatchId })">(Retry)</a>
                 }
-            </td>
-            <td>
+            </div>
+            <div class="col-md-1">
                 <button type="button" class="btn" data-toggle="collapse" data-target="#lines_@(item.BatchId)">
                     <span class="glyphicon glyphicon-collapse-down"></span> Expand
-                </button>
-                <div id="lines_@(item.BatchId)" class="collapse">
-                    @Html.Action("ListLines", new { id = item.BatchId })
-                </div>
-            </td>
-        </tr>
+                </button>                
+            </div>
+        </div>
+        <div id="lines_@(item.BatchId)" class="collapse">
+            @Html.Action("ListLines", new { id = item.BatchId })
+        </div>
 
     }
-</table>
+</div>
 
 @section scripts{
     <script type="text/javascript">
