@@ -86,3 +86,35 @@
         </tr>
     }
 </table>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('a[name="retryBatchLink"]').unbind('click');
+
+        $('a[name="retryBatchLink"]').click(function () {
+            var url = $(this).attr('href2');
+            $.ajax(url)
+                .success(function (data) {
+                    refreshFiles();
+                })
+            .fail(function (data) {
+                alert(data)
+            });
+        });
+
+        $('a[name="linesLink"]').unbind('click');
+
+        $('a[name="linesLink"]').click(function () {
+            $('#batchLines .modal-body').html('');
+            var url = $(this).attr('href2');
+            $.ajax(url)
+                .success(function (data) {
+                    $('#batchLines .modal-body').html(data);
+                    $('#batchLines').modal();
+                })
+                .fail(function (data) { });
+        });
+
+    });
+</script>
