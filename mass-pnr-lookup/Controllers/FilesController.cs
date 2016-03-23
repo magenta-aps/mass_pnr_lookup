@@ -34,9 +34,12 @@ namespace mass_pnr_lookup.Controllers
                 var batch = LoadBatch(id, context);
                 if (batch != null)
                 {
-                    var lines = batch.Lines.OrderBy(l => l.Row);
+                    var lines = context.BatchLines.Where(l => l.Batch_BatchId == id).OrderBy(l => l.Row)
+                        .Skip((pageNumber - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToArray();
                     ViewBag.BatchId = id;
-                    return PartialView("../Files/ListLines", new PagedList<BatchLine>(lines, pageNumber, pageSize));
+                    return PartialView("../Files/ListLines", new StaticPagedList<BatchLine>(lines, pageNumber, pageSize, batch.NumLines));
                 }
                 return new HttpNotFoundResult();
             }

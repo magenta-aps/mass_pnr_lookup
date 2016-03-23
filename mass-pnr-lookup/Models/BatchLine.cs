@@ -14,6 +14,10 @@ namespace mass_pnr_lookup.Models
         [Key]
         public int BatchElementId { get; set; }
 
+        [ForeignKey("Batch")]
+        [Index]
+        public int Batch_BatchId { get; set; }
+        
         public virtual Batch Batch { get; set; }
         public string SourceContents { get; set; }
         public int Row { get; set; }
