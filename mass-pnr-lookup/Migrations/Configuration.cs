@@ -14,6 +14,13 @@ namespace mass_pnr_lookup.Migrations
 
         protected override void Seed(mass_pnr_lookup.Models.BatchContext context)
         {
+            foreach (var batch in context.Batches.Where(b => b.SearchSemaphoreId == Guid.Empty).ToArray())
+            {
+                batch.SearchSemaphoreId = CprBroker.Engine.Queues.Semaphore.Create().Impl.SemaphoreId;
+                batch.SearchSemaphore().Signal();
+                context.SaveChanges();
+            }
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

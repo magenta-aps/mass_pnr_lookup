@@ -19,7 +19,7 @@ namespace mass_pnr_lookup.Models
         }
 
         public BatchContext()
-            :base(Properties.Settings.Default.MassPnrLookupConnectionString)
+            : base(Properties.Settings.Default.MassPnrLookupConnectionString)
         { }
     }
 }

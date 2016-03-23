@@ -32,6 +32,7 @@ namespace mass_pnr_lookup.Models
 
         public Guid GenerationSemaphoreId { get; set; }
         public Guid NotificationSemaphoreId { get; set; }
+        public Guid SearchSemaphoreId { get; set; }
 
         public User User { get; set; }
 
@@ -50,6 +51,11 @@ namespace mass_pnr_lookup.Models
         public Semaphore NotificationSemaphore()
         {
             return Semaphore.GetById(NotificationSemaphoreId);
+        }
+
+        public Semaphore SearchSemaphore()
+        {
+            return Semaphore.GetById(SearchSemaphoreId);
         }
 
         public void GenerateOutput()
@@ -94,9 +100,12 @@ namespace mass_pnr_lookup.Models
         public void EnqueueSearch()
         {
             // Search queue
+            var searchSemaphore = Semaphore.Create();
+            this.SearchSemaphoreId = searchSemaphore.Impl.SemaphoreId;
+
             var searchQueue = Queue.GetQueues<SearchQueue>().FirstOrDefault();
             foreach (var line in this.Lines)
-                searchQueue.Enqueue(line.ToQueueItem());
+                searchQueue.Enqueue(line.ToQueueItem(), searchSemaphore);
         }
 
         public void ResetCounters()
@@ -127,6 +136,7 @@ namespace mass_pnr_lookup.Models
             context.SaveChanges();
 
             this.EnqueueSearch();
+            context.SaveChanges();
         }
 
     }

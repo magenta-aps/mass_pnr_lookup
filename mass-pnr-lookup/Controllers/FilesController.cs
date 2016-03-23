@@ -31,7 +31,7 @@ namespace mass_pnr_lookup.Controllers
         {
             using (var context = new Models.BatchContext())
             {
-                var batch = LoadBatches(context).Where(b => b.BatchId == id).SingleOrDefault();
+                var batch = LoadBatch(id, context);
                 if (batch != null)
                 {
                     var lines = batch.Lines.OrderBy(l => l.Row);
@@ -42,11 +42,43 @@ namespace mass_pnr_lookup.Controllers
             }
         }
 
+        public ActionResult Pause(int id)
+        {
+            using (var context = new BatchContext())
+            {
+                var batch = LoadBatch(id, context);
+                if (batch != null && batch.Status == BatchStatus.Processing)
+                {
+                    batch.Status = BatchStatus.Paused;
+                    context.SaveChanges();
+                    batch.SearchSemaphore().Wait();
+                    return Json("Success.", JsonRequestBehavior.AllowGet);
+                }
+            }
+            return new HttpNotFoundResult();
+        }
+
+        public ActionResult Resume(int id)
+        {
+            using (var context = new BatchContext())
+            {
+                var batch = LoadBatch(id, context);
+                if (batch != null && batch.Status == BatchStatus.Paused)
+                {
+                    batch.Status = BatchStatus.Processing;
+                    context.SaveChanges();
+                    batch.SearchSemaphore().SignalAll();
+                    return Json("Success.", JsonRequestBehavior.AllowGet);
+                }
+            }
+            return new HttpNotFoundResult();
+        }
+
         public ActionResult Retry(int id)
         {
             using (var context = new BatchContext())
             {
-                var batch = LoadBatches(context).Where(b => b.BatchId == id).SingleOrDefault();
+                var batch = LoadBatch(id, context);
 
                 if (batch != null && (batch.Status == BatchStatus.Completed || batch.Status == BatchStatus.Notified))
                 {
@@ -71,7 +103,7 @@ namespace mass_pnr_lookup.Controllers
         {
             using (var context = new BatchContext())
             {
-                var batch = LoadBatches(context).Where(b => b.BatchId == id).SingleOrDefault();
+                var batch = LoadBatch(id, context);
 
                 if (batch != null && batch.GeneratedContents != null)
                     return new FileContentResult(batch.GeneratedContents, "application/txt") { FileDownloadName = string.Format("{0}-result.txt", batch.FileName) };
@@ -135,6 +167,11 @@ namespace mass_pnr_lookup.Controllers
         protected virtual IQueryable<Batch> LoadBatches(BatchContext context)
         {
             return GetUser(context, User.Identity.Name).Batches.AsQueryable();
+        }
+
+        protected Batch LoadBatch(int id, BatchContext context)
+        {
+            return LoadBatches(context).Where(b => b.BatchId == id).SingleOrDefault();
         }
         #endregion
     }

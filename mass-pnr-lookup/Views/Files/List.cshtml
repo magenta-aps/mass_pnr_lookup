@@ -18,7 +18,7 @@
         <th>
             User
         </th>
-        <th>
+        <th colspan="2">
             Status
         </th>
         <th>
@@ -50,6 +50,20 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.User.Name)
+            </td>
+            <td>
+                @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Processing)
+                {
+                    <button type="button" class="btn" aria-label="Left Align" name="pause" id="@item.BatchId">
+                        <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                    </button>
+                }
+                @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Paused)
+                {
+                    <button type="button" class="btn" aria-label="Left Align" name="resume" id="@item.BatchId">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
@@ -112,6 +126,32 @@
                 .success(function (data) {
                     $('#batchLines .modal-body').html(data);
                     $('#batchLines').modal();
+                })
+                .fail(function (data) {
+                    alert(data);
+                });
+        });
+
+        $('[name="resume"]').unbind('click');
+        $('[name="resume"]').click(function () {
+            var url = '@Url.Action("Resume", new { id="dummy_id"})'.replace('dummy_id', $(this).attr('id'));
+            $.ajax(url)
+                .success(function () {
+                    //alert('ok');
+                    refreshFiles();
+                })
+                .fail(function (data) {
+                    alert(data);
+                });
+        });
+
+        $('[name="pause"]').unbind('click');
+        $('[name="pause"]').click(function () {
+            var url = '@Url.Action("Pause", new { id="dummy_id"})'.replace('dummy_id', $(this).attr('id'));
+            $.ajax(url)
+                .success(function () {
+                    //alert('ok');
+                    refreshFiles();
                 })
                 .fail(function (data) {
                     alert(data);

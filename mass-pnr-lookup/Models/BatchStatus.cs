@@ -13,6 +13,7 @@ namespace mass_pnr_lookup.Models
         Processing,
         Completed,
         Notified,
-        Error
+        Error,
+        Paused
     }
 }
