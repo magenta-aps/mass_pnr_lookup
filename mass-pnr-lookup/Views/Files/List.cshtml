@@ -80,34 +80,8 @@
                 }
             </div>
             <div class="col-md-1">
-                <button type="button" class="btn" data-toggle="collapse" data-target="#lines_@(item.BatchId)">
-                    <span class="glyphicon glyphicon-collapse-down"></span> Expand
-                </button>                
+                <a href="#" name="linesLink" href2="@Url.Action("ListLines", new {id= item.BatchId })">Lines</a>
             </div>
         </div>
-        <div id="lines_@(item.BatchId)" class="collapse">
-            @Html.Action("ListLines", new { id = item.BatchId })
-        </div>
-
     }
 </div>
-
-@section scripts{
-    <script type="text/javascript">
-        $(function () {
-
-            $('a[name="retryBatchLink"]').unbind('click');
-
-            $('a[name="retryBatchLink"]').click(function () {
-                var url = $(this).attr('href2');
-                $.ajax(url)
-                    .success(function (data) {
-                        refreshFiles();
-                    })
-                .fail(function (data) {
-                    alert(data)
-                });
-            });
-        });
-    </script>
-}

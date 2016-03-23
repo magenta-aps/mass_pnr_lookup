@@ -28,6 +28,24 @@
     @Html.Action("List")
 </span>
 
+<!-- Modal -->
+<div class="modal" id="batchLines" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body" >
+                <p>This is a large modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts{
 
     <script type="text/javascript">
@@ -58,6 +76,37 @@
                     refreshFiles();
                 }
             });
+        });
+
+        // From List.cshtml
+        $(function () {
+
+            $('a[name="retryBatchLink"]').unbind('click');
+
+            $('a[name="retryBatchLink"]').click(function () {
+                var url = $(this).attr('href2');
+                $.ajax(url)
+                    .success(function (data) {
+                        refreshFiles();
+                    })
+                .fail(function (data) {
+                    alert(data)
+                });
+            });
+
+            $('a[name="linesLink"]').unbind('click');
+
+            $('a[name="linesLink"]').click(function () {
+                $('#batchLines .modal-body').html('');
+                var url = $(this).attr('href2');
+                $.ajax(url)
+                    .success(function (data) {
+                        $('#batchLines .modal-body').html(data);
+                        $('#batchLines').modal();
+                    })
+                    .fail(function (data) { });
+            });
+
         });
     </script>
 }
