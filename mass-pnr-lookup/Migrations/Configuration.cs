@@ -18,7 +18,7 @@ namespace mass_pnr_lookup.Migrations
             foreach (var batch in context.Batches.Where(b => b.SearchSemaphoreId == Guid.Empty).ToArray())
             {
                 batch.SearchSemaphoreId = CprBroker.Engine.Queues.Semaphore.Create().Impl.SemaphoreId;
-                batch.SearchSemaphore().Signal();
+                batch.SearchSemaphore().SignalAll();
                 context.SaveChanges();
             }
 

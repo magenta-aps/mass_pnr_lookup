@@ -101,6 +101,7 @@ namespace mass_pnr_lookup.Models
         {
             // Search queue
             var searchSemaphore = Semaphore.Create();
+            searchSemaphore.SignalAll();
             this.SearchSemaphoreId = searchSemaphore.Impl.SemaphoreId;
 
             var searchQueue = Queue.GetQueues<SearchQueue>().FirstOrDefault();
