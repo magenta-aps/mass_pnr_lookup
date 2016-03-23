@@ -3,53 +3,55 @@
 @model PagedList<mass_pnr_lookup.Models.BatchLine>
 
 
-<div class="row">
-    <div class="col-md-1">
-        Row
-    </div>
-    <div class="col-md-2">
-        Address
-    </div>
-    <div class="col-md-2">
-        Name
-    </div>
-    <div class="col-md-1">
-        PNR
-    </div>
-    <div class="col-md-2">
-        Error
-    </div>
-    <div class="col-md-2">
-        Matched Name
-    </div>
-    <div class="col-md-2">
-        Matched Address
-    </div>
-</div>
+<table class="table">
+    <tr>
+        <th>
+            Row
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            PNR
+        </th>
+        <th>
+            Error
+        </th>
+        <th>
+            Matched Name
+        </th>
+        <th>
+            Matched Address
+        </th>
+    </tr>
 
-@foreach (var item in Model)
-{
-    <div class="row">
-        <div class="col-md-1">
-            @Html.DisplayFor(modelItem => item.Row)
-        </div>
-        <div class="col-md-2">
-            @Html.DisplayFor(modelItem => item.Address)
-        </div>
-        <div class="col-md-2">
-            @Html.DisplayFor(modelItem => item.Name)
-        </div>
-        <div class="col-md-1">
-            @Html.DisplayFor(modelItem => item.PNR)
-        </div>
-        <div class="col-md-2">
-            @Html.DisplayFor(modelItem => item.Error)
-        </div>
-        <div class="col-md-2">
-            @Html.DisplayFor(modelItem => item.MatchedName)
-        </div>
-        <div class="col-md-2">
-            @Html.DisplayFor(modelItem => item.MatchedAddress)
-        </div>
-    </div>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Row)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PNR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Error)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatchedName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatchedAddress)
+            </td>
+        </tr>
+    }
+</table>

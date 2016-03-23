@@ -28,16 +28,20 @@
     @Html.Action("List")
 </span>
 
+<style type="text/css">
+    @@media screen and (min-width: 768px) {
+        	#batchLines .modal-dialog  {width:60%;}
+    }
+</style>
 <!-- Modal -->
 <div class="modal" id="batchLines" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Details</h4>
             </div>
-            <div class="modal-body" >
-                <p>This is a large modal.</p>
+            <div class="modal-body">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
