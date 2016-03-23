@@ -35,6 +35,7 @@ namespace mass_pnr_lookup.Controllers
                 if (batch != null)
                 {
                     var lines = batch.Lines.OrderBy(l => l.Row);
+                    ViewBag.BatchId = id;
                     return PartialView("../Files/ListLines", new PagedList<BatchLine>(lines, pageNumber, pageSize));
                 }
                 return new HttpNotFoundResult();

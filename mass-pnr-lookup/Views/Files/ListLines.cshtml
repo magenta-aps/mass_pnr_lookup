@@ -1,57 +1,70 @@
 ﻿@using PagedList
+@using PagedList.Mvc
 
 @model PagedList<mass_pnr_lookup.Models.BatchLine>
+<span id="lineListSpan">
 
+    @Html.PagedListPager(
+    Model,
+    (page) => Url.Action("ListLines", new { id = ViewBag.BatchId, pageNumber = page }),
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+        new AjaxOptions()
+        {
+            UpdateTargetId = "lineListSpan",
+            InsertionMode = InsertionMode.Replace
+        })
+    )
 
-<table class="table">
-    <tr>
-        <th>
-            Row
-        </th>
-        <th>
-            Address
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            PNR
-        </th>
-        <th>
-            Error
-        </th>
-        <th>
-            Matched Name
-        </th>
-        <th>
-            Matched Address
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Row)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PNR)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Error)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MatchedName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MatchedAddress)
-            </td>
+            <th>
+                Row
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                PNR
+            </th>
+            <th>
+                Error
+            </th>
+            <th>
+                Matched Name
+            </th>
+            <th>
+                Matched Address
+            </th>
         </tr>
-    }
-</table>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Row)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PNR)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Error)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MatchedName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MatchedAddress)
+                </td>
+            </tr>
+        }
+    </table>
+</span>
