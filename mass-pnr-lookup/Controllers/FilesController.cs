@@ -18,7 +18,7 @@ namespace mass_pnr_lookup.Controllers
             return View("Index");
         }
 
-        public ActionResult List(int pageNumber = 1, int pageSize = 5)
+        public ActionResult List(int pageNumber = 1, int pageSize = 10)
         {
             using (var context = new Models.BatchContext())
             {
