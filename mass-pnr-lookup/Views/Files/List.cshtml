@@ -113,7 +113,9 @@
                     $('#batchLines .modal-body').html(data);
                     $('#batchLines').modal();
                 })
-                .fail(function (data) { });
+                .fail(function (data) {
+                    alert(data);
+                });
         });
 
     });
