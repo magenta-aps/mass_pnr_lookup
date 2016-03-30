@@ -45,12 +45,12 @@ namespace mass_pnr_lookup.Queues
                             {
                                 var attr = (bestMatch.Item as FiltreretOejebliksbilledeType).AttributListe;
                                 batchLine.FillFrom(attr);
+                                itemSucceeded = true;
                             }
                             else
                             {
                                 batchLine.Error = "Person not found";
                             }
-                            itemSucceeded = true;
                         }
                         else
                         {
