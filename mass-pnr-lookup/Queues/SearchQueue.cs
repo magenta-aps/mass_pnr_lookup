@@ -62,13 +62,18 @@ namespace mass_pnr_lookup.Queues
                         batchLine.Error = "Invalid address";
                     }
 
-                    if (itemSucceeded)
-                        batchLine.Batch.SucceededLines++;
-                    else
-                        batchLine.Batch.FailedLines++;
+                    lock ("BatchCounts")
+                    {
+                        context.Entry<Batch>(batchLine.Batch).Reload(); // Reload to avoid overwriting the counts
 
-                    // Save the result at this point
-                    context.SaveChanges();
+                        if (itemSucceeded)
+                            batchLine.Batch.SucceededLines++;
+                        else
+                            batchLine.Batch.FailedLines++;
+
+                        // Save the result at this point
+                        context.SaveChanges();
+                    }
 
 
                     // Queue management
