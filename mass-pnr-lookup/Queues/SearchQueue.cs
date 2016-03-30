@@ -46,7 +46,6 @@ namespace mass_pnr_lookup.Queues
                                 var attr = (bestMatch.Item as FiltreretOejebliksbilledeType).AttributListe;
                                 batchLine.FillFrom(attr);
                                 itemSucceeded = true;
-                                CprBroker.Engine.Local.Admin.LogSuccess(CprBroker.Utilities.Strings.SerializeObject(attr));
                             }
                             else
                             {
