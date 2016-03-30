@@ -8,8 +8,6 @@ namespace mass_pnr_lookup.Models
     public enum BatchStatus
     {
         Created,
-        Uploaded,
-        Extracted,
         Processing,
         Completed,
         Notified,
