@@ -9,5 +9,8 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=Localhost\SQLEXPRESS;Initial Catalog=mass_pnr_lookup;User ID=cpr;Password=cpr</Value>
     </Setting>
+    <Setting Name="NumberOfSearchQueues" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

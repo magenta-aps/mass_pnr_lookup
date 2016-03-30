@@ -33,5 +33,14 @@ namespace mass_pnr_lookup.Properties {
                 return ((string)(this["MassPnrLookupConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int NumberOfSearchQueues {
+            get {
+                return ((int)(this["NumberOfSearchQueues"]));
+            }
+        }
     }
 }

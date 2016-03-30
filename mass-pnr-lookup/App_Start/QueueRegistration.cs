@@ -18,10 +18,11 @@ namespace mass_pnr_lookup
                 extrationQueue = Queue.AddQueue<ExtractionQueue>(3000, new Dictionary<string, string>(), 1, 100);
             }
 
-            var searchQueue = Queue.GetQueues<SearchQueue>().SingleOrDefault();
-            if (searchQueue == null)
+            var searchQueues = Queue.GetQueues<SearchQueue>().ToList();
+            while (searchQueues.Count < Properties.Settings.Default.NumberOfSearchQueues)
             {
-                searchQueue = Queue.AddQueue<SearchQueue>(3000, new Dictionary<string, string>(), 25, 1);
+                var searchQueue = Queue.AddQueue<SearchQueue>(3000, new Dictionary<string, string>(), 25, 1);
+                searchQueues.Add(searchQueue);
             }
 
             var outputGenerationQueue = Queue.GetQueues<OutputGenerationQueue>().SingleOrDefault();

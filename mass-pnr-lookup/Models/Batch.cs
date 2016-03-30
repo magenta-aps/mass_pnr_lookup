@@ -104,9 +104,18 @@ namespace mass_pnr_lookup.Models
             searchSemaphore.SignalAll();
             this.SearchSemaphoreId = searchSemaphore.Impl.SemaphoreId;
 
-            var searchQueue = Queue.GetQueues<SearchQueue>().FirstOrDefault();
+            var searchQueues = Queue.GetQueues<SearchQueue>();
+            if (searchQueues.Length < 1)
+                throw new Exception("Search queues not found");
+
+            var random = new Random();
+            var index = random.Next(0, searchQueues.Length);
+
             foreach (var line in this.Lines)
-                searchQueue.Enqueue(line.ToQueueItem(), searchSemaphore);
+            {
+                searchQueues[index].Enqueue(line.ToQueueItem(), searchSemaphore);
+                index = (index + 1) % searchQueues.Length;
+            }
         }
 
         public void ResetCounters()
