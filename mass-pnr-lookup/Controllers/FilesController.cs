@@ -89,7 +89,7 @@ namespace mass_pnr_lookup.Controllers
                     batch.ResetCounters();
                     if (batch.Lines != null)
                     {
-                        batch.Lines.Clear();
+                        context.BatchLines.RemoveRange(batch.Lines);
                     }
                     context.SaveChanges();
 
