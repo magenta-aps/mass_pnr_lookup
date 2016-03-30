@@ -85,7 +85,12 @@ namespace mass_pnr_lookup.Controllers
 
                 if (batch != null && (batch.Status == BatchStatus.Completed || batch.Status == BatchStatus.Notified))
                 {
-                    batch.EnqueueAllAfterExtraction(context);
+                    batch.Status = BatchStatus.Created;
+                    context.SaveChanges();
+
+                    var extractionQueue = CprBroker.Engine.Queues.Queue.GetQueues<Queues.ExtractionQueue>().Single();
+                    extractionQueue.Enqueue(new Queues.BatchQueueItem() { BatchId = batch.BatchId });
+
                     return Json("Success.", JsonRequestBehavior.AllowGet);
                 }
             }
