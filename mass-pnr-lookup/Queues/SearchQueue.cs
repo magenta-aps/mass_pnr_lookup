@@ -73,20 +73,19 @@ namespace mass_pnr_lookup.Queues
 
                         // Save the result at this point
                         context.SaveChanges();
-                    }
 
-
-                    // Queue management
-                    if (itemSucceeded)
-                    {
-                        ret.Add(item);
-                        // Decrement the wait count on the semaphore
-                        batchLine.Batch.GenerationSemaphore().Signal();
-                    }
-                    else if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
-                    {
-                        // Max attempts reached - signal anyway
-                        batchLine.Batch.GenerationSemaphore().Signal();
+                        // Queue management
+                        if (itemSucceeded)
+                        {
+                            ret.Add(item);
+                            // Decrement the wait count on the semaphore
+                            batchLine.Batch.GenerationSemaphore().Signal();
+                        }
+                        else if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
+                        {
+                            // Max attempts reached - signal anyway
+                            batchLine.Batch.GenerationSemaphore().Signal();
+                        }
                     }
                 }
             }
