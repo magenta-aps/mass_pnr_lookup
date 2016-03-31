@@ -19,10 +19,16 @@ namespace mass_pnr_lookup
                 addr.PostCodeIdentifier,
                 addr.DistrictName
             };
-            return string.Join(" ",
+
+            var ret = string.Join(" ",
                 parts
                 .Where(p => !string.IsNullOrEmpty(p))
-                .ToArray());
+                .ToArray()).Trim();
+
+            if (ret.EndsWith(","))
+                ret = ret.Substring(0, ret.Length - 1).Trim();
+
+            return ret;
         }
     }
 }
