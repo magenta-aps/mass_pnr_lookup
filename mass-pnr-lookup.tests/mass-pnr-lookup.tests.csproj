@@ -133,6 +133,7 @@
   <ItemGroup>
     <Compile Include="CsvParserTests.cs" />
     <Compile Include="DawaAddressParserTests.cs" />
+    <Compile Include="ExtensionsTests.cs" />
     <Compile Include="ExtractionQueueTests.cs" />
     <Compile Include="FullTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
