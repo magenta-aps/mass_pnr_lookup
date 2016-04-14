@@ -92,6 +92,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -136,6 +137,7 @@
     <Compile Include="ExtensionsTests.cs" />
     <Compile Include="ExtractionQueueTests.cs" />
     <Compile Include="FullTest.cs" />
+    <Compile Include="UserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -162,6 +164,7 @@
     <None Include="Resources\Test_Opslag_output.csv" />
     <None Include="Resources\AddressSample.json" />
     <None Include="Resources\Test_Opslag.csv" />
+    <None Include="smtp.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

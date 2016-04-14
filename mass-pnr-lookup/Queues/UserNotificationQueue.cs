@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using mass_pnr_lookup.Models;
+using System.DirectoryServices.AccountManagement;
+using System.Net.Mail;
 
 namespace mass_pnr_lookup.Queues
 {
@@ -16,12 +18,33 @@ namespace mass_pnr_lookup.Queues
                 using (var context = new BatchContext())
                 {
                     var batch = context.Batches.Find(item.BatchId);
+                    // If this item is the latest assigned notification queue item
+                    if (batch.NotificationSemaphore().Impl.SemaphoreId == item.Impl.SemaphoreId.Value)
+                    {
+                        var userPrincipal = batch?.User.GetUserPrincipal(ContextType.Domain);
+                        var email = userPrincipal?.EmailAddress;
 
-                    // TODO: Notify user here
-                    //.....
+                        if (!string.IsNullOrEmpty(email))
+                        {
+                            // Create client and message
+                            var smtpClient = new SmtpClient();
 
-                    batch.Status = BatchStatus.Notified;
-                    context.SaveChanges();
+                            MailMessage msg = new MailMessage()
+                            {
+                                //From = new MailAddress((smtpClient.Credentials as System.Net.NetworkCredential).UserName),
+                                Subject = "Batch completed",
+                                Body = string.Format("Your batch '{0}' has been completed at {1}", batch.FileName, batch.CompletedTS),
+                            };
+                            msg.To.Add(new MailAddress(email, userPrincipal.DisplayName));
+
+                            // Send the message
+                            smtpClient.Send(msg);
+
+                            // Update the status
+                            batch.Status = BatchStatus.Notified;
+                            context.SaveChanges();
+                        }
+                    }
                 }
                 ret.Add(item);
             }
