@@ -79,7 +79,7 @@
 
             $.ajax(url)
                     .success(function (data) {
-                        $('#fileList').html(data)
+                        $('#fileList').empty().append(data);
                     })
         };
 
