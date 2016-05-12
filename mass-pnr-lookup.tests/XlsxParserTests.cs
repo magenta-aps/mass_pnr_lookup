@@ -29,7 +29,8 @@ namespace mass_pnr_lookup.tests
             byte[] generatedBytes;
             using (var parser = new XlsxParser(Properties.Resources.Eksempel_Liste))
             {
-                parser.ContentsTable.Columns.Add("PNR", typeof(string));
+                if (!parser.ContentsTable.Columns.Contains("PNR"))
+                    parser.ContentsTable.Columns.Add("PNR", typeof(string));
                 int i = 1;
                 foreach (DataRow row in parser.ContentsTable.Rows)
                 {
@@ -41,6 +42,7 @@ namespace mass_pnr_lookup.tests
             {
                 Assert.IsTrue(newParser.GetColumnNames().Contains("PNR"));
             }
+            File.WriteAllBytes("AddColumn_ContainsNewColumn.xlsx", generatedBytes);
         }
     }
 }
