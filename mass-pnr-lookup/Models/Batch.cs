@@ -60,17 +60,29 @@ namespace mass_pnr_lookup.Models
 
         public void GenerateOutput()
         {
-            var b = new System.Text.StringBuilder((int)(Size * 1.2));
-            //var parser = new CsvParser.CsvEnumerator(SourceContents);
-            //b.Append(parser.FirstLine);
-            b.AppendLine(";PNR;FEJL;EJER_NAVN_MATCH;EJER_ADR_MATCH");
-
-            foreach (var line in Lines.OrderBy(l => l.Row).ThenBy(l => l.BatchElementId))
+            using (var parser = CreateParser())
             {
-                b.Append(line.SourceContents);
-                b.AppendFormat(";{0};{1};{2};{3}{4}", line.PNR, line.Error, line.MatchedName, line.MatchedAddress, Environment.NewLine);
+                var newColumnNames = new string[] { "PNR", "FEJL", "EJER_NAVN_MATCH", "EJER_ADR_MATCH" };
+                foreach (var colName in newColumnNames)
+                {
+                    if (!parser.ContentsTable.Columns.Contains(colName))
+                    {
+                        parser.ContentsTable.Columns.Add(colName, typeof(string));
+                    }
+                }
+
+                int index = 0;
+                foreach (var line in Lines.OrderBy(l => l.Row).ThenBy(l => l.BatchElementId))
+                {
+                    var row = parser.ContentsTable.Rows[index++];
+                    var values = new string[] { line.PNR, line.Error, line.MatchedName, line.MatchedAddress };
+                    for (int i = 0; i > values.Length; i++)
+                    {
+                        row[newColumnNames[i]] = values[i];
+                    }
+                }
+                GeneratedContents = parser.SerializeContents();
             }
-            GeneratedContents = Commons.CsvEncoding.GetBytes(b.ToString());
         }
 
         public void EnqueueOutputGeneration()

@@ -4,6 +4,8 @@ using System.Linq;
 using mass_pnr_lookup.Models;
 using System.IO;
 using System.Collections;
+using System.Text;
+using System.Data;
 
 namespace mass_pnr_lookup.Parsers
 {
@@ -50,6 +52,26 @@ namespace mass_pnr_lookup.Parsers
                     .Select(v => v as object)
                     .ToArray()
                 ).ToArray();
+        }
+
+        public override byte[] SerializeContents()
+        {
+            var b = new StringBuilder();
+            b.AppendLine(
+                string.Join(
+                    ";",
+                    ContentsTable.Columns
+                        .OfType<DataColumn>()
+                        .Select(c => c.ColumnName)
+                    ));
+            foreach (DataRow row in ContentsTable.Rows)
+            {
+                b.AppendLine(
+                    string.Join(
+                        ";",
+                        row.ItemArray.Select(o => o as string).ToArray()));
+            }
+            return Commons.CsvEncoding.GetBytes(b.ToString());
         }
     }
 }

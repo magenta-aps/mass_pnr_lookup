@@ -11,7 +11,7 @@ namespace mass_pnr_lookup.Parsers
     public abstract partial class Parser : IParser
     {
         public byte[] Contents { get; private set; }
-        public DataTable ContentsTable;
+        public DataTable ContentsTable { get; private set; }
 
         protected MemoryStream _MemoryStream;
 
@@ -23,7 +23,9 @@ namespace mass_pnr_lookup.Parsers
                 contents = new byte[0];
 
             Contents = contents;
-            _MemoryStream = new MemoryStream(Contents);
+            _MemoryStream = new MemoryStream();
+            _MemoryStream.Write(Contents, 0, Contents.Length);
+            _MemoryStream.Seek(0, SeekOrigin.Begin);
 
             // Perform any custom initialization in the sub class
             CustomInit();
@@ -84,5 +86,7 @@ namespace mass_pnr_lookup.Parsers
                 SourceContents = string.Join(";", values)
             };
         }
+
+        public abstract byte[] SerializeContents();
     }
 }
