@@ -10,144 +10,124 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace mass_pnr_lookup.Parsers
 {
-    public class XlsxParser : IParser
+    public class XlsxParser : Parser
     {
-        public byte[] Contents { get; private set; }
+        SpreadsheetDocument _SpreadsheetDocument;
+        WorkbookPart wbPart;
+        WorksheetPart wsPart;
 
-        public IEnumerator<BatchLine> GetEnumerator()
+        public XlsxParser(byte[] contents)
+            : base(contents)
         {
-            return new XlsxEnumerator(Contents);
+
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public override void CustomInit()
         {
-            return GetEnumerator();
+            _SpreadsheetDocument = SpreadsheetDocument.Open(_MemoryStream, false);
+
+            wbPart = _SpreadsheetDocument.WorkbookPart;
+            var firstSheetId = wbPart.Workbook.Descendants<Sheet>().FirstOrDefault().Id;
+
+            wsPart = wbPart.GetPartById(firstSheetId) as WorksheetPart;
         }
 
-        public class XlsxEnumerator : BaseEnumerator, IEnumerator<BatchLine>
+        public override string[] ReadColumnNames()
         {
-            SpreadsheetDocument _SpreadsheetDocument;
-            WorksheetPart wsPart;
+            var headerRow = wsPart.Worksheet
+                .Descendants<Row>()
+                .Where(r => r.Descendants<Cell>().Count() > 0)
+                .FirstOrDefault();
 
-            public XlsxEnumerator(byte[] contents)
-                : base(contents)
+            if (headerRow != null)
             {
-
+                return headerRow
+                    .Descendants<Cell>()
+                    .Select(cell => GetCellValue(cell, _SpreadsheetDocument.WorkbookPart))
+                    .ToArray();
             }
-            public override void CustomInit()
+            else
             {
-                _SpreadsheetDocument = SpreadsheetDocument.Open(_MemoryStream, false);
-
-                var wbPart = _SpreadsheetDocument.WorkbookPart;
-                var firstSheetId = wbPart.Workbook.Descendants<Sheet>().FirstOrDefault().Id;
-
-                wsPart = wbPart.GetPartById(firstSheetId) as WorksheetPart;
+                throw new ArgumentException("Invalid contents");
             }
+        }
 
-            public override string[] ReadColumnNames()
+        public override object[][] GetData()
+        {
+            var rows = wsPart.Worksheet
+                .Descendants<Row>()
+                .Where(r => r.Descendants<Cell>().Count() > 0)
+                // Skip the header row
+                .Skip(1);
+
+            return rows
+                .Select(r =>
+                    r.Descendants<Cell>()
+                    .Select(c => GetCellValue(c, this.wbPart) as object)
+                    .ToArray())
+                .ToArray();
+        }
+
+        private static string GetCellValue(Cell theCell, WorkbookPart wbPart)
+        {
+            string value = "";
+            if (theCell != null)
             {
-                var headerRow = wsPart.Worksheet
-                    .Descendants<Row>()
-                    .Where(r => r.Descendants<Cell>().Count() > 0)
-                    .FirstOrDefault();
+                value = theCell.InnerText;
 
-                if (headerRow != null)
+                // If the cell represents an integer number, you are done. 
+                // For dates, this code returns the serialized value that 
+                // represents the date. The code handles strings and 
+                // Booleans individually. For shared strings, the code 
+                // looks up the corresponding value in the shared string 
+                // table. For Booleans, the code converts the value into 
+                // the words TRUE or FALSE.
+                if (theCell.DataType != null)
                 {
-                    return headerRow
-                        .Descendants<Cell>()
-                        .Select(cell => GetCellValue(cell, _SpreadsheetDocument.WorkbookPart))
-                        .ToArray();
-                }
-                else
-                {
-                    throw new ArgumentException("Invalid contents");
-                }
-            }
-
-            public override string[] ReadCurrentValues()
-            {
-                throw new NotImplementedException();
-            }
-
-            object IEnumerator.Current
-            {
-                get
-                {
-                    return this.Current;
-                }
-            }
-
-            public override void Dispose()
-            {
-                if (_SpreadsheetDocument != null)
-                    _SpreadsheetDocument.Dispose();
-                base.Dispose();
-            }
-
-            public bool MoveNext()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Reset()
-            {
-                throw new NotImplementedException();
-            }
-
-            private static string GetCellValue(Cell theCell, WorkbookPart wbPart)
-            {
-                string value = "";
-                if (theCell != null)
-                {
-                    value = theCell.InnerText;
-
-                    // If the cell represents an integer number, you are done. 
-                    // For dates, this code returns the serialized value that 
-                    // represents the date. The code handles strings and 
-                    // Booleans individually. For shared strings, the code 
-                    // looks up the corresponding value in the shared string 
-                    // table. For Booleans, the code converts the value into 
-                    // the words TRUE or FALSE.
-                    if (theCell.DataType != null)
+                    switch (theCell.DataType.Value)
                     {
-                        switch (theCell.DataType.Value)
-                        {
-                            case DocumentFormat.OpenXml.Spreadsheet.CellValues.SharedString:
+                        case DocumentFormat.OpenXml.Spreadsheet.CellValues.SharedString:
 
-                                // For shared strings, look up the value in the
-                                // shared strings table.
-                                var stringTable =
-                                    wbPart.GetPartsOfType<DocumentFormat.OpenXml.Packaging.SharedStringTablePart>()
-                                    .FirstOrDefault();
+                            // For shared strings, look up the value in the
+                            // shared strings table.
+                            var stringTable =
+                                wbPart.GetPartsOfType<DocumentFormat.OpenXml.Packaging.SharedStringTablePart>()
+                                .FirstOrDefault();
 
-                                // If the shared string table is missing, something 
-                                // is wrong. Return the index that is in
-                                // the cell. Otherwise, look up the correct text in 
-                                // the table.
-                                if (stringTable != null)
-                                {
-                                    value =
-                                        stringTable.SharedStringTable
-                                        .ElementAt(int.Parse(value)).InnerText;
-                                }
-                                break;
+                            // If the shared string table is missing, something 
+                            // is wrong. Return the index that is in
+                            // the cell. Otherwise, look up the correct text in 
+                            // the table.
+                            if (stringTable != null)
+                            {
+                                value =
+                                    stringTable.SharedStringTable
+                                    .ElementAt(int.Parse(value)).InnerText;
+                            }
+                            break;
 
-                            case DocumentFormat.OpenXml.Spreadsheet.CellValues.Boolean:
-                                switch (value)
-                                {
-                                    case "0":
-                                        value = "FALSE";
-                                        break;
-                                    default:
-                                        value = "TRUE";
-                                        break;
-                                }
-                                break;
-                        }
+                        case DocumentFormat.OpenXml.Spreadsheet.CellValues.Boolean:
+                            switch (value)
+                            {
+                                case "0":
+                                    value = "FALSE";
+                                    break;
+                                default:
+                                    value = "TRUE";
+                                    break;
+                            }
+                            break;
                     }
                 }
-                return value;
             }
+            return value;
+        }
+
+        public override void Dispose()
+        {
+            if (_SpreadsheetDocument != null)
+                _SpreadsheetDocument.Dispose();
+            base.Dispose();
         }
     }
 }

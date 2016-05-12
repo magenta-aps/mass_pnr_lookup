@@ -7,110 +7,49 @@ using System.Collections;
 
 namespace mass_pnr_lookup.Parsers
 {
-    public class CsvParser : IParser
+    public class CsvParser : Parser
     {
-        public byte[] Contents { get; private set; }
+        string[] _Lines;
 
         public CsvParser(byte[] contents)
+            : base(contents)
         {
-            this.Contents = contents;
+
         }
 
-        public IEnumerator<BatchLine> GetEnumerator()
+        public override void CustomInit()
         {
-            return new CsvEnumerator(Contents);
+            using (var _StreamReader = new StreamReader(this._MemoryStream, Commons.CsvEncoding))
+            {
+                _Lines = _StreamReader.ReadToEnd().Split(Environment.NewLine.ToArray(), StringSplitOptions.RemoveEmptyEntries)
+                    .Where(l => l.Trim().Length > 0)
+                    .ToArray();
+            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public override string[] ReadColumnNames()
         {
-            return GetEnumerator();
+            var firstLine = _Lines.FirstOrDefault();
+            if (firstLine != null)
+            {
+                var firstLineValues = firstLine.Split(';');
+                return firstLineValues;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid contents");
+            }
         }
 
-        public class CsvEnumerator : BaseEnumerator, IEnumerator<BatchLine>
+        public override object[][] GetData()
         {
-
-            StreamReader _StreamReader;
-
-            string _CurrentLine;
-            public string FirstLine;
-
-            public CsvEnumerator(byte[] contents)
-                : base(contents)
-            {
-
-            }
-
-            public override void CustomInit()
-            {
-                this._StreamReader = new StreamReader(this._MemoryStream, Commons.CsvEncoding);
-            }
-
-            public override string[] ReadColumnNames()
-            {
-                while (FirstLine == null && !this._StreamReader.EndOfStream)
-                {
-                    FirstLine = this._StreamReader.ReadLine();
-                }
-                if (!string.IsNullOrEmpty(FirstLine))
-                {
-                    var firstLineValues = FirstLine.Split(';');
-                    return firstLineValues;
-                }
-                else
-                {
-                    throw new ArgumentException("Invalid contents");
-                }
-            }
-
-            public override string[] ReadCurrentValues()
-            {
-                if (string.IsNullOrEmpty(_CurrentLine))
-                    return null;
-
-                return _CurrentLine.Split(';');
-            }
-
-            object IEnumerator.Current
-            {
-                get
-                {
-                    return Current;
-                }
-            }
-
-            public override void Dispose()
-            {
-                if (_StreamReader != null)
-                    _StreamReader.Dispose();
-
-                base.Dispose();
-            }
-
-            public bool MoveNext()
-            {
-                _CurrentLine = null;
-
-                while (string.IsNullOrEmpty(_CurrentLine))
-                {
-                    if (_StreamReader.EndOfStream)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        _CurrentLine = _StreamReader.ReadLine();
-                        _CurrentLineIndex++;
-                    }
-                }
-                return true;
-            }
-
-            public void Reset()
-            {
-                throw new NotImplementedException();
-            }
+            return _Lines
+                .Skip(1)
+                .Select(l =>
+                    l.Split(';')
+                    .Select(v => v as object)
+                    .ToArray()
+                ).ToArray();
         }
     }
-
-
 }

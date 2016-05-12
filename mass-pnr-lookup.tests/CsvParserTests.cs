@@ -21,7 +21,7 @@ namespace mass_pnr_lookup.tests
         {
             var parser = new CsvParser(null);
             var lines = parser.ToArray();
-            Assert.AreEqual(0, lines.Length);
+            Assert.AreEqual(0, lines.Count);
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace mass_pnr_lookup.tests
         {
             var parser = new CsvParser(new byte[0]);
             var lines = parser.ToArray();
-            Assert.AreEqual(0, lines.Length);
+            Assert.AreEqual(0, lines.Count);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace mass_pnr_lookup.tests
         {
             var parser = new CsvParser(Create(Environment.NewLine + Environment.NewLine + Environment.NewLine));
             var lines = parser.ToArray();
-            Assert.AreEqual(0, lines.Length);
+            Assert.AreEqual(0, lines.Count);
         }
 
         const string FirstLine = "EJER_NAVN;EJER_ADR;EJER_POSTADR\r\n";
@@ -49,14 +49,14 @@ namespace mass_pnr_lookup.tests
         {
             var parser = new CsvParser(Create(FirstLine + "person,address in denmark"));
             var lines = parser.ToArray();
-            Assert.AreEqual(1, lines.Length);
+            Assert.AreEqual(1, lines.Count);
         }
 
         [TestMethod]
         public void OneLine_CorrectData()
         {
             var parser = new CsvParser(Create(FirstLine + "person;address in denmark;post"));
-            var line = parser.First();
+            var line = parser.ReadLines().First();
             Assert.AreEqual("person", line.Name);
             Assert.AreEqual("address in denmark, post", line.Address);
         }
@@ -65,7 +65,7 @@ namespace mass_pnr_lookup.tests
         public void AddressWithComma_CorrectData()
         {
             var parser = new CsvParser(Create(FirstLine + "person;address,in , denmark;"));
-            var line = parser.First();
+            var line = parser.ReadLines().First();
             Assert.AreEqual("person", line.Name);
             Assert.AreEqual("address,in , denmark, ", line.Address);
         }

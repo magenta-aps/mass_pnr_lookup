@@ -61,8 +61,8 @@ namespace mass_pnr_lookup.Models
         public void GenerateOutput()
         {
             var b = new System.Text.StringBuilder((int)(Size * 1.2));
-            var parser = new CsvParser.CsvEnumerator(SourceContents);
-            b.Append(parser.FirstLine);
+            //var parser = new CsvParser.CsvEnumerator(SourceContents);
+            //b.Append(parser.FirstLine);
             b.AppendLine(";PNR;FEJL;EJER_NAVN_MATCH;EJER_ADR_MATCH");
 
             foreach (var line in Lines.OrderBy(l => l.Row).ThenBy(l => l.BatchElementId))
