@@ -85,6 +85,16 @@ namespace mass_pnr_lookup.tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Eksempel_Liste {
+            get {
+                object obj = ResourceManager.GetObject("Eksempel_Liste", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Id;EJER_NAVN;EJER_ADR;EJER_POSTADR;EnhedNavn;EnhedAdresse;EnhedPostnr;Initialer;AfsenderNavn;Indeks;LinkBrev;LinkTillBrev
         ///1749;Fornavn Efternavn;Studiestræde 14;1455 København K;Text;Vejnavn 1;1455 København K;init;Navn;3;LinkBrevValue;LinkTillBrevValue
         ///;;;;;;;;;;;

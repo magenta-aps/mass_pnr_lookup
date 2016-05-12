@@ -128,14 +128,48 @@ namespace mass_pnr_lookup.Parsers
             return value;
         }
 
+        private int InsertSharedStringItem(string text, SharedStringTablePart shareStringPart)
+        {
+            // If the part does not contain a SharedStringTable, create one.
+            if (shareStringPart.SharedStringTable == null)
+            {
+                shareStringPart.SharedStringTable = new SharedStringTable();
+            }
+
+            int i = 0;
+
+            // Iterate through all the items in the SharedStringTable. If the text already exists, return its index.
+            foreach (SharedStringItem item in shareStringPart.SharedStringTable.Elements<SharedStringItem>())
+            {
+                if (item.InnerText == text)
+                {
+                    return i;
+                }
+
+                i++;
+            }
+
+            // The text does not exist in the part. Create the SharedStringItem and return its index.
+            shareStringPart.SharedStringTable.AppendChild(new SharedStringItem(new DocumentFormat.OpenXml.Spreadsheet.Text(text)));
+            shareStringPart.SharedStringTable.Save();
+
+            return i;
+        }
+
         void SetCellValue(SharedStringTablePart stringTable, Cell cell, string value)
         {
-            var stringItem = new SharedStringItem() { };
-            stringItem.InnerXml = value;
-            stringTable.SharedStringTable.Append(stringItem);
+            int sharedStringIndex = InsertSharedStringItem(value, stringTable);
 
+            if (cell.DataType == null)
+            {
+                cell.DataType = new DocumentFormat.OpenXml.EnumValue<CellValues>(CellValues.SharedString);
+            }
             cell.DataType.Value = CellValues.SharedString;
-            cell.InnerXml = stringTable.SharedStringTable.Count.ToString();
+
+            string cellValueText = sharedStringIndex.ToString();
+            CellValue cellValue = new CellValue(cellValueText);
+            cell.RemoveAllChildren();
+            cell.AppendChild<CellValue>(cellValue);
         }
 
         public override byte[] SerializeContents()

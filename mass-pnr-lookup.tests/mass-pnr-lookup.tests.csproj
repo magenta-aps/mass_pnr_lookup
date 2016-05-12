@@ -92,6 +92,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -145,6 +146,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="QueueTests.cs" />
+    <Compile Include="XlsxParserTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\mass-pnr-lookup\mass-pnr-lookup.csproj">
@@ -160,6 +162,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Resources\Eksempel_Liste.xlsx" />
     <None Include="Resources\InvalidAddress.csv" />
     <None Include="Resources\Test_Opslag_output.csv" />
     <None Include="Resources\AddressSample.json" />
