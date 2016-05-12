@@ -119,7 +119,14 @@ namespace mass_pnr_lookup.Controllers
                 var batch = LoadBatch(id, context);
 
                 if (batch != null && batch.GeneratedContents != null)
-                    return new FileContentResult(batch.GeneratedContents, "application/txt") { FileDownloadName = string.Format("{0}-result.txt", batch.FileName) };
+                {
+                    var ext = batch.FileName.Split('.').Skip(1).LastOrDefault();
+                    ext = string.IsNullOrEmpty(ext) ? "" : "." + ext;
+                    return new FileContentResult(batch.GeneratedContents, "application/unspecified")
+                    {
+                        FileDownloadName = string.Format("{0}-result{1}", batch.FileName, ext)
+                    };
+                }
             }
             return new HttpNotFoundResult();
         }

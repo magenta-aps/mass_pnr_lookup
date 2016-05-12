@@ -42,7 +42,7 @@ namespace mass_pnr_lookup.tests
             {
                 var name = searchCriteria.SoegObjekt.SoegAttributListe.SoegEgenskab.First().NavnStruktur;
                 var cpr = searchCriteria.SoegObjekt.SoegAttributListe.SoegRegisterOplysning.First().Item as CprBorgerType;
-                cpr.PersonCivilRegistrationIdentifier = "2107497164"; // CprBroker.Tests.PartInterface.Utilities.RandomCprNumber();
+                cpr.PersonCivilRegistrationIdentifier = CprBroker.Tests.PartInterface.Utilities.RandomCprNumber();
 
                 return new LaesResultatType[]
                 {

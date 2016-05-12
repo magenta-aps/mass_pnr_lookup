@@ -40,7 +40,12 @@ namespace mass_pnr_lookup.Models
 
         public Parsers.IParser CreateParser()
         {
-            return new Parsers.CsvParser(this.SourceContents);
+            if (FileName.EndsWith(".csv"))
+                return new Parsers.CsvParser(SourceContents);
+            else if (FileName.EndsWith(".xlsx"))
+                return new XlsxParser(SourceContents);
+            else
+                return null;
         }
 
         public Semaphore GenerationSemaphore()
@@ -76,7 +81,7 @@ namespace mass_pnr_lookup.Models
                 {
                     var row = parser.ContentsTable.Rows[index++];
                     var values = new string[] { line.PNR, line.Error, line.MatchedName, line.MatchedAddress };
-                    for (int i = 0; i > values.Length; i++)
+                    for (int i = 0; i < values.Length; i++)
                     {
                         row[newColumnNames[i]] = values[i];
                     }

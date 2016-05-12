@@ -17,7 +17,8 @@ namespace mass_pnr_lookup.tests
             CprBroker.Engine.BrokerContext.Initialize(CprBroker.Utilities.Constants.BaseApplicationToken.ToString(), "Testing developer");
 
             CprBroker.Engine.Queues.Queue.GetQueues<ExtractionQueue>().Single().RunAll();
-            CprBroker.Engine.Queues.Queue.GetQueues<SearchQueue>().Single().RunAll();
+            foreach (var searchQueue in CprBroker.Engine.Queues.Queue.GetQueues<SearchQueue>())
+                searchQueue.RunAll();
             CprBroker.Engine.Queues.Queue.GetQueues<OutputGenerationQueue>().Single().RunAll();
             CprBroker.Engine.Queues.Queue.GetQueues<UserNotificationQueue>().Single().RunAll();
         }
