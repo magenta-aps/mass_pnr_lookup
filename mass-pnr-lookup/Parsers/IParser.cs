@@ -10,7 +10,7 @@ namespace mass_pnr_lookup.Parsers
 {
     public interface IParser : IDisposable
     {
-        string[] ReadColumnNames();
+        string[] GetColumnNames();
         ICollection<BatchLine> ToArray();
         List<BatchLine> ReadLines();
     }

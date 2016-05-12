@@ -27,7 +27,7 @@ namespace mass_pnr_lookup.Parsers
             }
         }
 
-        public override string[] ReadColumnNames()
+        public override string[] GetColumnNames()
         {
             var firstLine = _Lines.FirstOrDefault();
             if (firstLine != null)

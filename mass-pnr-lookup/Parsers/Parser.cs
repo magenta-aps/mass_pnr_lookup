@@ -29,7 +29,7 @@ namespace mass_pnr_lookup.Parsers
             CustomInit();
 
             ContentsTable = new DataTable();
-            foreach (var colName in ReadColumnNames())
+            foreach (var colName in GetColumnNames())
                 ContentsTable.Columns.Add(colName, typeof(string));
 
             foreach (var lineData in GetData())
@@ -41,7 +41,7 @@ namespace mass_pnr_lookup.Parsers
         public virtual void CustomInit()
         { }
 
-        public abstract string[] ReadColumnNames();
+        public abstract string[] GetColumnNames();
 
         public ICollection<BatchLine> ToArray()
         {

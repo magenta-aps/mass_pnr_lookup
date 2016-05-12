@@ -32,7 +32,7 @@ namespace mass_pnr_lookup.Parsers
             wsPart = wbPart.GetPartById(firstSheetId) as WorksheetPart;
         }
 
-        public override string[] ReadColumnNames()
+        public override string[] GetColumnNames()
         {
             var headerRow = wsPart.Worksheet
                 .Descendants<Row>()
