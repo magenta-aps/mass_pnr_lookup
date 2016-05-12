@@ -174,9 +174,11 @@ namespace mass_pnr_lookup.Parsers
 
         public override byte[] SerializeContents()
         {
+            // Cache the string table object
             var stringTable = wbPart.GetPartsOfType<DocumentFormat.OpenXml.Packaging.SharedStringTablePart>()
                                 .FirstOrDefault();
 
+            // Add column headers if needed
             foreach (var column in ContentsTable.Columns.OfType<DataColumn>())
             {
                 if (headerRow.Descendants<Cell>().FirstOrDefault(cell => GetCellValue(cell, wbPart).ToUpper() == column.ColumnName.ToUpper()) == null)
@@ -187,11 +189,7 @@ namespace mass_pnr_lookup.Parsers
                 }
             }
 
-            int index = 0;
-            Dictionary<string, int> columnIndecies = headerRow.Descendants<Cell>()
-                .Select(cell => new { I = index++, V = GetCellValue(cell, wbPart) })
-                .ToDictionary(o => o.V, o => o.I);
-
+            // Set row values
             var excelRows = DataRows().ToArray();
 
             for (int iRow = 0; iRow < ContentsTable.Rows.Count; iRow++)
@@ -211,6 +209,8 @@ namespace mass_pnr_lookup.Parsers
                     SetCellValue(stringTable, excelCell, cellValue);
                 }
             }
+
+            // Save
             _SpreadsheetDocument.Close();
             var ret = new byte[_MemoryStream.Length];
 
