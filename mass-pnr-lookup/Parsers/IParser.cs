@@ -13,7 +13,7 @@ namespace mass_pnr_lookup.Parsers
     {
         DataTable ContentsTable { get; }
         string[] GetColumnNames();
-        ICollection<BatchLine> ToArray();
+        BatchLine[] ToArray();
         List<BatchLine> ReadLines();
         byte[] SerializeContents();
     }

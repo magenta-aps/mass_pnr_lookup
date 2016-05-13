@@ -21,8 +21,18 @@ namespace mass_pnr_lookup.Queues
 
                     try
                     {
+                        // Delete existing lines if needed
+                        var oldLines = context.BatchLines.Where(bl => bl.Batch_BatchId == batch.BatchId);
+                        context.BatchLines.RemoveRange(oldLines);
+                        context.SaveChanges();
+
+                        context.Entry<Batch>(batch).Reload();
+
                         var lines = parser.ToArray();
-                        batch.Lines = lines;
+                        if (batch.Lines == null)
+                            batch.Lines = new List<BatchLine>();
+
+                        Array.ForEach<BatchLine>(lines, bl => batch.Lines.Add(bl));
 
                         batch.EnqueueAllAfterExtraction(context);
                     }

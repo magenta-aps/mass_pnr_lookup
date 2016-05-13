@@ -21,7 +21,7 @@ namespace mass_pnr_lookup.tests
         {
             var parser = new CsvParser(null);
             var lines = parser.ToArray();
-            Assert.AreEqual(0, lines.Count);
+            Assert.AreEqual(0, lines.Length);
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace mass_pnr_lookup.tests
         {
             var parser = new CsvParser(new byte[0]);
             var lines = parser.ToArray();
-            Assert.AreEqual(0, lines.Count);
+            Assert.AreEqual(0, lines.Length);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace mass_pnr_lookup.tests
         {
             var parser = new CsvParser(Create(Environment.NewLine + Environment.NewLine + Environment.NewLine));
             var lines = parser.ToArray();
-            Assert.AreEqual(0, lines.Count);
+            Assert.AreEqual(0, lines.Length);
         }
 
         const string FirstLine = "EJER_NAVN;EJER_ADR;EJER_POSTADR\r\n";
@@ -49,7 +49,7 @@ namespace mass_pnr_lookup.tests
         {
             var parser = new CsvParser(Create(FirstLine + "person,address in denmark"));
             var lines = parser.ToArray();
-            Assert.AreEqual(1, lines.Count);
+            Assert.AreEqual(1, lines.Length);
         }
 
         [TestMethod]

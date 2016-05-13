@@ -45,9 +45,9 @@ namespace mass_pnr_lookup.Parsers
 
         public abstract string[] GetColumnNames();
 
-        public ICollection<BatchLine> ToArray()
+        public BatchLine[] ToArray()
         {
-            return ReadLines();
+            return ReadLines().ToArray();
         }
 
         public List<BatchLine> ReadLines()

@@ -18,7 +18,7 @@
 
 
 <p>
-    <div id="dropZone">Drop your files here</div>
+    <div id="dropZone">Drop your files here (*.csv, *.xlsx)</div>
     <br>
     Uploaded Files:
     <ul id="uploadResult"></ul>
@@ -41,6 +41,7 @@
                 paramname: 'files',
                 maxFiles: 5,
                 maxfilesize: 10, // 10 MB
+                allowedfileextensions:['csv', 'xlsx'],
                 dragOver: function () {
                     $('#dropZone').css('background', 'blue');
                 },

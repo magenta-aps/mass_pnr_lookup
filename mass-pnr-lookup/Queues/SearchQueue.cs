@@ -26,6 +26,9 @@ namespace mass_pnr_lookup.Queues
 
                     var batchLine = context.BatchLines.Find(item.BatchLineId);
 
+                    if (batchLine == null)
+                        continue;
+
                     var partManager = new PartManager();
                     var soegObject = batchLine.ToSoegObject();
 
