@@ -77,8 +77,10 @@
             var pageNum = activePageAnchor.length > 0 ? activePageAnchor[0].innerText : '1';
             url = listUrl().replace('&amp;', '&').replace('sdf', pageNum);
 
-            $.ajax(url)
-                    .success(function (data) {
+            $.ajax({
+                'url': url,
+                'cache': false
+            }).success(function (data) {
                         $('#fileList').empty().append(data);
                     })
         };
