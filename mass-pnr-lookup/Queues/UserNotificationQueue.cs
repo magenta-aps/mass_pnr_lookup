@@ -34,7 +34,7 @@ namespace mass_pnr_lookup.Queues
                                 //From = new MailAddress((smtpClient.Credentials as System.Net.NetworkCredential).UserName),
                                 Subject = "Batch completed",
                                 Body = string.Format("Your batch '{0}' has been completed at {1}", batch.FileName, batch.CompletedTS),
-                                From = new MailAddress(email, userPrincipal.DisplayName)
+                                From = new MailAddress(email)
                             };
                             msg.To.Add(new MailAddress(email, userPrincipal.DisplayName));
 
