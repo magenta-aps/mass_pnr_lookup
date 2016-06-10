@@ -5,6 +5,7 @@ using System.Web;
 using mass_pnr_lookup.Models;
 using System.DirectoryServices.AccountManagement;
 using System.Net.Mail;
+using CprBroker.Engine.Local;
 
 namespace mass_pnr_lookup.Queues
 {
@@ -15,42 +16,50 @@ namespace mass_pnr_lookup.Queues
             var ret = new List<BatchQueueItem>();
             foreach (var item in items)
             {
-                using (var context = new BatchContext())
+                try
                 {
-                    var batch = context.Batches.Find(item.BatchId);
-                    // If this item is the latest assigned notification queue item
-                    if (batch.NotificationSemaphore().Impl.SemaphoreId == item.Impl.SemaphoreId.Value)
+                    using (var context = new BatchContext())
                     {
-                        var userPrincipal = batch?.User?.GetUserPrincipal(ContextType.Domain);
-                        var email = userPrincipal?.EmailAddress;
-
-                        if (!string.IsNullOrEmpty(email))
+                        var batch = context.Batches.Find(item.BatchId);
+                        // If this item is the latest assigned notification queue item
+                        if (batch.NotificationSemaphore().Impl.SemaphoreId == item.Impl.SemaphoreId.Value)
                         {
-                            // Create client and message
-                            var smtpClient = new SmtpClient();
+                            var userPrincipal = batch?.User?.GetUserPrincipal(ContextType.Domain);
+                            var email = userPrincipal?.EmailAddress;
 
-                            MailMessage msg = new MailMessage()
+                            if (!string.IsNullOrEmpty(email))
                             {
-                                //From = new MailAddress((smtpClient.Credentials as System.Net.NetworkCredential).UserName),
-                                Subject = "Batch completed",
-                                Body = string.Format("Your batch '{0}' has been completed at {1}", batch.FileName, batch.CompletedTS),
-                                From = new MailAddress(email)
-                            };
-                            msg.To.Add(new MailAddress(email, userPrincipal.DisplayName));
+                                Admin.LogFormattedSuccess(
+                                        "Sending email for batch <{0}>, user <{1}>, principal <{2}>, email <{3}>",
+                                        batch.BatchId,
+                                        batch.User?.Name,
+                                        userPrincipal?.Name,
+                                        email
+                                        );
 
-                            // Send the message
-                            smtpClient.Send(msg);
+                                // Create client and message
+                                var smtpClient = new SmtpClient();
 
-                            // Update the status
-                            batch.Status = BatchStatus.Notified;
-                            context.SaveChanges();
-                            ret.Add(item);
-                        }
-                        else
-                        {
-                            try
+                                MailMessage msg = new MailMessage()
+                                {
+                                    //From = new MailAddress((smtpClient.Credentials as System.Net.NetworkCredential).UserName),
+                                    Subject = "Batch completed",
+                                    Body = string.Format("Your batch '{0}' has been completed at {1}", batch.FileName, batch.CompletedTS),
+                                    From = new MailAddress(email)
+                                };
+                                msg.To.Add(new MailAddress(email, userPrincipal.DisplayName));
+
+                                // Send the message
+                                smtpClient.Send(msg);
+
+                                // Update the status
+                                batch.Status = BatchStatus.Notified;
+                                context.SaveChanges();
+                                ret.Add(item);
+                            }
+                            else
                             {
-                                CprBroker.Engine.Local.Admin.LogFormattedError(
+                                Admin.LogFormattedError(
                                     "Could not find email for batch <{0}>, user <{1}>, principal <{2}>, email <{3}>",
                                     batch.BatchId,
                                     batch.User?.Name,
@@ -58,12 +67,19 @@ namespace mass_pnr_lookup.Queues
                                     email
                                     );
                             }
-                            catch (Exception ex)
-                            {
-                                CprBroker.Engine.Local.Admin.LogException(ex);
-                            }
+                        }
+                        else
+                        {
+                            Admin.LogFormattedError(
+                                "Semaphore mismatch, skipping user notificatiuons. Batch <{0}> queue item <{1}>",
+                                    batch.BatchId,
+                                    item.Impl.QueueItemId);
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Admin.LogException(ex, string.Format("queue item <{0}>", item.Impl.QueueItemId));
                 }
             }
             return ret.ToArray();
