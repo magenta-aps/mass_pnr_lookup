@@ -34,7 +34,7 @@ namespace mass_pnr_lookup.Models
         public Guid NotificationSemaphoreId { get; set; }
         public Guid SearchSemaphoreId { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public virtual ICollection<BatchLine> Lines { get; set; }
 
