@@ -47,7 +47,13 @@ namespace mass_pnr_lookup.Queues
                         }
                         else
                         {
-                            CprBroker.Engine.Local.Admin.LogFormattedError("Could not find email for batch <{0}>, user <{1}>", batch.BatchId, batch.User?.Name);
+                            CprBroker.Engine.Local.Admin.LogFormattedError(
+                                "Could not find email for batch <{0}>, user <{1}>, principal <{2}>, email <{3}>",
+                                batch.BatchId,
+                                batch.User?.Name,
+                                userPrincipal?.Name,
+                                email
+                                );
                         }
                     }
                 }
