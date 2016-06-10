@@ -34,6 +34,7 @@ namespace mass_pnr_lookup.Queues
                                 //From = new MailAddress((smtpClient.Credentials as System.Net.NetworkCredential).UserName),
                                 Subject = "Batch completed",
                                 Body = string.Format("Your batch '{0}' has been completed at {1}", batch.FileName, batch.CompletedTS),
+                                From = new MailAddress(email, userPrincipal.DisplayName)
                             };
                             msg.To.Add(new MailAddress(email, userPrincipal.DisplayName));
 
@@ -47,13 +48,20 @@ namespace mass_pnr_lookup.Queues
                         }
                         else
                         {
-                            CprBroker.Engine.Local.Admin.LogFormattedError(
-                                "Could not find email for batch <{0}>, user <{1}>, principal <{2}>, email <{3}>",
-                                batch.BatchId,
-                                batch.User?.Name,
-                                userPrincipal?.Name,
-                                email
-                                );
+                            try
+                            {
+                                CprBroker.Engine.Local.Admin.LogFormattedError(
+                                    "Could not find email for batch <{0}>, user <{1}>, principal <{2}>, email <{3}>",
+                                    batch.BatchId,
+                                    batch.User?.Name,
+                                    userPrincipal?.Name,
+                                    email
+                                    );
+                            }
+                            catch (Exception ex)
+                            {
+                                CprBroker.Engine.Local.Admin.LogException(ex);
+                            }
                         }
                     }
                 }
