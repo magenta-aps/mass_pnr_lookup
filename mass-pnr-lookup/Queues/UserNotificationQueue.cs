@@ -43,6 +43,7 @@ namespace mass_pnr_lookup.Queues
                             // Update the status
                             batch.Status = BatchStatus.Notified;
                             context.SaveChanges();
+                            ret.Add(item);
                         }
                         else
                         {
@@ -50,7 +51,6 @@ namespace mass_pnr_lookup.Queues
                         }
                     }
                 }
-                ret.Add(item);
             }
             return ret.ToArray();
         }
