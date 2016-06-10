@@ -21,7 +21,7 @@ namespace mass_pnr_lookup.Queues
                     // If this item is the latest assigned notification queue item
                     if (batch.NotificationSemaphore().Impl.SemaphoreId == item.Impl.SemaphoreId.Value)
                     {
-                        var userPrincipal = batch?.User.GetUserPrincipal(ContextType.Domain);
+                        var userPrincipal = batch?.User?.GetUserPrincipal(ContextType.Domain);
                         var email = userPrincipal?.EmailAddress;
 
                         if (!string.IsNullOrEmpty(email))
@@ -43,6 +43,10 @@ namespace mass_pnr_lookup.Queues
                             // Update the status
                             batch.Status = BatchStatus.Notified;
                             context.SaveChanges();
+                        }
+                        else
+                        {
+                            CprBroker.Engine.Local.Admin.LogFormattedError("Could not find email for batch <{0}>, user <{1}>", batch.BatchId, batch.User?.Name);
                         }
                     }
                 }
