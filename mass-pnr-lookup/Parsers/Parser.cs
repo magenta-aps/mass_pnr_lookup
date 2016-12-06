@@ -34,8 +34,15 @@ namespace mass_pnr_lookup.Parsers
             foreach (var colName in GetColumnNames())
                 ContentsTable.Columns.Add(colName, typeof(string));
 
+            var numColumns = ContentsTable.Columns.Count;
             foreach (var lineData in GetData())
-                ContentsTable.Rows.Add(lineData);
+            {
+                // Adjust number of columns
+                var relevantLineData = lineData
+                    .Concat(new object[numColumns])
+                    .Take(numColumns);
+                ContentsTable.Rows.Add(relevantLineData.ToArray());
+            }
         }
 
         public abstract object[][] GetData();
