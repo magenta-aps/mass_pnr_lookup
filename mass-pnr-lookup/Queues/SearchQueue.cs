@@ -42,12 +42,8 @@ namespace mass_pnr_lookup.Queues
 
                         if (StandardReturType.IsSucceeded(searchResult.StandardRetur))
                         {
-                            // If multiple matches are found, choose the first one
-                            var bestMatch = searchResult.LaesResultat.FirstOrDefault();
-                            if (bestMatch != null)
+                            if(batchLine.FillFrom(searchResult))
                             {
-                                var attr = (bestMatch.Item as FiltreretOejebliksbilledeType).AttributListe;
-                                batchLine.FillFrom(attr);
                                 itemSucceeded = true;
                             }
                             else

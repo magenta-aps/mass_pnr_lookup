@@ -17,7 +17,7 @@ namespace mass_pnr_lookup.Models
         [ForeignKey("Batch")]
         [Index]
         public int Batch_BatchId { get; set; }
-        
+
         public virtual Batch Batch { get; set; }
         public string SourceContents { get; set; }
         public int Row { get; set; }
@@ -72,6 +72,29 @@ namespace mass_pnr_lookup.Models
             else
             {
                 return null;
+            }
+        }
+
+        public bool FillFrom(SoegListOutputType searchResult)
+        {
+            var names = this.Name.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var fullName = new PersonNameStructureType(names).ToString();
+
+            // If multiple matches are found, choose the first one
+            var bestMatch = searchResult.LaesResultat
+                .Select(lr => (lr.Item as FiltreretOejebliksbilledeType).AttributListe)
+                .Where(atr => atr != null)
+                .Select(atr => new { atr, FullName = atr.Egenskab.FirstOrDefault()?.NavnStruktur?.PersonNameStructure?.ToString() })
+                .Where( o=>o.FullName?.ToLower() == fullName?.ToLower() )
+                .FirstOrDefault();
+            if (bestMatch != null)
+            {
+                this.FillFrom(bestMatch.atr);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
