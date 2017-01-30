@@ -124,6 +124,9 @@
   <data name="Eksempel_Liste" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Eksempel_Liste.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Eksempel_Liste_MissingColumn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Eksempel_Liste-MissingColumn.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Test_Opslag" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Test_Opslag.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

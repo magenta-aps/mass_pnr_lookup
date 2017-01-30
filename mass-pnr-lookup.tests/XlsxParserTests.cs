@@ -44,5 +44,20 @@ namespace mass_pnr_lookup.tests
             }
             File.WriteAllBytes("AddColumn_ContainsNewColumn.xlsx", generatedBytes);
         }
+
+        [TestMethod]
+        public void GetData_MissingColumnValue_EqualRowLength()
+        {
+            using (var parser = new XlsxParser(Properties.Resources.Eksempel_Liste_MissingColumn))
+            {
+                var data = parser.GetData();
+                var lengths = data.Select(d => d.Length);
+                Assert.AreEqual(1,lengths.Distinct().Count());
+                foreach(var d in data)
+                {
+                    Console.WriteLine(d.Length);
+                }
+            }
+        }
     }
 }
