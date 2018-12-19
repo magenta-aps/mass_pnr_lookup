@@ -2,6 +2,7 @@ using System;
 using CprBroker.Schemas.Part;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 namespace mass_pnr_lookup.Parsers
 {
     public class DawaAddressParser : IAddressParser
@@ -10,6 +11,12 @@ namespace mass_pnr_lookup.Parsers
         {
             try
             {
+                // Prepare addressString
+                // Since DAWA cannot understand "12 B" as a houseNumber, only "12B" we will combine addresses like this.
+                addressString = Regex.Replace(addressString, @"(^[^0-9]+[0-9]+)[ ]?([a-zæøåA-ZÆØÅ])", "$1$2");
+                
+
+                // Lookup the address as a query to Dawa
                 addressString = System.Web.HttpUtility.UrlEncode(addressString);
                 String urlString = "http://dawa.aws.dk/adresser?q=" + addressString;
 
@@ -19,6 +26,7 @@ namespace mass_pnr_lookup.Parsers
 
                 var adresses = Newtonsoft.Json.JsonConvert.DeserializeObject<JArray>(responseTask.Result);
 
+                // Extract address data
                 if (adresses.Count > 0)
                 {
                     adresses = new JArray(adresses.First);
