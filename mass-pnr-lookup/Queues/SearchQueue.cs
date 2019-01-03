@@ -12,6 +12,7 @@ namespace mass_pnr_lookup.Queues
 {
     public class SearchQueue : CprBroker.Engine.Queues.Queue<LineQueueItem>
     {
+        // TODO: Why is it external only?
         public CprBroker.Schemas.SourceUsageOrder SourceUsageOrder { get; set; } = CprBroker.Schemas.SourceUsageOrder.ExternalOnly;
 
         public override LineQueueItem[] Process(LineQueueItem[] items)
@@ -27,7 +28,14 @@ namespace mass_pnr_lookup.Queues
                     var batchLine = context.BatchLines.Find(item.BatchLineId);
 
                     if (batchLine == null)
+                    {
+                        if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
+                        {
+                            // Max attempts reached - signal and remove anyway
+                            ret.Add(item);
+                        }
                         continue;
+                    }
 
                     var partManager = new PartManager();
                     var soegObject = batchLine.ToSoegObject();
@@ -82,7 +90,8 @@ namespace mass_pnr_lookup.Queues
                         }
                         else if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
                         {
-                            // Max attempts reached - signal anyway
+                            // Max attempts reached - signal and remove anyway
+                            ret.Add(item);
                             batchLine.Batch.GenerationSemaphore().Signal();
                         }
                     }

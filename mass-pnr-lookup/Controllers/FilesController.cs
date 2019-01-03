@@ -102,6 +102,29 @@ namespace mass_pnr_lookup.Controllers
             return Json("Unable to retry", JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Remove(int id)
+        {
+            try
+            {
+                using (var context = new BatchContext())
+                {
+                    var batch = LoadBatch(id, context);
+                    if (batch != null)
+                    {
+                        context.Batches.Remove(batch);
+                        context.SaveChanges();
+                        batch.SignalAllSemaphores();
+                        return Json("Success.",JsonRequestBehavior.AllowGet);
+                    }
+                }
+            } catch (Exception ex)
+            {
+                return Json("An Error occured.", JsonRequestBehavior.AllowGet);
+                // DEBUGGING return Json(ex.Message+"\r\n"+ex.StackTrace+"\r\n\r\n"+ex.InnerException, JsonRequestBehavior.AllowGet);
+            }
+            return new HttpStatusCodeResult(500);
+        }
+
         [HttpPost]
         public ActionResult UploadFiles(IEnumerable<HttpPostedFileBase> files)
         {

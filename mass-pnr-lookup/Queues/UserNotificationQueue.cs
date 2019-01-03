@@ -22,7 +22,7 @@ namespace mass_pnr_lookup.Queues
                     {
                         var batch = context.Batches.Find(item.BatchId);
                         // If this item is the latest assigned notification queue item
-                        if (batch.NotificationSemaphore().Impl.SemaphoreId == item.Impl.SemaphoreId.Value)
+                        if (batch != null && batch.NotificationSemaphore().Impl.SemaphoreId == item.Impl.SemaphoreId.Value)
                         {
                             var userPrincipal = batch?.User?.GetUserPrincipal(ContextType.Domain);
                             var email = userPrincipal?.EmailAddress;
@@ -61,11 +61,17 @@ namespace mass_pnr_lookup.Queues
                             {
                                 Admin.LogFormattedError(
                                     "Could not find email for batch <{0}>, user <{1}>, principal <{2}>, email <{3}>",
-                                    batch.BatchId,
-                                    batch.User?.Name,
+                                    batch?.BatchId,
+                                    batch?.User?.Name,
                                     userPrincipal?.Name,
                                     email
                                     );
+                                if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
+                                {
+                                    // Max retry reached, clean up queueItem
+                                    ret.Add(item);
+
+                                }
                             }
                         }
                         else
@@ -74,12 +80,24 @@ namespace mass_pnr_lookup.Queues
                                 "Semaphore mismatch, skipping user notificatiuons. Batch <{0}> queue item <{1}>",
                                     batch.BatchId,
                                     item.Impl.QueueItemId);
+                            if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
+                            {
+                                // Max retry reached, clean up queueItem
+                                ret.Add(item);
+
+                            }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     Admin.LogException(ex, string.Format("queue item <{0}>", item.Impl.QueueItemId));
+                    if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
+                    {
+                        // Max retry reached, clean up queueItem
+                        ret.Add(item);
+
+                    }
                 }
             }
             return ret.ToArray();

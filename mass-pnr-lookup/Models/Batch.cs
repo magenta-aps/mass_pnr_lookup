@@ -166,5 +166,21 @@ namespace mass_pnr_lookup.Models
             context.SaveChanges();
         }
 
+        public void SignalAllSemaphores()
+        {
+
+            // After the deletion of Batches and BatchLines, We signal all Semaphores, to make the QueueItems run, 
+            // once the QueueItems reach *MaxRetry* Attempts, it should delete itself
+            if(NotificationSemaphore() != null)
+                NotificationSemaphore().SignalAll();
+
+            if (GenerationSemaphore() != null)
+                GenerationSemaphore().SignalAll();
+
+            if (SearchSemaphore() != null)
+                SearchSemaphore().SignalAll();
+
+        }
+
     }
 }

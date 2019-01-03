@@ -34,6 +34,12 @@ namespace mass_pnr_lookup.Queues
                 catch (Exception ex)
                 {
                     Logger.LogException(ex);
+                    if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
+                    {
+                        // Max retry reached, clean up queueItem
+                        ret.Add(item);
+
+                    }
                 }
             }
             return ret.ToArray();

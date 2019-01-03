@@ -26,6 +26,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,25 +46,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CprBroker.Data, Version=2.2.6.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CprBroker.Config, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\broker.github\PART\Source\Core\Output\CprBroker.Data.dll</HintPath>
+      <HintPath>..\..\CPRbroker\PART\Source\Core\Output\CprBroker.Config.dll</HintPath>
     </Reference>
-    <Reference Include="CprBroker.Engine, Version=2.2.5.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CprBroker.Data, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\broker.github\PART\Source\Core\Output\CprBroker.Engine.dll</HintPath>
+      <HintPath>..\..\CPRbroker\PART\Source\Core\Output\CprBroker.Data.dll</HintPath>
     </Reference>
-    <Reference Include="CprBroker.PartInterface, Version=2.2.6.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CprBroker.Engine, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\broker.github\PART\Source\CprBroker\Output\CprBroker.PartInterface.dll</HintPath>
+      <HintPath>..\..\CPRbroker\PART\Source\Core\Output\CprBroker.Engine.dll</HintPath>
     </Reference>
-    <Reference Include="CprBroker.Schemas, Version=2.2.5.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CprBroker.PartInterface, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\broker.github\PART\Source\Core\Output\CprBroker.Schemas.dll</HintPath>
+      <HintPath>..\..\CPRbroker\PART\Source\CprBroker\PartInterface\bin\Debug\CprBroker.PartInterface.dll</HintPath>
     </Reference>
-    <Reference Include="CprBroker.Utilities, Version=2.2.6.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CprBroker.Schemas, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\broker.github\PART\Source\Core\Output\CprBroker.Utilities.dll</HintPath>
+      <HintPath>..\..\CPRbroker\PART\Source\Core\Output\CprBroker.Schemas.dll</HintPath>
+    </Reference>
+    <Reference Include="CprBroker.Utilities, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\CPRbroker\PART\Source\Core\Output\CprBroker.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">

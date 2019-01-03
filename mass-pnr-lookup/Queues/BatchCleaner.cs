@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CprBroker.Engine.Tasks;
+using mass_pnr_lookup.Models;
+using CprBroker.Engine.Local;
 
 namespace mass_pnr_lookup.Queues
 {
@@ -10,7 +12,30 @@ namespace mass_pnr_lookup.Queues
     {
         protected override void PerformTimerAction()
         {
-            throw new NotImplementedException();
+
+            int daysToKeepFiles = Properties.Settings.Default.DaysToKeepBatchFiles;
+
+            DateTime deleteOlderThan = DateTime.Now.AddDays(-daysToKeepFiles);
+            using (BatchContext context = new BatchContext())
+            {
+                IQueryable<Batch> batchesToDelete = context.Batches.Where(b => b.CompletedTS < deleteOlderThan);
+                
+                foreach(Batch batch in batchesToDelete)
+                {
+                    try
+                    { 
+                        context.Batches.Remove(batch);
+                        batch.SignalAllSemaphores();
+                        Admin.LogSuccess("Mass PNR Lookup: Removed batch " + batch.BatchId);
+                    } catch(Exception e)
+                    {
+                        Admin.LogException(e);
+                    }
+                }
+                context.SaveChanges();
+
+
+            }
         }
     }
 }

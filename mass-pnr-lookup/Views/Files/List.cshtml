@@ -47,57 +47,60 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Name)
-            </td>
-            <td>
-                @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Processing)
-                {
-                    <button type="button" class="btn" aria-label="Left Align" name="pause" id="@item.BatchId">
-                        <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
-                    </button>
-                }
-                @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Paused)
-                {
-                    <button type="button" class="btn" aria-label="Left Align" name="resume" id="@item.BatchId">
-                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
-                    </button>
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubmittedTS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompletedTS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SucceededLines)/@Html.DisplayFor(modelItem => item.NumLines)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FailedLines)/@Html.DisplayFor(modelItem => item.NumLines)
-            </td>
-            <td>
-                @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Completed || item.Status == mass_pnr_lookup.Models.BatchStatus.Notified)
-                {
-                    @Html.ActionLink("Download", "Result", new { id = item.BatchId })
-                    <br />
-                    <a href="#" name="retryBatchLink" href2="@Url.Action("Retry",new { id = item.BatchId })">(Retry)</a>
-                }
-            </td>
-            <td>
-                <a href="#" name="linesLink" href2="@Url.Action("ListLines", new {id= item.BatchId })">Lines</a>
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Name)
+        </td>
+        <td>
+            @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Processing)
+            {
+                <button type="button" class="btn" aria-label="Left Align" name="pause" id="@item.BatchId">
+                    <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                </button>
+            }
+            @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Paused)
+            {
+                <button type="button" class="btn" aria-label="Left Align" name="resume" id="@item.BatchId">
+                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                </button>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubmittedTS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompletedTS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SucceededLines)/@Html.DisplayFor(modelItem => item.NumLines)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FailedLines)/@Html.DisplayFor(modelItem => item.NumLines)
+        </td>
+        <td>
+            @if (item.Status == mass_pnr_lookup.Models.BatchStatus.Completed || item.Status == mass_pnr_lookup.Models.BatchStatus.Notified)
+            {
+                @Html.ActionLink("Download", "Result", new { id = item.BatchId })
+                <br />
+                <a href="#" name="retryBatchLink" href2="@Url.Action("Retry",new { id = item.BatchId })">(Retry)</a>
+            }
+        </td>
+        <td>
+            <a href="#" name="linesLink" href2="@Url.Action("ListLines", new {id=item.BatchId })">Lines</a>
+        </td>
+        <td>
+            <a href="#" name="linesLink" href2="@Url.Action("Remove", new {id= item.BatchId })">Delete Batch</a>
+        </td>
+    </tr>
     }
 </table>
 
