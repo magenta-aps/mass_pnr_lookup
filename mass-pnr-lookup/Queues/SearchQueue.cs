@@ -7,13 +7,32 @@ using CprBroker.Engine.Queues;
 using mass_pnr_lookup.Models;
 using CprBroker.Engine;
 using CprBroker.Schemas.Part;
+using CprBroker.Schemas;
 
 namespace mass_pnr_lookup.Queues
 {
     public class SearchQueue : CprBroker.Engine.Queues.Queue<LineQueueItem>
     {
-        // TODO: Why is it external only?
-        public CprBroker.Schemas.SourceUsageOrder SourceUsageOrder { get; set; } = CprBroker.Schemas.SourceUsageOrder.ExternalOnly;
+        private bool search(PartManager partManager, SoegInputType1 soegObject, BatchLine batchLine, SourceUsageOrder SourceUsageOrder)
+        {
+            var searchResult = partManager.SearchList(
+                            BrokerContext.Current.UserToken,
+                            BrokerContext.Current.ApplicationToken,
+                            soegObject,
+                            SourceUsageOrder);
+
+            if (StandardReturType.IsSucceeded(searchResult.StandardRetur))
+            {
+                return batchLine.FillFrom(searchResult);
+                
+            }
+            else
+            {
+                batchLine.Error = string.Format("{0}-{1}", searchResult.StandardRetur.StatusKode, searchResult.StandardRetur.FejlbeskedTekst);
+                return false;
+            }
+
+        }
 
         public override LineQueueItem[] Process(LineQueueItem[] items)
         {
@@ -40,17 +59,19 @@ namespace mass_pnr_lookup.Queues
                     var partManager = new PartManager();
                     var soegObject = batchLine.ToSoegObject();
 
+
                     if (soegObject != null)
                     {
-                        var searchResult = partManager.SearchList(
-                            BrokerContext.Current.UserToken,
-                            BrokerContext.Current.ApplicationToken,
-                            soegObject,
-                            SourceUsageOrder);
-
-                        if (StandardReturType.IsSucceeded(searchResult.StandardRetur))
+                        // Try to search locally first
+                        // Since Mass PNR Lookup does some name-matching itself first, we need the local search.
+                        // There could be a local person found by CPR Broker, that Mass PNR Lookup does not match, therefore using "SourceUsageOrder.LocalThenExternal" is not enough
+                        if (search(partManager, soegObject, batchLine, SourceUsageOrder.LocalOnly))
                         {
-                            if(batchLine.FillFrom(searchResult))
+                            itemSucceeded = true;
+                        } else
+                        {
+                            // If no local person was found, search Externally
+                            if (search(partManager, soegObject, batchLine, SourceUsageOrder.ExternalOnly))
                             {
                                 itemSucceeded = true;
                             }
@@ -59,10 +80,7 @@ namespace mass_pnr_lookup.Queues
                                 batchLine.Error = "Person not found";
                             }
                         }
-                        else
-                        {
-                            batchLine.Error = string.Format("{0}-{1}", searchResult.StandardRetur.StatusKode, searchResult.StandardRetur.FejlbeskedTekst);
-                        }
+
                     }
                     else
                     {
