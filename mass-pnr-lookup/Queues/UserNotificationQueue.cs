@@ -21,8 +21,22 @@ namespace mass_pnr_lookup.Queues
                     using (var context = new BatchContext())
                     {
                         var batch = context.Batches.Find(item.BatchId);
+
+                        // If the batch is deleted
+                        if(batch == null)
+                        {
+                            if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
+                            {
+                                // Max retry reached, clean up queueItem
+                                ret.Add(item);
+
+                            }
+                            continue;
+                            
+                        }
+
                         // If this item is the latest assigned notification queue item
-                        if (batch != null && batch.NotificationSemaphore().Impl.SemaphoreId == item.Impl.SemaphoreId.Value)
+                        if (batch.NotificationSemaphore().Impl.SemaphoreId == item.Impl.SemaphoreId.Value)
                         {
                             var userPrincipal = batch?.User?.GetUserPrincipal(ContextType.Domain);
                             var email = userPrincipal?.EmailAddress;
