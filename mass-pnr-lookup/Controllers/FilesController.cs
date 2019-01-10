@@ -117,7 +117,7 @@ namespace mass_pnr_lookup.Controllers
                         return Json("Success.",JsonRequestBehavior.AllowGet);
                     }
                 }
-            } catch (Exception ex)
+            } catch (Exception)
             {
                 return Json("An Error occured.", JsonRequestBehavior.AllowGet);
                 // DEBUGGING return Json(ex.Message+"\r\n"+ex.StackTrace+"\r\n\r\n"+ex.InnerException, JsonRequestBehavior.AllowGet);
