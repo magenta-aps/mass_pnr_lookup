@@ -75,10 +75,6 @@ namespace mass_pnr_lookup.Queues
                             {
                                 itemSucceeded = true;
                             }
-                            else
-                            {
-                                batchLine.Error = "Person not found";
-                            }
                         }
 
                     }
@@ -93,8 +89,6 @@ namespace mass_pnr_lookup.Queues
 
                         if (itemSucceeded)
                             batchLine.Batch.SucceededLines++;
-                        else
-                            batchLine.Batch.FailedLines++;
 
                         // Save the result at this point
                         context.SaveChanges();
@@ -110,6 +104,9 @@ namespace mass_pnr_lookup.Queues
                         {
                             // Max attempts reached - signal and remove anyway
                             ret.Add(item);
+                            batchLine.Batch.FailedLines++;
+                            context.SaveChanges();
+
                             batchLine.Batch.GenerationSemaphore().Signal();
                         }
                     }
