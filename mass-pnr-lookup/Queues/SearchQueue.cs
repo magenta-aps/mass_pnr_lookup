@@ -98,8 +98,6 @@ namespace mass_pnr_lookup.Queues
                         if (itemSucceeded)
                             batchLine.Batch.SucceededLines++;
 
-                        // Save the result at this point
-                        context.SaveChanges();
 
                         // Queue management
                         if (itemSucceeded)
@@ -113,10 +111,11 @@ namespace mass_pnr_lookup.Queues
                             // Max attempts reached - signal and remove anyway
                             ret.Add(item);
                             batchLine.Batch.FailedLines++;
-                            context.SaveChanges();
 
                             batchLine.Batch.GenerationSemaphore().Signal();
                         }
+                        // Save the result at this point
+                        context.SaveChanges();
                     }
                 }
             }
