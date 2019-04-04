@@ -23,8 +23,16 @@ namespace mass_pnr_lookup.Queues
 
             if (StandardReturType.IsSucceeded(searchResult.StandardRetur))
             {
-                return batchLine.FillFrom(searchResult);
-                
+                if (batchLine.FillFrom(searchResult))
+                {
+                    return true;
+                }
+                else
+                {
+                    batchLine.Error = "Person not found";
+                    return false;
+                }
+
             }
             else
             {
