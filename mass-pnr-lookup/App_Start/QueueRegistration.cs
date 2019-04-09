@@ -15,7 +15,7 @@ namespace mass_pnr_lookup
             var extrationQueue = Queue.GetQueues<ExtractionQueue>().SingleOrDefault();
             if (extrationQueue == null)
             {
-                extrationQueue = Queue.AddQueue<ExtractionQueue>(3000, new Dictionary<string, string>(), 1, 100);
+                extrationQueue = Queue.AddQueue<ExtractionQueue>(3000, new Dictionary<string, string>(), 1, 5);
             }
 
             var searchQueues = Queue.GetQueues<SearchQueue>().ToList();
