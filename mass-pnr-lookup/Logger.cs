@@ -2,14 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CprBroker.Engine.local;
 
 namespace mass_pnr_lookup
 {
-    public class Logger
+    public class LogInCprBroker
     {
-        public static void LogException(Exception ex)
+        public static void LogSuccess(string msg)
         {
-            // TODO: wire this up to something !!
+            Admin.LogSuccess(msg);
+        }
+
+        public static void LogError(string msg)
+        {
+            Admin.LogFormattedSuccess(msg);
+        }
+
+        public static void LogException(Exception ex, string msg)
+        {
+            Admin.LogException(ex, msg);
         }
     }
 }
