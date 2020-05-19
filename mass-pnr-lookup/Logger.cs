@@ -15,7 +15,7 @@ namespace mass_pnr_lookup
 
         public static void LogError(string msg)
         {
-            Admin.LogFormattedSuccess(msg);
+            Admin.LogError(msg);
         }
 
         public static void LogException(Exception ex, string msg)
