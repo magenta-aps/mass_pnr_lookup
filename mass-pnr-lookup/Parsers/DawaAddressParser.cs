@@ -18,7 +18,7 @@ namespace mass_pnr_lookup.Parsers
 
                 // Lookup the address as a query to Dawa
                 addressString = System.Web.HttpUtility.UrlEncode(addressString);
-                String urlString = "http://dawa.aws.dk/adresser?q=" + addressString;
+                String urlString = "https://api.dataforsyningen.dk/adresser?q=" + addressString;
 
                 var client = new System.Net.Http.HttpClient();
                 var responseTask = client.GetStringAsync(urlString);

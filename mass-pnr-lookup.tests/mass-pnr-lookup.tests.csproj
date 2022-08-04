@@ -39,6 +39,7 @@
     <Reference Include="CprBroker.Data, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\broker.github\PART\Source\Core\Output\CprBroker.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CprBroker.Engine, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

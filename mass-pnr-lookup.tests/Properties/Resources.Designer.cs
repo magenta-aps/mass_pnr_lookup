@@ -66,7 +66,7 @@ namespace mass_pnr_lookup.tests.Properties {
         ///  &quot;id&quot;: &quot;0a3f50ad-6bc3-32b8-e044-0003ba298018&quot;,
         ///  &quot;kvhx&quot;: &quot;03161568__14_______&quot;,
         ///  &quot;status&quot;: 1,
-        ///  &quot;href&quot;: &quot;http://dawa.aws.dk/adresser/0a3f50ad-6bc3-32b8-e044-0003ba298018&quot;,
+        ///  &quot;href&quot;: &quot;https://api.dataforsyningen.dk/adresser/0a3f50ad-6bc3-32b8-e044-0003ba298018&quot;,
         ///  &quot;historik&quot;: {
         ///    &quot;oprettet&quot;: &quot;2000-02-05T21:56:13.000&quot;,
         ///    &quot;ændret&quot;: &quot;2000-02-05T21:56:13.000&quot;
@@ -75,7 +75,7 @@ namespace mass_pnr_lookup.tests.Properties {
         ///  &quot;dør&quot;: null,
         ///  &quot;adressebetegnelse&quot;: &quot;Studiestræde 14, 4300 Holbæk&quot;,
         ///  &quot;adgangsadresse&quot;: {
-        ///    &quot;href&quot;: &quot;http://dawa.aws.dk/adgangsadresser/0a3f5083-4cbf-32b8-e044-0003ba298018&quot;,
+        ///    &quot;href&quot;: &quot;https://api.dataforsyningen.dk/adgangsadresser/0a3f5083-4cbf-32b8-e044-0003ba298018&quot;,
         ///    &quot;id&quot;: &quot;0a3f5083-4cbf-32b8-e044 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AddressSample {

@@ -1,207 +1,208 @@
 [
-{
-  "id": "0a3f50ad-6bc3-32b8-e044-0003ba298018",
-  "kvhx": "03161568__14_______",
-  "status": 1,
-  "href": "http://dawa.aws.dk/adresser/0a3f50ad-6bc3-32b8-e044-0003ba298018",
-  "historik": {
-    "oprettet": "2000-02-05T21:56:13.000",
-    "ændret": "2000-02-05T21:56:13.000"
-  },
-  "etage": null,
-  "dør": null,
-  "adressebetegnelse": "Studiestræde 14, 4300 Holbæk",
-  "adgangsadresse": {
-    "href": "http://dawa.aws.dk/adgangsadresser/0a3f5083-4cbf-32b8-e044-0003ba298018",
-    "id": "0a3f5083-4cbf-32b8-e044-0003ba298018",
-    "kvh": "03161568__14",
+  {
+    "id": "0a3f50ad-6bc3-32b8-e044-0003ba298018",
+    "kvhx": "03161568__14_______",
     "status": 1,
-    "vejstykke": {
-      "href": "http://dawa.aws.dk/vejstykker/316/1568",
-      "navn": "Studiestræde",
-      "adresseringsnavn": "Studiestræde",
-      "kode": "1568"
-    },
-    "husnr": "14",
-    "supplerendebynavn": null,
-    "postnummer": {
-      "href": "http://dawa.aws.dk/postnumre/4300",
-      "nr": "4300",
-      "navn": "Holbæk"
-    },
-    "stormodtagerpostnummer": null,
-    "kommune": {
-      "href": "http://dawa.aws.dk/kommuner/0316",
-      "kode": "0316",
-      "navn": "Holbæk"
-    },
-    "ejerlav": {
-      "kode": 2000851,
-      "navn": "Holbæk Bygrunde"
-    },
-    "esrejendomsnr": "8104",
-    "matrikelnr": "175",
+    "href": "https://api.dataforsyningen.dk/adresser/0a3f50ad-6bc3-32b8-e044-0003ba298018",
     "historik": {
       "oprettet": "2000-02-05T21:56:13.000",
-      "ændret": "2013-08-02T11:26:32.297"
+      "ændret": "2000-02-05T21:56:13.000"
     },
-    "adgangspunkt": {
-      "koordinater": [
-        11.7119232554688,
-        55.7184623259757
-      ],
-      "nøjagtighed": "A",
-      "kilde": 5,
-      "tekniskstandard": "TK",
-      "tekstretning": 287.65,
-      "ændret": "2013-08-01T23:59:00.000"
-    },
-    "DDKN": {
-      "m100": "100m_61780_6703",
-      "km1": "1km_6178_670",
-      "km10": "10km_617_67"
-    },
-    "sogn": {
-      "kode": "7274",
-      "navn": "Sankt Nikolai",
-      "href": "http://dawa.aws.dk/sogne/7274"
-    },
-    "region": {
-      "href": "http://dawa.aws.dk/regioner/1085",
-      "kode": "1085",
-      "navn": "Region Sjælland"
-    },
-    "retskreds": {
-      "kode": "1122",
-      "navn": "Retten i Holbæk",
-      "href": "http://dawa.aws.dk/retskredse/1122"
-    },
-    "politikreds": {
-      "kode": "1467",
-      "navn": "Midt- og Vestsjællands Politi",
-      "href": "http://dawa.aws.dk/politikredse/1467"
-    },
-    "opstillingskreds": {
-      "kode": "0037",
-      "navn": "Holbæk",
-      "href": "http://dawa.aws.dk/opstillingskredse/37"
-    },
-    "zone": "Byzone",
-    "jordstykke": {
-      "href": "http://dawa.aws.dk/jordstykker/2000851/175",
-      "matrikelnr": "175",
-      "esrejendomsnr": "8104",
+    "etage": null,
+    "dør": null,
+    "adressebetegnelse": "Studiestræde 14, 4300 Holbæk",
+    "adgangsadresse": {
+      "href": "https://api.dataforsyningen.dk/adgangsadresser/0a3f5083-4cbf-32b8-e044-0003ba298018",
+      "id": "0a3f5083-4cbf-32b8-e044-0003ba298018",
+      "kvh": "03161568__14",
+      "status": 1,
+      "vejstykke": {
+        "href": "https://api.dataforsyningen.dk/vejstykker/316/1568",
+        "navn": "Studiestræde",
+        "adresseringsnavn": "Studiestræde",
+        "kode": "1568"
+      },
+      "husnr": "14",
+      "supplerendebynavn": null,
+      "postnummer": {
+        "href": "https://api.dataforsyningen.dk/postnumre/4300",
+        "nr": "4300",
+        "navn": "Holbæk"
+      },
+      "stormodtagerpostnummer": null,
+      "kommune": {
+        "href": "https://api.dataforsyningen.dk/kommuner/0316",
+        "kode": "0316",
+        "navn": "Holbæk"
+      },
       "ejerlav": {
         "kode": 2000851,
-        "navn": "Holbæk Bygrunde",
-        "href": "http://dawa.aws.dk/ejerlav/2000851"
+        "navn": "Holbæk Bygrunde"
+      },
+      "esrejendomsnr": "8104",
+      "matrikelnr": "175",
+      "historik": {
+        "oprettet": "2000-02-05T21:56:13.000",
+        "ændret": "2013-08-02T11:26:32.297"
+      },
+      "adgangspunkt": {
+        "koordinater": [
+          11.7119232554688,
+          55.7184623259757
+        ],
+        "nøjagtighed": "A",
+        "kilde": 5,
+        "tekniskstandard": "TK",
+        "tekstretning": 287.65,
+        "ændret": "2013-08-01T23:59:00.000"
+      },
+      "DDKN": {
+        "m100": "100m_61780_6703",
+        "km1": "1km_6178_670",
+        "km10": "10km_617_67"
+      },
+      "sogn": {
+        "kode": "7274",
+        "navn": "Sankt Nikolai",
+        "href": "https://api.dataforsyningen.dk/sogne/7274"
+      },
+      "region": {
+        "href": "https://api.dataforsyningen.dk/regioner/1085",
+        "kode": "1085",
+        "navn": "Region Sjælland"
+      },
+      "retskreds": {
+        "kode": "1122",
+        "navn": "Retten i Holbæk",
+        "href": "https://api.dataforsyningen/retskredse/1122"
+      },
+      "politikreds": {
+        "kode": "1467",
+        "navn": "Midt- og Vestsjællands Politi",
+        "href": "https://api.dataforsyningen.dk/politikredse/1467"
+      },
+      "opstillingskreds": {
+        "kode": "0037",
+        "navn": "Holbæk",
+        "href": "https://api.dataforsyningen.dk/opstillingskredse/37"
+      },
+      "zone": "Byzone",
+      "jordstykke": {
+        "href": "https://api.dataforsyningen.dk/jordstykker/2000851/175",
+        "matrikelnr": "175",
+        "esrejendomsnr": "8104",
+        "ejerlav": {
+          "kode": 2000851,
+          "navn": "Holbæk Bygrunde",
+          "href": "https://api.dataforsyningen.dk/ejerlav/2000851"
+        }
       }
     }
-  }
-}, {
-  "id": "0a3f50a0-ee94-32b8-e044-0003ba298018",
-  "kvhx": "01017064__14__1____",
-  "status": 1,
-  "href": "http://dawa.aws.dk/adresser/0a3f50a0-ee94-32b8-e044-0003ba298018",
-  "historik": {
-    "oprettet": "2000-02-05T20:33:20.000",
-    "ændret": "2000-02-05T20:33:20.000"
   },
-  "etage": "1",
-  "dør": null,
-  "adressebetegnelse": "Studiestræde 14, 1., 1455 København K",
-  "adgangsadresse": {
-    "href": "http://dawa.aws.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
-    "id": "0a3f507b-0406-32b8-e044-0003ba298018",
-    "kvh": "01017064__14",
+  {
+    "id": "0a3f50a0-ee94-32b8-e044-0003ba298018",
+    "kvhx": "01017064__14__1____",
     "status": 1,
-    "vejstykke": {
-      "href": "http://dawa.aws.dk/vejstykker/101/7064",
-      "navn": "Studiestræde",
-      "adresseringsnavn": "Studiestræde",
-      "kode": "7064"
-    },
-    "husnr": "14",
-    "supplerendebynavn": null,
-    "postnummer": {
-      "href": "http://dawa.aws.dk/postnumre/1455",
-      "nr": "1455",
-      "navn": "København K"
-    },
-    "stormodtagerpostnummer": null,
-    "kommune": {
-      "href": "http://dawa.aws.dk/kommuner/0101",
-      "kode": "0101",
-      "navn": "København"
-    },
-    "ejerlav": {
-      "kode": 2000163,
-      "navn": "Nørre Kvarter, København"
-    },
-    "esrejendomsnr": "542920",
-    "matrikelnr": "93",
+    "href": "https://api.dataforsyningen.dk/adresser/0a3f50a0-ee94-32b8-e044-0003ba298018",
     "historik": {
       "oprettet": "2000-02-05T20:33:20.000",
-      "ændret": "2009-11-25T01:07:37.000"
+      "ændret": "2000-02-05T20:33:20.000"
     },
-    "adgangspunkt": {
-      "koordinater": [
-        12.5698375261276,
-        55.6788229857504
-      ],
-      "nøjagtighed": "A",
-      "kilde": 5,
-      "tekniskstandard": "TD",
-      "tekstretning": 200,
-      "ændret": "2002-04-05T00:00:00.000"
-    },
-    "DDKN": {
-      "m100": "100m_61761_7244",
-      "km1": "1km_6176_724",
-      "km10": "10km_617_72"
-    },
-    "sogn": {
-      "kode": "9174",
-      "navn": "Vor Frue",
-      "href": "http://dawa.aws.dk/sogne/9174"
-    },
-    "region": {
-      "href": "http://dawa.aws.dk/regioner/1084",
-      "kode": "1084",
-      "navn": "Region Hovedstaden"
-    },
-    "retskreds": {
-      "kode": "1101",
-      "navn": "Københavns Byret",
-      "href": "http://dawa.aws.dk/retskredse/1101"
-    },
-    "politikreds": {
-      "kode": "1470",
-      "navn": "Københavns Politi",
-      "href": "http://dawa.aws.dk/politikredse/1470"
-    },
-    "opstillingskreds": {
-      "kode": "0003",
-      "navn": "Indre By",
-      "href": "http://dawa.aws.dk/opstillingskredse/3"
-    },
-    "zone": "Byzone",
-    "jordstykke": {
-      "href": "http://dawa.aws.dk/jordstykker/2000163/93",
-      "matrikelnr": "93",
-      "esrejendomsnr": "542920",
+    "etage": "1",
+    "dør": null,
+    "adressebetegnelse": "Studiestræde 14, 1., 1455 København K",
+    "adgangsadresse": {
+      "href": "https://api.dataforsyningen.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
+      "id": "0a3f507b-0406-32b8-e044-0003ba298018",
+      "kvh": "01017064__14",
+      "status": 1,
+      "vejstykke": {
+        "href": "https://api.dataforsyningen.dk/vejstykker/101/7064",
+        "navn": "Studiestræde",
+        "adresseringsnavn": "Studiestræde",
+        "kode": "7064"
+      },
+      "husnr": "14",
+      "supplerendebynavn": null,
+      "postnummer": {
+        "href": "https://api.dataforsyningen.dk/postnumre/1455",
+        "nr": "1455",
+        "navn": "København K"
+      },
+      "stormodtagerpostnummer": null,
+      "kommune": {
+        "href": "https://api.dataforsyningen.dk/kommuner/0101",
+        "kode": "0101",
+        "navn": "København"
+      },
       "ejerlav": {
         "kode": 2000163,
-        "navn": "Nørre Kvarter, København",
-        "href": "http://dawa.aws.dk/ejerlav/2000163"
+        "navn": "Nørre Kvarter, København"
+      },
+      "esrejendomsnr": "542920",
+      "matrikelnr": "93",
+      "historik": {
+        "oprettet": "2000-02-05T20:33:20.000",
+        "ændret": "2009-11-25T01:07:37.000"
+      },
+      "adgangspunkt": {
+        "koordinater": [
+          12.5698375261276,
+          55.6788229857504
+        ],
+        "nøjagtighed": "A",
+        "kilde": 5,
+        "tekniskstandard": "TD",
+        "tekstretning": 200,
+        "ændret": "2002-04-05T00:00:00.000"
+      },
+      "DDKN": {
+        "m100": "100m_61761_7244",
+        "km1": "1km_6176_724",
+        "km10": "10km_617_72"
+      },
+      "sogn": {
+        "kode": "9174",
+        "navn": "Vor Frue",
+        "href": "https://api.dataforsyningen.dk/sogne/9174"
+      },
+      "region": {
+        "href": "https://api.dataforsyningen.dk/regioner/1084",
+        "kode": "1084",
+        "navn": "Region Hovedstaden"
+      },
+      "retskreds": {
+        "kode": "1101",
+        "navn": "Københavns Byret",
+        "href": "https://api.dataforsyningen.dk/retskredse/1101"
+      },
+      "politikreds": {
+        "kode": "1470",
+        "navn": "Københavns Politi",
+        "href": "https://api.dataforsyningen.dk/politikredse/1470"
+      },
+      "opstillingskreds": {
+        "kode": "0003",
+        "navn": "Indre By",
+        "href": "https://api.dataforsyningen.dk/opstillingskredse/3"
+      },
+      "zone": "Byzone",
+      "jordstykke": {
+        "href": "https://api.dataforsyningen.dk/jordstykker/2000163/93",
+        "matrikelnr": "93",
+        "esrejendomsnr": "542920",
+        "ejerlav": {
+          "kode": 2000163,
+          "navn": "Nørre Kvarter, København",
+          "href": "https://api.dataforsyningen.dk/ejerlav/2000163"
+        }
       }
     }
-  }
-}, {
+  }, {
   "id": "9719c281-f2e5-4bea-9542-a6818a8472d5",
   "kvhx": "01017064__14__2____",
   "status": 1,
-  "href": "http://dawa.aws.dk/adresser/9719c281-f2e5-4bea-9542-a6818a8472d5",
+  "href": "https://api.dataforsyningen.dk/adresser/9719c281-f2e5-4bea-9542-a6818a8472d5",
   "historik": {
     "oprettet": "2015-10-05T20:38:14.610",
     "ændret": "2015-10-05T20:38:14.610"
@@ -210,12 +211,12 @@
   "dør": null,
   "adressebetegnelse": "Studiestræde 14, 2., 1455 København K",
   "adgangsadresse": {
-    "href": "http://dawa.aws.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
+    "href": "https://api.dataforsyningen.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
     "id": "0a3f507b-0406-32b8-e044-0003ba298018",
     "kvh": "01017064__14",
     "status": 1,
     "vejstykke": {
-      "href": "http://dawa.aws.dk/vejstykker/101/7064",
+      "href": "https://api.dataforsyningen.dk/vejstykker/101/7064",
       "navn": "Studiestræde",
       "adresseringsnavn": "Studiestræde",
       "kode": "7064"
@@ -223,13 +224,13 @@
     "husnr": "14",
     "supplerendebynavn": null,
     "postnummer": {
-      "href": "http://dawa.aws.dk/postnumre/1455",
+      "href": "https://api.dataforsyningen.dk/postnumre/1455",
       "nr": "1455",
       "navn": "København K"
     },
     "stormodtagerpostnummer": null,
     "kommune": {
-      "href": "http://dawa.aws.dk/kommuner/0101",
+      "href": "https://api.dataforsyningen.dk/kommuner/0101",
       "kode": "0101",
       "navn": "København"
     },
@@ -262,37 +263,37 @@
     "sogn": {
       "kode": "9174",
       "navn": "Vor Frue",
-      "href": "http://dawa.aws.dk/sogne/9174"
+      "href": "https://api.dataforsyningen.dk/sogne/9174"
     },
     "region": {
-      "href": "http://dawa.aws.dk/regioner/1084",
+      "href": "https://api.dataforsyningen.dk/regioner/1084",
       "kode": "1084",
       "navn": "Region Hovedstaden"
     },
     "retskreds": {
       "kode": "1101",
       "navn": "Københavns Byret",
-      "href": "http://dawa.aws.dk/retskredse/1101"
+      "href": "https://api.dataforsyningen.dk/retskredse/1101"
     },
     "politikreds": {
       "kode": "1470",
       "navn": "Københavns Politi",
-      "href": "http://dawa.aws.dk/politikredse/1470"
+      "href": "https://api.dataforsyningen.dk/politikredse/1470"
     },
     "opstillingskreds": {
       "kode": "0003",
       "navn": "Indre By",
-      "href": "http://dawa.aws.dk/opstillingskredse/3"
+      "href": "https://api.dataforsyningen.dk/opstillingskredse/3"
     },
     "zone": "Byzone",
     "jordstykke": {
-      "href": "http://dawa.aws.dk/jordstykker/2000163/93",
+      "href": "https://api.dataforsyningen.dk/jordstykker/2000163/93",
       "matrikelnr": "93",
       "esrejendomsnr": "542920",
       "ejerlav": {
         "kode": 2000163,
         "navn": "Nørre Kvarter, København",
-        "href": "http://dawa.aws.dk/ejerlav/2000163"
+        "href": "https://api.dataforsyningen.dk/ejerlav/2000163"
       }
     }
   }
@@ -300,7 +301,7 @@
   "id": "0a3f50a0-ee95-32b8-e044-0003ba298018",
   "kvhx": "01017064__14__3____",
   "status": 1,
-  "href": "http://dawa.aws.dk/adresser/0a3f50a0-ee95-32b8-e044-0003ba298018",
+  "href": "https://api.dataforsyningen.dk/adresser/0a3f50a0-ee95-32b8-e044-0003ba298018",
   "historik": {
     "oprettet": "2000-02-05T20:33:20.000",
     "ændret": "2000-02-05T20:33:20.000"
@@ -309,12 +310,12 @@
   "dør": null,
   "adressebetegnelse": "Studiestræde 14, 3., 1455 København K",
   "adgangsadresse": {
-    "href": "http://dawa.aws.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
+    "href": "https://api.dataforsyningen.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
     "id": "0a3f507b-0406-32b8-e044-0003ba298018",
     "kvh": "01017064__14",
     "status": 1,
     "vejstykke": {
-      "href": "http://dawa.aws.dk/vejstykker/101/7064",
+      "href": "https://api.dataforsyningen.dk/vejstykker/101/7064",
       "navn": "Studiestræde",
       "adresseringsnavn": "Studiestræde",
       "kode": "7064"
@@ -322,13 +323,13 @@
     "husnr": "14",
     "supplerendebynavn": null,
     "postnummer": {
-      "href": "http://dawa.aws.dk/postnumre/1455",
+      "href": "https://api.dataforsyningen.dk/postnumre/1455",
       "nr": "1455",
       "navn": "København K"
     },
     "stormodtagerpostnummer": null,
     "kommune": {
-      "href": "http://dawa.aws.dk/kommuner/0101",
+      "href": "https://api.dataforsyningen.dk/kommuner/0101",
       "kode": "0101",
       "navn": "København"
     },
@@ -361,37 +362,37 @@
     "sogn": {
       "kode": "9174",
       "navn": "Vor Frue",
-      "href": "http://dawa.aws.dk/sogne/9174"
+      "href": "https://api.dataforsyningen.dk/sogne/9174"
     },
     "region": {
-      "href": "http://dawa.aws.dk/regioner/1084",
+      "href": "https://api.dataforsyningen.dk/regioner/1084",
       "kode": "1084",
       "navn": "Region Hovedstaden"
     },
     "retskreds": {
       "kode": "1101",
       "navn": "Københavns Byret",
-      "href": "http://dawa.aws.dk/retskredse/1101"
+      "href": "https://api.dataforsyningen.dk/retskredse/1101"
     },
     "politikreds": {
       "kode": "1470",
       "navn": "Københavns Politi",
-      "href": "http://dawa.aws.dk/politikredse/1470"
+      "href": "https://api.dataforsyningen.dk/politikredse/1470"
     },
     "opstillingskreds": {
       "kode": "0003",
       "navn": "Indre By",
-      "href": "http://dawa.aws.dk/opstillingskredse/3"
+      "href": "https://api.dataforsyningen.dk/opstillingskredse/3"
     },
     "zone": "Byzone",
     "jordstykke": {
-      "href": "http://dawa.aws.dk/jordstykker/2000163/93",
+      "href": "https://api.dataforsyningen.dk/jordstykker/2000163/93",
       "matrikelnr": "93",
       "esrejendomsnr": "542920",
       "ejerlav": {
         "kode": 2000163,
         "navn": "Nørre Kvarter, København",
-        "href": "http://dawa.aws.dk/ejerlav/2000163"
+        "href": "https://api.dataforsyningen.dk/ejerlav/2000163"
       }
     }
   }
@@ -399,7 +400,7 @@
   "id": "e4937c89-f58a-48c9-a541-580637607cb1",
   "kvhx": "01017064__14__4____",
   "status": 1,
-  "href": "http://dawa.aws.dk/adresser/e4937c89-f58a-48c9-a541-580637607cb1",
+  "href": "https://api.dataforsyningen.dk/adresser/e4937c89-f58a-48c9-a541-580637607cb1",
   "historik": {
     "oprettet": "2016-02-19T12:41:04.507",
     "ændret": "2016-02-19T12:41:04.507"
@@ -408,12 +409,12 @@
   "dør": null,
   "adressebetegnelse": "Studiestræde 14, 4., 1455 København K",
   "adgangsadresse": {
-    "href": "http://dawa.aws.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
+    "href": "https://api.dataforsyningen.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
     "id": "0a3f507b-0406-32b8-e044-0003ba298018",
     "kvh": "01017064__14",
     "status": 1,
     "vejstykke": {
-      "href": "http://dawa.aws.dk/vejstykker/101/7064",
+      "href": "https://api.dataforsyningen.dk/vejstykker/101/7064",
       "navn": "Studiestræde",
       "adresseringsnavn": "Studiestræde",
       "kode": "7064"
@@ -421,13 +422,13 @@
     "husnr": "14",
     "supplerendebynavn": null,
     "postnummer": {
-      "href": "http://dawa.aws.dk/postnumre/1455",
+      "href": "https://api.dataforsyningen.dk/postnumre/1455",
       "nr": "1455",
       "navn": "København K"
     },
     "stormodtagerpostnummer": null,
     "kommune": {
-      "href": "http://dawa.aws.dk/kommuner/0101",
+      "href": "https://api.dataforsyningen.dk/kommuner/0101",
       "kode": "0101",
       "navn": "København"
     },
@@ -460,37 +461,37 @@
     "sogn": {
       "kode": "9174",
       "navn": "Vor Frue",
-      "href": "http://dawa.aws.dk/sogne/9174"
+      "href": "https://api.dataforsyningen.dk/sogne/9174"
     },
     "region": {
-      "href": "http://dawa.aws.dk/regioner/1084",
+      "href": "https://api.dataforsyningen.dk/regioner/1084",
       "kode": "1084",
       "navn": "Region Hovedstaden"
     },
     "retskreds": {
       "kode": "1101",
       "navn": "Københavns Byret",
-      "href": "http://dawa.aws.dk/retskredse/1101"
+      "href": "https://api.dataforsyningen.dk/retskredse/1101"
     },
     "politikreds": {
       "kode": "1470",
       "navn": "Københavns Politi",
-      "href": "http://dawa.aws.dk/politikredse/1470"
+      "href": "https://api.dataforsyningen.dk/politikredse/1470"
     },
     "opstillingskreds": {
       "kode": "0003",
       "navn": "Indre By",
-      "href": "http://dawa.aws.dk/opstillingskredse/3"
+      "href": "https://api.dataforsyningen.dk/opstillingskredse/3"
     },
     "zone": "Byzone",
     "jordstykke": {
-      "href": "http://dawa.aws.dk/jordstykker/2000163/93",
+      "href": "https://api.dataforsyningen.dk/jordstykker/2000163/93",
       "matrikelnr": "93",
       "esrejendomsnr": "542920",
       "ejerlav": {
         "kode": 2000163,
         "navn": "Nørre Kvarter, København",
-        "href": "http://dawa.aws.dk/ejerlav/2000163"
+        "href": "https://api.dataforsyningen.dk/ejerlav/2000163"
       }
     }
   }
@@ -498,7 +499,7 @@
   "id": "0a3f50a0-ee92-32b8-e044-0003ba298018",
   "kvhx": "01017064__14_kl____",
   "status": 1,
-  "href": "http://dawa.aws.dk/adresser/0a3f50a0-ee92-32b8-e044-0003ba298018",
+  "href": "https://api.dataforsyningen.dk/adresser/0a3f50a0-ee92-32b8-e044-0003ba298018",
   "historik": {
     "oprettet": "2000-02-05T20:33:20.000",
     "ændret": "2000-02-05T20:33:20.000"
@@ -507,12 +508,12 @@
   "dør": null,
   "adressebetegnelse": "Studiestræde 14, kl., 1455 København K",
   "adgangsadresse": {
-    "href": "http://dawa.aws.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
+    "href": "https://api.dataforsyningen.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
     "id": "0a3f507b-0406-32b8-e044-0003ba298018",
     "kvh": "01017064__14",
     "status": 1,
     "vejstykke": {
-      "href": "http://dawa.aws.dk/vejstykker/101/7064",
+      "href": "https://api.dataforsyningen.dk/vejstykker/101/7064",
       "navn": "Studiestræde",
       "adresseringsnavn": "Studiestræde",
       "kode": "7064"
@@ -520,13 +521,13 @@
     "husnr": "14",
     "supplerendebynavn": null,
     "postnummer": {
-      "href": "http://dawa.aws.dk/postnumre/1455",
+      "href": "https://api.dataforsyningen.dk/postnumre/1455",
       "nr": "1455",
       "navn": "København K"
     },
     "stormodtagerpostnummer": null,
     "kommune": {
-      "href": "http://dawa.aws.dk/kommuner/0101",
+      "href": "https://api.dataforsyningen.dk/kommuner/0101",
       "kode": "0101",
       "navn": "København"
     },
@@ -559,37 +560,37 @@
     "sogn": {
       "kode": "9174",
       "navn": "Vor Frue",
-      "href": "http://dawa.aws.dk/sogne/9174"
+      "href": "https://api.dataforsyningen.dk/sogne/9174"
     },
     "region": {
-      "href": "http://dawa.aws.dk/regioner/1084",
+      "href": "https://api.dataforsyningen.dk/regioner/1084",
       "kode": "1084",
       "navn": "Region Hovedstaden"
     },
     "retskreds": {
       "kode": "1101",
       "navn": "Københavns Byret",
-      "href": "http://dawa.aws.dk/retskredse/1101"
+      "href": "https://api.dataforsyningen.dk/retskredse/1101"
     },
     "politikreds": {
       "kode": "1470",
       "navn": "Københavns Politi",
-      "href": "http://dawa.aws.dk/politikredse/1470"
+      "href": "https://api.dataforsyningen.dk/politikredse/1470"
     },
     "opstillingskreds": {
       "kode": "0003",
       "navn": "Indre By",
-      "href": "http://dawa.aws.dk/opstillingskredse/3"
+      "href": "https://api.dataforsyningen.dk/opstillingskredse/3"
     },
     "zone": "Byzone",
     "jordstykke": {
-      "href": "http://dawa.aws.dk/jordstykker/2000163/93",
+      "href": "https://api.dataforsyningen.dk/jordstykker/2000163/93",
       "matrikelnr": "93",
       "esrejendomsnr": "542920",
       "ejerlav": {
         "kode": 2000163,
         "navn": "Nørre Kvarter, København",
-        "href": "http://dawa.aws.dk/ejerlav/2000163"
+        "href": "https://api.dataforsyningen.dk/ejerlav/2000163"
       }
     }
   }
@@ -597,7 +598,7 @@
   "id": "0a3f50a0-ee93-32b8-e044-0003ba298018",
   "kvhx": "01017064__14_st____",
   "status": 1,
-  "href": "http://dawa.aws.dk/adresser/0a3f50a0-ee93-32b8-e044-0003ba298018",
+  "href": "https://api.dataforsyningen.dk/adresser/0a3f50a0-ee93-32b8-e044-0003ba298018",
   "historik": {
     "oprettet": "2000-02-05T20:33:20.000",
     "ændret": "2000-02-05T20:33:20.000"
@@ -606,12 +607,12 @@
   "dør": null,
   "adressebetegnelse": "Studiestræde 14, st., 1455 København K",
   "adgangsadresse": {
-    "href": "http://dawa.aws.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
+    "href": "https://api.dataforsyningen.dk/adgangsadresser/0a3f507b-0406-32b8-e044-0003ba298018",
     "id": "0a3f507b-0406-32b8-e044-0003ba298018",
     "kvh": "01017064__14",
     "status": 1,
     "vejstykke": {
-      "href": "http://dawa.aws.dk/vejstykker/101/7064",
+      "href": "https://api.dataforsyningen.dk/vejstykker/101/7064",
       "navn": "Studiestræde",
       "adresseringsnavn": "Studiestræde",
       "kode": "7064"
@@ -619,13 +620,13 @@
     "husnr": "14",
     "supplerendebynavn": null,
     "postnummer": {
-      "href": "http://dawa.aws.dk/postnumre/1455",
+      "href": "https://api.dataforsyningen.dk/postnumre/1455",
       "nr": "1455",
       "navn": "København K"
     },
     "stormodtagerpostnummer": null,
     "kommune": {
-      "href": "http://dawa.aws.dk/kommuner/0101",
+      "href": "https://api.dataforsyningen.dk/kommuner/0101",
       "kode": "0101",
       "navn": "København"
     },
@@ -658,37 +659,37 @@
     "sogn": {
       "kode": "9174",
       "navn": "Vor Frue",
-      "href": "http://dawa.aws.dk/sogne/9174"
+      "href": "https://api.dataforsyningen.dk/sogne/9174"
     },
     "region": {
-      "href": "http://dawa.aws.dk/regioner/1084",
+      "href": "https://api.dataforsyningen.dk/regioner/1084",
       "kode": "1084",
       "navn": "Region Hovedstaden"
     },
     "retskreds": {
       "kode": "1101",
       "navn": "Københavns Byret",
-      "href": "http://dawa.aws.dk/retskredse/1101"
+      "href": "https://api.dataforsyningen.dk/retskredse/1101"
     },
     "politikreds": {
       "kode": "1470",
       "navn": "Københavns Politi",
-      "href": "http://dawa.aws.dk/politikredse/1470"
+      "href": "https://api.dataforsyningen.dk/politikredse/1470"
     },
     "opstillingskreds": {
       "kode": "0003",
       "navn": "Indre By",
-      "href": "http://dawa.aws.dk/opstillingskredse/3"
+      "href": "https://api.dataforsyningen.dk/opstillingskredse/3"
     },
     "zone": "Byzone",
     "jordstykke": {
-      "href": "http://dawa.aws.dk/jordstykker/2000163/93",
+      "href": "https://api.dataforsyningen.dk/jordstykker/2000163/93",
       "matrikelnr": "93",
       "esrejendomsnr": "542920",
       "ejerlav": {
         "kode": 2000163,
         "navn": "Nørre Kvarter, København",
-        "href": "http://dawa.aws.dk/ejerlav/2000163"
+        "href": "https://api.dataforsyningen.dk/ejerlav/2000163"
       }
     }
   }
