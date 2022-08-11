@@ -1,5 +1,6 @@
 using System;
 using CprBroker.Schemas.Part;
+using CprBroker.Engine.Local;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
@@ -70,7 +71,7 @@ namespace mass_pnr_lookup.Parsers
             }
             catch (Exception ex)
             {
-                Logger.LogException(ex);
+                Admin.LogException(ex, String.Format("Mass PNR Lookup Exception: {0}", ex.ToString()));
             }
             return null;
         }

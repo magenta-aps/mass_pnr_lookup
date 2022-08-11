@@ -27,9 +27,9 @@ namespace mass_pnr_lookup.Queues
                         context.Batches.Remove(batch);
                         batch.SignalAllSemaphores();
                         Admin.LogSuccess("Mass PNR Lookup: Removed batch " + batch.BatchId);
-                    } catch(Exception e)
+                    } catch(Exception ex)
                     {
-                        Admin.LogException(e);
+                        Admin.LogException(ex, String.Format("Mass PNR Lookup Exception: {0}", ex.ToString()));
                     }
                 }
                 context.SaveChanges();

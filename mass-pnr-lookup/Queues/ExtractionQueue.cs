@@ -47,8 +47,7 @@ namespace mass_pnr_lookup.Queues
                         }
                         catch (Exception ex)
                         {
-                            Admin.LogException(ex);
-
+                            Admin.LogException(ex, String.Format("Mass PNR Lookup Exception: {0}", ex.ToString()));
                             batch.Status = BatchStatus.Error;
                             context.SaveChanges();
                         }

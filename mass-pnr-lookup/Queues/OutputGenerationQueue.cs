@@ -5,6 +5,7 @@ using System.Web;
 using CprBroker.Engine.Queues;
 using mass_pnr_lookup.Models;
 using mass_pnr_lookup.Parsers;
+using CprBroker.Engine.Local;
 
 namespace mass_pnr_lookup.Queues
 {
@@ -33,7 +34,7 @@ namespace mass_pnr_lookup.Queues
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogException(ex);
+                    Admin.LogException(ex, String.Format("Mass PNR Lookup Exception: {0}", ex.ToString()));
                     if (item.Impl.AttemptCount >= this.Impl.MaxRetry - 1)
                     {
                         // Max retry reached, clean up queueItem
