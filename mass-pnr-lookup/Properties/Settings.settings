@@ -15,5 +15,11 @@
     <Setting Name="DaysToKeepBatchFiles" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">90</Value>
     </Setting>
+    <Setting Name="addressapi_baseurl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://api.danskadresseapi.dk/dawa</Value>
+    </Setting>
+    <Setting Name="addressapi_key" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

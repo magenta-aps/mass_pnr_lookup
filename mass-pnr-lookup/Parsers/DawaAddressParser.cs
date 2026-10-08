@@ -17,11 +17,17 @@ namespace mass_pnr_lookup.Parsers
                 addressString = Regex.Replace(addressString, @"(^[^0-9]+[0-9]+)[ ]?([a-zæøåA-ZÆØÅ])", "$1$2");
                 
 
-                // Lookup the address as a query to Dawa
+                // Lookup the address as a query to DanskAdresseAPI (DAWA-compatible; DAWA was shut down 01/10/2026)
+                var settings = Properties.Settings.Default;
                 addressString = System.Web.HttpUtility.UrlEncode(addressString);
-                String urlString = "https://api.dataforsyningen.dk/adresser?q=" + addressString;
+                String urlString = settings.addressapi_baseurl.TrimEnd('/') + "/adresser?q=" + addressString + "&per_side=1";
 
                 var client = new System.Net.Http.HttpClient();
+                client.Timeout = TimeSpan.FromSeconds(10);
+                if (!String.IsNullOrEmpty(settings.addressapi_key))
+                {
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", settings.addressapi_key);
+                }
                 var responseTask = client.GetStringAsync(urlString);
                 responseTask.Wait();
 

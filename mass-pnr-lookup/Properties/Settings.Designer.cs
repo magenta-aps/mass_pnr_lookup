@@ -51,5 +51,23 @@ namespace mass_pnr_lookup.Properties {
                 return ((int)(this["DaysToKeepBatchFiles"]));
             }
         }
+
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.danskadresseapi.dk/dawa")]
+        public string addressapi_baseurl {
+            get {
+                return ((string)(this["addressapi_baseurl"]));
+            }
+        }
+
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string addressapi_key {
+            get {
+                return ((string)(this["addressapi_key"]));
+            }
+        }
     }
 }
